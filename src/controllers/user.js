@@ -1,4 +1,3 @@
-const express = require("express");
 const User = require("../models/user");
 
 const signUp = async (req, res) => {
@@ -13,11 +12,11 @@ const signUp = async (req, res) => {
     const user = await User.create(req.body);
     //Generate token using JWT
     const token = await user.generateAuthToken();
-    // Using nodemailer (SMTP) for development
+    // Using nodemailer (SMTP) for email sending/testing
     sendWelcomeEmail({
       email,
       subject: "Thanks for joining in!",
-      message: `Welcome to Learn More, ${firstName}. Let me know how you get along with the app`,
+      message: `Welcome to Learn More, ${firstName}. Let us know how you get along with the app`,
     });
     res.status(201).json({
       STATUS: "SUCESS",
@@ -33,3 +32,5 @@ const signUp = async (req, res) => {
     });
   }
 };
+
+module.exports = signUp;
