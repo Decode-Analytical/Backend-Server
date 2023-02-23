@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 //creating schema
 const userSchema = new Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: [true, "Name must be Provided"],
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: [true, "Name must be Provided"],
       trim: true,
@@ -35,6 +40,10 @@ const userSchema = new Schema(
             statusCode: responseStatusCodes.BAD_REQUEST,
           });
       },
+    },
+    phoneNumber: {
+      type: Number,
+      required: true,
     },
     tokens: [{ token: { type: String, required: true } }],
   },
