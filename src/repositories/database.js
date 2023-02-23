@@ -1,11 +1,14 @@
-//create new js files for your database
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-const connectDB = () => {
-    mongoose
-    .connect(process.env.mongoUR)
-    .then((connect) => console.log("db connected"))
-    .catch((err) => console.log(err));
+const dbUrl = process.env.DATABASE_URL_DEV;
 
-}
-module.exports = connectDB
+(function(){
+    mongoose.connect(dbUrl)
+    .then(()=>{
+        console.log('DB Connected');
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+})();

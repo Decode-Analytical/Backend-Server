@@ -1,9 +1,16 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const index = require('./src/routes/index');
+require('./src/repositories/database');
+require('dotenv').config();
+
 const app = express();
+
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
 
 index(app);
 
-app.listen(3000, ()=>{
-    console.log('App is running on port 3000')
+app.listen(process.env.PORT, ()=>{
+    console.log(`App is running on port ${process.env.PORT}`)
 })
