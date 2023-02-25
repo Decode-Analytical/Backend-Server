@@ -1,23 +1,18 @@
 const User = require("../models/user");
+const responseStatusCodes = require("../utils/util");
 
 const signUp = async (req, res) => {
   try {
-    const { email, firstName } = req.body;
-    const existingUser = User.findOne({ email });
+    const { email, fullName } = req.body;
+    const existingUser = await User.findOne({ email });
     if (existingUser)
-      res.status(422).json({
+      return res.status(responseStatusCodes.CONFLICT).json({
         STATUS: "FAILURE",
         MESSAGE: "User already exist",
       });
     const user = await User.create(req.body);
     //Generate token using JWT
     const token = await user.generateAuthToken();
-    // Using nodemailer (SMTP) for email sending/testing
-    sendWelcomeEmail({
-      email,
-      subject: "Thanks for joining in!",
-      message: `Welcome to Learn More, ${firstName}. Let us know how you get along with the app`,
-    });
     res.status(201).json({
       STATUS: "SUCESS",
       MESSAGE: "User created successfully",
@@ -25,10 +20,10 @@ const signUp = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({
       STATUS: "FAILURE",
-      MESSAGE: "Internal server error",
+      MESSAGE: error.message,
     });
   }
 };

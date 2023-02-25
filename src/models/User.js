@@ -1,19 +1,17 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
+const validator = require("validator");
+const responseStatusCodes = require("../utils/util");
+const jwt = require("jsonwebtoken");
 
-//creating schema
 const userSchema = new Schema(
   {
-    firstName: {
+    fullName: {
       type: String,
       required: [true, "Name must be Provided"],
       trim: true,
     },
-    lastName: {
-      type: String,
-      required: [true, "Name must be Provided"],
-      trim: true,
-    },
+
     email: {
       type: String,
       required: true,
@@ -22,7 +20,7 @@ const userSchema = new Schema(
       lowercase: true,
       validate(mail) {
         if (!validator.isEmail(mail))
-          throw new AppError({
+          throw new Error({
             message: "Invalid Email",
             statusCode: responseStatusCodes.BAD_REQUEST,
           });
@@ -35,7 +33,7 @@ const userSchema = new Schema(
       minlength: [8, "Password must be at least 8 characters"],
       validate: (password) => {
         if (password.toLowerCase().includes("password"))
-          throw new AppError({
+          throw new Error({
             message: "You can't use the word password",
             statusCode: responseStatusCodes.BAD_REQUEST,
           });
@@ -50,5 +48,18 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+// User Token Generation
+userSchema.methods.generateAuthToken = async function () {
+  const user = this;
+  const token = await jwt.sign(
+    { _id: user._id.toString() },
+    process.env.JWT_SECRET
+  );
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+  return token;
+};
+
 const User = mongoose.model("users", userSchema);
+
 module.exports = User;
