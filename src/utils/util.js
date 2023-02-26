@@ -1,5 +1,3 @@
-//create new js files for your utils... Validators go in this folder
-
 const responseStatusCodes = {
   SUCCESS: 200,
   CREATED: 201,

@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const validator = require("validator");
 const responseStatusCodes = require("../utils/util");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -60,6 +61,14 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+//Hashing User plain text password before saving
+userSchema.pre("save", async function (next) {
+  const user = this;
+  if (user.isModified("password")) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
+  next();
+});
 const User = mongoose.model("users", userSchema);
 
 module.exports = User;

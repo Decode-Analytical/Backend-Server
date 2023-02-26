@@ -1,30 +1,18 @@
 const User = require("../models/user");
-const responseStatusCodes = require("../utils/util");
+const CommonService = require("../utils/commonService");
 
 const signUp = async (req, res) => {
   try {
-    const { email, fullName } = req.body;
+    const { email } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res.status(responseStatusCodes.CONFLICT).json({
-        STATUS: "FAILURE",
-        MESSAGE: "User already exist",
-      });
+      return CommonService.conflictResponse("User already exist", res);
     const user = await User.create(req.body);
     //Generate token using JWT
-    const token = await user.generateAuthToken();
-    res.status(201).json({
-      STATUS: "SUCESS",
-      MESSAGE: "User created successfully",
-      user,
-      token,
-    });
+    await user.generateAuthToken();
+    CommonService.createdResponse("User created successfully", user, res);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({
-      STATUS: "FAILURE",
-      MESSAGE: error.message,
-    });
+    CommonService.failureResponse(error.message, res);
   }
 };
 
