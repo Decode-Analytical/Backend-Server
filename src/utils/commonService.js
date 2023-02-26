@@ -7,11 +7,12 @@ class CommonService {
     });
   }
 
-  static createdResponse(message, DATA, res) {
+  static createdResponse(DATA, token, res) {
     res.status(responseStatusCodes.CREATED).json({
       STATUS: "SUCCESS",
-      MESSAGE: message,
+      MESSAGE: "User created successfully",
       DATA,
+      token,
     });
   }
 

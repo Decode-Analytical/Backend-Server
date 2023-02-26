@@ -61,6 +61,15 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+//Removing sensitive datas from the user
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+  delete userObject.password;
+  delete userObject.tokens;
+  return userObject;
+};
+
 //Hashing User plain text password before saving
 userSchema.pre("save", async function (next) {
   const user = this;
@@ -69,6 +78,7 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
+
 const User = mongoose.model("users", userSchema);
 
 module.exports = User;
