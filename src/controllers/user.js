@@ -16,4 +16,16 @@ const signUp = async (req, res) => {
   }
 };
 
-module.exports = signUp;
+const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findByCredentials(email, password, res);
+    if (user) {
+      const token = await user.generateAuthToken();
+      return res.status(200).json({ user, token });
+    }
+  } catch (error) {
+    CommonService.failureResponse(error.message, res);
+  }
+};
+module.exports = { signUp, userLogin };

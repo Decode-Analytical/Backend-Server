@@ -4,6 +4,7 @@ const validator = require("validator");
 const responseStatusCodes = require("../utils/util");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const CommonService = require("../utils/commonService");
 
 const userSchema = new Schema(
   {
@@ -68,6 +69,15 @@ userSchema.methods.toJSON = function () {
   delete userObject.password;
   delete userObject.tokens;
   return userObject;
+};
+
+//UserLogin Authentication
+userSchema.statics.findByCredentials = async (email, password, res) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("User does not exist");
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new Error("Unable to login");
+  return user;
 };
 
 //Hashing User plain text password before saving
