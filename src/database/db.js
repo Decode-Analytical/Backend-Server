@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
+mongoose.set('strictQuery', true)
 
 const dbUrl = process.env.DATABASE_URL_DEV;
 
