@@ -1,4 +1,5 @@
 const responseStatusCodes = require("../utils/util");
+const logger = require("../utils/logger");
 class CommonService {
   static successResponse(res, DATA) {
     res.status(responseStatusCodes.SUCCESS).json({
@@ -17,7 +18,7 @@ class CommonService {
   }
 
   static failureResponse(message, res) {
-    console.log(message);
+    logger.error(message);
     res.status(responseStatusCodes.BAD_REQUEST).json({
       STATUS: "FAILURE",
       MESSAGE: message,
