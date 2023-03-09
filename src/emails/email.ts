@@ -6,7 +6,7 @@ const sendEmail = (options) => {
     port: Number(process.env.SMTP_PORT),
     auth: {
       user: process.env.SMTP_EMAIL,
-      pass: process.env.SMTP_PASSWORD,
+      pass: process.env.SENDGRID_KEY,
     },
   });
 
