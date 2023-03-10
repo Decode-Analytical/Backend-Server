@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const CommonService = require("../utils/commonService");
 const sendEmail = require("../emails/email");
+const { SUCCESS } = require("../utils/util");
+const logger = require("../utils/logger");
 
 const signUp = async (req, res) => {
   try {
@@ -35,4 +37,63 @@ const userLogin = async (req, res) => {
     CommonService.failureResponse(error.message, res);
   }
 };
-module.exports = { signUp, userLogin };
+
+const forgetPassword = async (req, res) => {
+  // Search for user Account
+  const { email } = req.body;
+  
+    const user = await User.findOne({ email });
+    if (!user)
+      return CommonService.notFoundResponse(
+        "Sorry, we don't recognize this account",
+        res
+      );
+    //Generate reset Token
+    const resetToken = user.generateResetPasswordToken();
+    // Create reset url
+    const resetURl = `${req.protocol}://${req.get(
+      "host"
+    )}/rest_password/${resetToken}`;
+    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. 
+  Please make a PUT request to: \n\n ${resetURl}`;
+  try {
+    // Send reset URL to user via Mail
+    await sendEmail({
+      email: email,
+      subject: "LEARN MORE PASSWORD RESET REQUEST",
+      message: message,
+    });
+
+    CommonService.successResponse(res, "Email Sent");
+  } catch (error) {
+    logger.error(error)
+    return res.CommonService.serverError("Email could not be sent", res);
+  }
+
+  const resetPassword = async (req, res) => {
+    const resetToken = req.params.resetToken
+    // Hash token
+    const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if(!user) return CommonService.failureResponse("Invalid or Expired Token", res)
+     // Set new password
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save()
+
+  CommonService.successResponse(res, user)
+
+  }
+};
+
+module.exports = { signUp, userLogin, forgetPassword };

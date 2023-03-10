@@ -91,6 +91,23 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Generate and hash password token
+userSchema.methods.generateResetPasswordToken = function () {
+  // Generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // Hash token and send to resetPassword token field
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+    // Set expire
+    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000
+
+    return resetToken;
+};
+
 const User = mongoose.model("users", userSchema);
 
 module.exports = User;

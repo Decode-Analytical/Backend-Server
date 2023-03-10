@@ -61,6 +61,14 @@ class CommonService {
     });
   }
 
+  static serverError(error, res) {
+    res.status(responseStatusCodes.INTERNAL_SERVER_ERROR).json({
+      STATUS: "FAILURE",
+      MESSAGE: "Internal Server error",
+      ERROR: error,
+    });
+  }
+
   static mongoError(error, res) {
     res.status(responseStatusCodes.INTERNAL_SERVER_ERROR).json({
       STATUS: "FAILURE",
