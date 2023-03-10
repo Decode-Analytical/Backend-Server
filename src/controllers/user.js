@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const CommonService = require("../utils/commonService");
-const sendEmail = require("../emails/email.ts");
+const sendEmail = require("../emails/email");
 
 const signUp = async (req, res) => {
   try {
