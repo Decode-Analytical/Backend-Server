@@ -39,9 +39,9 @@ const userLogin = async (req, res) => {
 };
 
 const forgetPassword = async (req, res) => {
-  // Search for user Account
   const { email } = req.body;
 
+  // Search for user Account
   const user = await User.findOne({ email });
   if (!user)
     return CommonService.notFoundResponse(
@@ -51,7 +51,6 @@ const forgetPassword = async (req, res) => {
 
   //Generate reset Token
   const resetToken = await user.generateResetPasswordToken();
-  logger.info(resetToken);
   // Create reset url
   const resetURl = `${req.protocol}://${req.get(
     "host"
