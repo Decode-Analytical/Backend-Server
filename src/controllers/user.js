@@ -1,8 +1,8 @@
 const User = require("../models/user");
 const CommonService = require("../utils/commonService");
 const sendEmail = require("../emails/email");
-const { SUCCESS } = require("../utils/util");
 const logger = require("../utils/logger");
+const crypto = require("crypto");
 
 const signUp = async (req, res) => {
   try {
@@ -19,9 +19,9 @@ const signUp = async (req, res) => {
       subject: "Thanks for joining in!",
       message: `Welcome to Learn More, ${fullName}. Let us know how you get along with the app`,
     });
-    CommonService.createdResponse(user, token, res);
+    return CommonService.createdResponse(user, token, res);
   } catch (error) {
-    CommonService.failureResponse(error.message, res);
+    return CommonService.failureResponse(error.message, res);
   }
 };
 
@@ -41,59 +41,67 @@ const userLogin = async (req, res) => {
 const forgetPassword = async (req, res) => {
   // Search for user Account
   const { email } = req.body;
-  
-    const user = await User.findOne({ email });
-    if (!user)
-      return CommonService.notFoundResponse(
-        "Sorry, we don't recognize this account",
-        res
-      );
-    //Generate reset Token
-    const resetToken = user.generateResetPasswordToken();
-    // Create reset url
-    const resetURl = `${req.protocol}://${req.get(
-      "host"
-    )}/rest_password/${resetToken}`;
-    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. 
+
+  const user = await User.findOne({ email });
+  if (!user)
+    return CommonService.notFoundResponse(
+      "Sorry, we don't recognize this account",
+      res
+    );
+
+  //Generate reset Token
+  const resetToken = await user.generateResetPasswordToken();
+  logger.info(resetToken);
+  // Create reset url
+  const resetURl = `${req.protocol}://${req.get(
+    "host"
+  )}/resetpassword/${resetToken}`;
+  const message = `You are receiving this email because you (or someone else) has requested the reset of a password. 
   Please make a PUT request to: \n\n ${resetURl}`;
+
   try {
     // Send reset URL to user via Mail
-    await sendEmail({
+    sendEmail({
       email: email,
-      subject: "LEARN MORE PASSWORD RESET REQUEST",
+      subject: "PASSWORD RESET REQUEST",
       message: message,
     });
 
-    CommonService.successResponse(res, "Email Sent");
+    return CommonService.successResponse(res, "Email Sent");
   } catch (error) {
-    logger.error(error)
-    return res.CommonService.serverError("Email could not be sent", res);
+    logger.error(error);
+    return CommonService.serverError("Email could not be sent", res);
   }
+};
 
-  const resetPassword = async (req, res) => {
-    const resetToken = req.params.resetToken
-    // Hash token
-    const resetPasswordToken = crypto
+const resetPassword = async (req, res) => {
+  const resetToken = req.params.resetToken;
+
+  // Hash token
+  const resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
 
+  try {
     const user = await User.findOne({
       resetPasswordToken,
       resetPasswordExpire: { $gt: Date.now() },
     });
 
-    if(!user) return CommonService.failureResponse("Invalid or Expired Token", res)
-     // Set new password
-  user.password = req.body.password;
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpire = undefined;
+    if (!user)
+      return CommonService.failureResponse("Invalid or Expired Token", res);
+    // Set new password
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
 
-  await user.save()
+    await user.save();
 
-  CommonService.successResponse(res, user)
-
+    return CommonService.successResponse(res, user);
+  } catch (error) {
+    CommonService.failureResponse(error.message, res);
   }
 };
 
-module.exports = { signUp, userLogin, forgetPassword };
+module.exports = { signUp, userLogin, forgetPassword, resetPassword };

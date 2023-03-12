@@ -4,7 +4,7 @@ const validator = require("validator");
 const responseStatusCodes = require("../utils/util");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const CommonService = require("../utils/commonService");
+const crypto = require("crypto");
 
 const userSchema = new Schema(
   {
@@ -46,8 +46,8 @@ const userSchema = new Schema(
       required: true,
     },
     tokens: [{ token: { type: String, required: true } }],
-    // resetPasswordToken: String,
-    // resetPasswordExpire: Date
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
   { timestamps: true }
 );
@@ -78,7 +78,7 @@ userSchema.statics.findByCredentials = async (email, password, res) => {
   const user = await User.findOne({ email });
   if (!user) throw new Error("User does not exist");
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error("Unable to login");
+  if (!isMatch) throw new Error("Invalid email or password");
   return user;
 };
 
@@ -92,7 +92,7 @@ userSchema.pre("save", async function (next) {
 });
 
 // Generate and hash password token
-userSchema.methods.generateResetPasswordToken = function () {
+userSchema.methods.generateResetPasswordToken = async function () {
   // Generate token
   const resetToken = crypto.randomBytes(20).toString("hex");
 
@@ -102,10 +102,12 @@ userSchema.methods.generateResetPasswordToken = function () {
     .update(resetToken)
     .digest("hex");
 
-    // Set expire
-    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000
+  // Set expire
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
 
-    return resetToken;
+  await this.save();
+
+  return resetToken;
 };
 
 const User = mongoose.model("users", userSchema);

@@ -7,7 +7,7 @@ const sendEmail = (options) => {
     port: Number(process.env.SMTP_PORT),
     auth: {
       user: process.env.SMTP_EMAIL,
-      pass: process.env.SENDGRID_KEY,
+      pass: process.env.SMTP_PASSWORD,
     },
   });
 
@@ -16,12 +16,11 @@ const sendEmail = (options) => {
     to: options.email,
     subject: options.subject,
     text: options.message,
-    html: `<b>Hey there! </b><br> Development 😉`,
+    html: `<b>Hey there! 👋</b><br> ${options.message}`,
   };
 
   transporter.sendMail(mailOptions, function (error, success) {
     if (error) logger.error(error);
-    logger.info(success);
     logger.info("Email sent: " + success.response);
   });
 };
