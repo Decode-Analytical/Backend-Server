@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/course', courseRoutes);
+app.use('/api/courses', courseRoutes);
 app.use('/api/account', userRoutes);
 app.use('/api/students', studentRoutes);
 

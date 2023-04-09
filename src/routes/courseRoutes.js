@@ -11,5 +11,10 @@ router.post('/uploadAudio/:id', storage.audioMulter.array("audiofile"), courseCr
 router.post('/uploadDocs/:id', storage.docsMulter.array("docsfile"), courseCrtl.uploadDocs);
 router.post('/uploadImage/:id', storage.inmageMulter.array("imagefile"), courseCrtl.uploadImage);
 
+//To get course videos and a single video
+router.get('/:courseId/videos', courseCrtl.getCourseVideos);
+router.get('/:courseId/videos/:videoId', courseCrtl.getCourseVideo);
+
+
 
 module.exports = router;

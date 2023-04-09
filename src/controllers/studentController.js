@@ -66,3 +66,17 @@ export const paidCourse = asyncHandler(async (req, res) => {
     throw new Error('Order Not Found!');
   }
 });
+
+
+//TO ADD POINTS TO A USER
+export const addPoint = asyncHandler(async(req, res, next)=>{
+  const { id } = req.params;
+  const student_data = await Student.findById(id);
+  if(!student_data){
+    return res.status(404).json({status: false, message: "Invalid User Id"});
+  }
+
+  student_data.points += 10;
+  const student_data_saved = await student_data.save();
+  return res.status(200).json({status: true, message: "Point Added", data: student_data_saved})
+})

@@ -1,5 +1,7 @@
 const Course = require("../models/courseModel");
 const cloudinary = require("../utils/cloudinary");
+const Student = require('../models/studentModel');
+
 // const { parse, stringify, toJSON, fromJSON } = require("flatted");
 // const { findById } = require("../models/courseModel");
 
@@ -195,4 +197,19 @@ try{
     res.json(error);
   }
 });
+
+export const getCourseVideos = asyncHandler(async(req, res, next)=>{
+  const {
+    courseId
+  } = req.params;
+
+  const course = await Course.findById(courseId);
+  if(!course){
+    const error = new Error('Invalid Id');
+    error.statusCode = 404;
+    throw error; 
+  }
+
+  return res.status(200).json({status: true, data: course.video})
+})
 

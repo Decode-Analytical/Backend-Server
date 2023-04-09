@@ -33,6 +33,11 @@ const studentSchema = mongoose.Schema(
       update_time: { type: String },
       email_address: { type: String },
     },
+    points: {
+      type: Number,
+      default: 0
+    },
+    
     price: {
       type: Number,
       require: true,
