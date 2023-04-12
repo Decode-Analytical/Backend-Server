@@ -1,6 +1,6 @@
 const Course = require("../models/courseModel");
 const cloudinary = require("../utils/cloudinary");
-const Student = require('../models/studentModel');
+//const Student = require('../models/studentModel');
 
 // const { parse, stringify, toJSON, fromJSON } = require("flatted");
 // const { findById } = require("../models/courseModel");
@@ -198,7 +198,7 @@ try{
   }
 });
 
-export const getCourseVideos = asyncHandler(async(req, res, next)=>{
+exports.getCourseVideos = (async(req, res, next)=>{
   const {
     courseId
   } = req.params;

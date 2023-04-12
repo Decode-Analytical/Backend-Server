@@ -139,7 +139,15 @@ var courseSchema = new mongoose.Schema({
                 required: true
             }
         }
-    ],     
+    ], 
+    comment_count: {type: Number, default: 0},
+    like_count: {type: Number, default: 0},
+    dislike_count: {type: Number, default: 0},
+    dislikes: [String],
+    likes: [String],
+    owner_id: String, // the user id i.e the id of the user that made the post gotten from 
+    owner_name: String,
+    owner_img: String,    
 },
 {timestamps: true}
 );

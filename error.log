@@ -1,0 +1,288 @@
+[2023-04-10T23:08:35.451Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:08:35.451Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:08:50.067Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:08:50.067Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:10:27.471Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:10:27.471Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:11:01.136Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:11:01.136Z]  [31merror[39m: uncaughtException: Cannot use import statement outside a module
+C:\Users\bigjosh\Music\Backend-Server\src\routes\studentRoutes.js:3
+import {
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:8:23)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-10T23:13:28.964Z]  [31merror[39m: uncaughtException: exports.addComment is not a function
+TypeError: exports.addComment is not a function
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:7:9)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+[2023-04-10T23:13:28.964Z]  [31merror[39m: uncaughtException: exports.addComment is not a function
+TypeError: exports.addComment is not a function
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:7:9)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+[2023-04-10T23:14:05.292Z]  [31merror[39m: uncaughtException: Router.use() requires a middleware function but got a Object
+TypeError: Router.use() requires a middleware function but got a Object
+    at Function.use (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:469:13)
+    at Function.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\application.js:227:21)
+    at Array.forEach (<anonymous>)
+    at Function.use (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\application.js:224:7)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+[2023-04-10T23:14:05.292Z]  [31merror[39m: uncaughtException: Router.use() requires a middleware function but got a Object
+TypeError: Router.use() requires a middleware function but got a Object
+    at Function.use (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:469:13)
+    at Function.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\application.js:227:21)
+    at Array.forEach (<anonymous>)
+    at Function.use (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\application.js:224:7)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\index.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+[2023-04-11T22:58:16.303Z]  [31merror[39m: unhandledRejection: Callback must be a function, got [object Object]
+MongooseError: Callback must be a function, got [object Object]
+    at Function.Model.$handleCallbackError (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:5276:11)
+    at Function.Model.findOneAndUpdate (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:2670:19)
+    at exports.editComment (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:104:37)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:280:10)
+[2023-04-11T22:58:16.303Z]  [31merror[39m: unhandledRejection: Callback must be a function, got [object Object]
+MongooseError: Callback must be a function, got [object Object]
+    at Function.Model.$handleCallbackError (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:5276:11)
+    at Function.Model.findOneAndUpdate (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:2670:19)
+    at exports.editComment (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:104:37)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:280:10)
+[2023-04-11T22:58:41.265Z]  [31merror[39m: unhandledRejection: Callback must be a function, got [object Object]
+MongooseError: Callback must be a function, got [object Object]
+    at Function.Model.$handleCallbackError (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:5276:11)
+    at Function.Model.findOneAndUpdate (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:2670:19)
+    at exports.editComment (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:104:37)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:280:10)
+[2023-04-11T22:58:41.265Z]  [31merror[39m: unhandledRejection: Callback must be a function, got [object Object]
+MongooseError: Callback must be a function, got [object Object]
+    at Function.Model.$handleCallbackError (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:5276:11)
+    at Function.Model.findOneAndUpdate (C:\Users\bigjosh\Music\Backend-Server\node_modules\mongoose\lib\model.js:2670:19)
+    at exports.editComment (C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:104:37)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\bigjosh\Music\Backend-Server\node_modules\express\lib\router\index.js:280:10)
+[2023-04-11T23:16:07.123Z]  [31merror[39m: uncaughtException: missing ) after argument list
+C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:110
+            {new: true}
+                      ^
+
+SyntaxError: missing ) after argument list
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-11T23:16:07.123Z]  [31merror[39m: uncaughtException: missing ) after argument list
+C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:110
+            {new: true}
+                      ^
+
+SyntaxError: missing ) after argument list
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-11T23:54:57.995Z]  [31merror[39m: uncaughtException: Identifier 'comment' has already been declared
+C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:106
+        let comment = await Comment.findByIdAndUpdate(filter, comment, {
+            ^
+
+SyntaxError: Identifier 'comment' has already been declared
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-11T23:54:57.995Z]  [31merror[39m: uncaughtException: Identifier 'comment' has already been declared
+C:\Users\bigjosh\Music\Backend-Server\src\controllers\commentCtrl.js:106
+        let comment = await Comment.findByIdAndUpdate(filter, comment, {
+            ^
+
+SyntaxError: Identifier 'comment' has already been declared
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1026:15)
+    at Module._compile (node:internal/modules/cjs/loader:1061:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1149:10)
+    at Module.load (node:internal/modules/cjs/loader:975:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Module.require (node:internal/modules/cjs/loader:999:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1097:14)

@@ -13,7 +13,7 @@ router.post('/uploadImage/:id', storage.inmageMulter.array("imagefile"), courseC
 
 //To get course videos and a single video
 router.get('/:courseId/videos', courseCrtl.getCourseVideos);
-router.get('/:courseId/videos/:videoId', courseCrtl.getCourseVideo);
+router.get('/:courseId/videos/:videoId', courseCrtl.getCourseVideos);
 
 
 
