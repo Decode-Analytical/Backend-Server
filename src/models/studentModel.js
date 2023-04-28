@@ -1,11 +1,11 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const studentSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       require: true,
-      ref: 'users',
+      ref: 'User',
     },
     orderCourses: [
       {
@@ -35,9 +35,9 @@ const studentSchema = mongoose.Schema(
     },
     points: {
       type: Number,
-      default: 0
+      default: 0,
     },
-    
+
     price: {
       type: Number,
       require: true,
