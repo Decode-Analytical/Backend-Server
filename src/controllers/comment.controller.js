@@ -1,5 +1,5 @@
-const Course = require('../models/courseModel');
-const Comment = require('../models/commentModel')
+const Course = require('../models/course.model');
+const Comment = require('../models/comment.model')
 const jwt = require('jsonwebtoken');
 
 

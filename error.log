@@ -286,3 +286,1587 @@ SyntaxError: Identifier 'comment' has already been declared
     at require (node:internal/modules/cjs/helpers:102:18)
     at Object.<anonymous> (C:\Users\bigjosh\Music\Backend-Server\src\routes\commentRoutes.js:3:21)
     at Module._compile (node:internal/modules/cjs/loader:1097:14)
+[2023-04-30T16:06:52.216Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:06:52.216Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:07:03.384Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:07:03.384Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:07:27.069Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:07:27.069Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:08:05.546Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:08:05.546Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:08:39.013Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:08:39.013Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:09:02.705Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:09:02.705Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:09:41.223Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:09:41.223Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:11:33.566Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:11:33.566Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:11:46.891Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:11:46.891Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:04.348Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:04.348Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:19.787Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:19.787Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:43.288Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:43.288Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:53.400Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:12:53.400Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:04.420Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:04.420Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:28.849Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:28.849Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:36.812Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:36.812Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:49.960Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:49.960Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:58.270Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:13:58.270Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:14:16.077Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:14:16.077Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:14:31.068Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:14:31.068Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:15:27.574Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:15:27.574Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:15:46.705Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:15:46.705Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:16:33.132Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/bootStrap.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/bootStrap.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:16:33.132Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/bootStrap.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/bootStrap.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:20:19.031Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:20:19.031Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:27:40.618Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:27:40.618Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:27:58.917Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:27:58.917Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:28:06.005Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:28:06.005Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:28:25.625Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:28:25.625Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:29:45.974Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:29:45.974Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:30:50.466Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:30:50.466Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:31:38.825Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:31:38.825Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:02.185Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:02.185Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:29.913Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:29.913Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:37.942Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:37.942Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:10:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:52.703Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:9:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:32:52.703Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:9:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:33:04.378Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:9:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:33:04.378Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/user.model'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:9:5)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-04-30T16:37:34.656Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:17:12)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:37:42.700Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:17:12)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:37:42.700Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:17:12)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:37:50.176Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:17:12)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:37:50.176Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:17:12)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:38:26.591Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:20:39)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:38:26.591Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:20:39)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:38:30.970Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:21:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:38:30.970Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:21:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:39:12.826Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:21:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:39:12.826Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:21:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:39:34.381Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:28:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-04-30T16:39:34.381Z]  [31merror[39m: uncaughtException: auth is not defined
+ReferenceError: auth is not defined
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/user.route.js:28:3)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)

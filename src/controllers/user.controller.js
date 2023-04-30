@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/user.model");
 const CommonService = require("../utils/commonService");
 const sendEmail = require("../emails/email");
 const logger = require("../utils/logger");
