@@ -5,7 +5,8 @@ var courseSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
+        unique: true
     },
     summary:{
         type:String,
@@ -27,10 +28,6 @@ var courseSchema = new mongoose.Schema({
     language: {
         type: String,
         required: true
-    },
-    createdBy: {
-        type: String,
-        required: true,
     },
     objectives: {
         type: String,
@@ -144,10 +141,7 @@ var courseSchema = new mongoose.Schema({
     like_count: {type: Number, default: 0},
     dislike_count: {type: Number, default: 0},
     dislikes: [String],
-    likes: [String],
-    owner_id: String, // the user id i.e the id of the user that made the post gotten from 
-    owner_name: String,
-    owner_img: String,    
+    likes: [String]
 },
 {timestamps: true}
 );

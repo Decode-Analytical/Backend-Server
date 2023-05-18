@@ -13,6 +13,7 @@
     "url": "git+https://github.com/Decode-Analytical/Backend-Server.git"
   },
   "author": "decode-analytical",
+  "type": "commonjs",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Decode-Analytical/Backend-Server/issues"

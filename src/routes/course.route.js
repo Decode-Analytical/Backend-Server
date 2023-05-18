@@ -9,7 +9,7 @@ router.post('/add-course', courseController.addCourse)
 router.post('/uploadVideo/:id', storage.videoMulter.array("videofile"), courseController.uploadVideos);
 router.post('/uploadAudio/:id', storage.audioMulter.array("audiofile"), courseController.uploadAudios);
 router.post('/uploadDocs/:id', storage.docsMulter.array("docsfile"), courseController.uploadDocs);
-router.post('/uploadImage/:id', storage.inmageMulter.array("imagefile"), courseController.uploadImage);
+router.post('/uploadImage/:id', storage.imageMulter.array("imagefile"), courseController.uploadImage);
 //Get Course Contents
 router.get('/:courseId/videos', courseController.getCourseVideos);
 router.get('/:courseId/videos/:videoId', courseController.getCourseVideos);

@@ -48,6 +48,10 @@ const userSchema = new Schema(
     tokens: [{ token: { type: String, required: true } }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    tutor: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
@@ -55,7 +59,7 @@ const userSchema = new Schema(
 // User Token Generation
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = await jwt.sign(
+  const token = jwt.sign(
     { _id: user._id.toString() },
     process.env.JWT_SECRET
   );

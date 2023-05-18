@@ -38,7 +38,7 @@ exports.docsMulter = multer({
     }
 }); 
 
-exports.inmageMulter = multer({
+exports.imageMulter = multer({
     storage: multer.diskStorage({}),
     fileFilter: (req, file, cb) => {
         let ext = path.extname(file.originalname);

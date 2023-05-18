@@ -1870,3 +1870,1235 @@ ReferenceError: auth is not defined
     at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:2:20)
     at Module._compile (node:internal/modules/cjs/loader:1120:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+[2023-05-17T16:43:41.649Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:43:41.649Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:34.470Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:34.470Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:42.498Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:42.498Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:49.870Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:49.870Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:56.808Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:44:56.808Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:45:04.591Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:45:04.591Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:10.149Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:10.149Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:24.876Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:24.876Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:52.100Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:46:52.100Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:47:02.259Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:47:02.259Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:47:12.914Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:47:12.914Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:48:04.843Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:48:04.843Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:48:42.736Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:48:42.736Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:51:37.312Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:51:37.312Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:51:44.709Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:51:44.709Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:52:21.995Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:52:21.995Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:52:26.377Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:52:26.377Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:52:39.730Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:52:39.730Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:04.579Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:04.579Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:17.374Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:17.374Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:25.796Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:53:25.796Z]  [31merror[39m: uncaughtException: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+Error: Cannot find module '../controllers/'
+Require stack:
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js
+- /home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:956:15)
+    at Module._load (node:internal/modules/cjs/loader:804:27)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+[2023-05-17T16:54:53.255Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:54:53.255Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:54:58.460Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T16:54:58.460Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T16:55:08.069Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T16:55:08.069Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T17:00:16.725Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T17:00:16.725Z]  [31merror[39m: uncaughtException: tutorRoutes is not defined
+ReferenceError: tutorRoutes is not defined
+    at bootStrap (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:19:28)
+    at Server.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/index.js:20:3)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:513:28)
+    at emitListeningNT (node:net:1465:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+[2023-05-17T17:00:24.795Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T17:00:24.795Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:3:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T17:00:43.803Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T17:00:43.803Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export const addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T17:01:55.578Z]  [31merror[39m: uncaughtException: Route.post() requires a callback function but got a [object Undefined]
+Error: Route.post() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as post] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as post] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:7:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-17T17:01:55.578Z]  [31merror[39m: uncaughtException: Route.post() requires a callback function but got a [object Undefined]
+Error: Route.post() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as post] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as post] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:7:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-17T17:04:03.331Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export.addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T17:04:03.331Z]  [31merror[39m: uncaughtException: Unexpected token 'export'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:5
+export.addTutor = async (req, res, next) => {
+^^^^^^
+
+SyntaxError: Unexpected token 'export'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T22:41:09.234Z]  [31merror[39m: uncaughtException: Route.get() requires a callback function but got a [object Undefined]
+Error: Route.get() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as get] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as get] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:8:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-17T22:41:09.234Z]  [31merror[39m: uncaughtException: Route.get() requires a callback function but got a [object Undefined]
+Error: Route.get() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as get] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as get] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:8:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-17T22:47:04.105Z]  [31merror[39m: User is already a tutor
+[2023-05-17T22:47:30.840Z]  [31merror[39m: User is already a tutor
+[2023-05-17T22:59:29.380Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:77
+            tutorId: tutor.id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T22:59:29.380Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:77
+            tutorId: tutor.id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:00:17.975Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:79
+            tutorId: tutor._id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:00:17.975Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:79
+            tutorId: tutor._id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:00:48.342Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:82
+            tutorId: tutor._id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:00:48.342Z]  [31merror[39m: uncaughtException: Unexpected identifier
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:82
+            tutorId: tutor._id
+            ^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:12:42.616Z]  [31merror[39m: Course is not defined
+[2023-05-17T23:13:41.551Z]  [31merror[39m: Course validation failed: createdBy: Path `createdBy` is required.
+[2023-05-17T23:36:22.708Z]  [31merror[39m: uncaughtException: Unexpected token ';'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:102
+    const { id } = req.;
+                       ^
+
+SyntaxError: Unexpected token ';'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:36:22.708Z]  [31merror[39m: uncaughtException: Unexpected token ';'
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:102
+    const { id } = req.;
+                       ^
+
+SyntaxError: Unexpected token ';'
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:36:36.258Z]  [31merror[39m: uncaughtException: missing ) after argument list
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:102
+    console.log(req.params;
+                    ^^^^^^
+
+SyntaxError: missing ) after argument list
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-17T23:36:36.258Z]  [31merror[39m: uncaughtException: missing ) after argument list
+/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/controllers/tutor.controller.js:102
+    console.log(req.params;
+                    ^^^^^^
+
+SyntaxError: missing ) after argument list
+    at Object.compileFunction (node:vm:360:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1049:15)
+    at Module._compile (node:internal/modules/cjs/loader:1084:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+[2023-05-18T09:33:09.665Z]  [31merror[39m: uncaughtException: Route.put() requires a callback function but got a [object Undefined]
+Error: Route.put() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:11:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-18T09:33:09.665Z]  [31merror[39m: uncaughtException: Route.put() requires a callback function but got a [object Undefined]
+Error: Route.put() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:11:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-18T09:33:14.695Z]  [31merror[39m: uncaughtException: Route.put() requires a callback function but got a [object Undefined]
+Error: Route.put() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:11:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-18T09:33:14.695Z]  [31merror[39m: uncaughtException: Route.put() requires a callback function but got a [object Undefined]
+Error: Route.put() requires a callback function but got a [object Undefined]
+    at Route.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/route.js:211:15)
+    at proto.<computed> [as put] (/home/eren/Desktop/NODE_PROJECT/Backend-Server/node_modules/express/lib/router/index.js:521:19)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/tutor.route.js:11:8)
+    at Module._compile (node:internal/modules/cjs/loader:1120:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1174:10)
+    at Module.load (node:internal/modules/cjs/loader:998:32)
+    at Module._load (node:internal/modules/cjs/loader:839:12)
+    at Module.require (node:internal/modules/cjs/loader:1022:19)
+    at require (node:internal/modules/cjs/helpers:102:18)
+    at Object.<anonymous> (/home/eren/Desktop/NODE_PROJECT/Backend-Server/src/routes/index.js:6:21)
+[2023-05-18T09:46:28.344Z]  [31merror[39m: Course Not FOund
+[2023-05-18T09:47:56.381Z]  [31merror[39m: Course Not FOund
+[2023-05-18T09:48:27.195Z]  [31merror[39m: title is not defined
+[2023-05-18T09:49:23.430Z]  [31merror[39m: Cast to ObjectId failed for value "{ id: '646565f953b67b1756ad2ae7' }" (type Object) at path "_id" for model "Course"
