@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const validator = require('validator');
-const responseStatusCodes = require('../utils/util');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
+const validator = require("validator");
+const responseStatusCodes = require("../utils/util");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: [true, 'Name must be Provided'],
+      required: [true, "Name must be Provided"],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, 'Name must be Provided'],
+      required: [true, "Name must be Provided"],
       trim: true,
     },
 
@@ -28,7 +28,7 @@ const userSchema = new Schema(
       validate(mail) {
         if (!validator.isEmail(mail))
           throw new Error({
-            message: 'Invalid Email',
+            message: "Invalid Email",
             statusCode: responseStatusCodes.BAD_REQUEST,
           });
       },
@@ -37,9 +37,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: [8, 'Password must be at least 8 characters'],
+      minlength: [8, "Password must be at least 8 characters"],
       validate: (password) => {
-        if (password.toLowerCase().includes('password'))
+        if (password.toLowerCase().includes("password"))
           throw new Error({
             message: "You can't use the word password",
             statusCode: responseStatusCodes.BAD_REQUEST,
@@ -55,8 +55,8 @@ const userSchema = new Schema(
     resetPasswordExpire: Date,
     tutor: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -64,10 +64,7 @@ const userSchema = new Schema(
 // User Token Generation
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign(
-    { _id: user._id.toString() },
-    process.env.JWT_SECRET
-  );
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
@@ -85,16 +82,16 @@ userSchema.methods.toJSON = function () {
 //UserLogin Authentication
 userSchema.statics.findByCredentials = async (email, password, res) => {
   const user = await User.findOne({ email });
-  if (!user) throw new Error('User does not exist');
+  if (!user) throw new Error("User does not exist");
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error('Invalid email or password');
+  if (!isMatch) throw new Error("Invalid email or password");
   return user;
 };
 
 //Hashing User plain text password before saving
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   const user = this;
-  if (user.isModified('password')) {
+  if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
   next();
@@ -103,13 +100,13 @@ userSchema.pre('save', async function (next) {
 // Generate and hash password token
 userSchema.methods.generateResetPasswordToken = async function () {
   // Generate token
-  const resetToken = crypto.randomBytes(20).toString('hex');
+  const resetToken = crypto.randomBytes(20).toString("hex");
 
   // Hash token and send to resetPassword token field
   this.resetPasswordToken = crypto
-    .createHash('sha256')
+    .createHash("sha256")
     .update(resetToken)
-    .digest('hex');
+    .digest("hex");
 
   // Set expire
   this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
@@ -119,6 +116,6 @@ userSchema.methods.generateResetPasswordToken = async function () {
   return resetToken;
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
