@@ -10,12 +10,12 @@ const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: [true, "Name must be Provided"],
+      required: [true, "firstName must be Provided"],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, "Name must be Provided"],
+      required: [true, "lastName must be Provided"],
       trim: true,
     },
 
