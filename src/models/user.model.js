@@ -8,7 +8,12 @@ const crypto = require('crypto');
 
 const userSchema = new Schema(
   {
-    fullName: {
+    firstName: {
+      type: String,
+      required: [true, 'Name must be Provided'],
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: [true, 'Name must be Provided'],
       trim: true,

@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 const signUp = async (req, res) => {
   try {
-    const { email, fullName } = req.body;
+    const { email, firstName ,lastName} = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return CommonService.conflictResponse("User already exist", res);
@@ -17,7 +17,7 @@ const signUp = async (req, res) => {
     sendEmail({
       email: email,
       subject: "Thanks for joining in!",
-      message: `Welcome to Learn More, ${fullName}. Let us know how you get along with the app`,
+      message: `Welcome to Learn More, ${firstName, lastName}. Let us know how you get along with the app`,
     });
     return CommonService.createdResponse(user, token, res);
   } catch (error) {
