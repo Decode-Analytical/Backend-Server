@@ -15,6 +15,6 @@ function connectDB() {
     .catch((err) => {
       console.log(err);
     });
-};
+}
 
 module.exports = connectDB;

@@ -3102,3 +3102,48 @@ Error: Route.put() requires a callback function but got a [object Undefined]
 [2023-05-18T09:47:56.381Z]  [31merror[39m: Course Not FOund
 [2023-05-18T09:48:27.195Z]  [31merror[39m: title is not defined
 [2023-05-18T09:49:23.430Z]  [31merror[39m: Cast to ObjectId failed for value "{ id: '646565f953b67b1756ad2ae7' }" (type Object) at path "_id" for model "Course"
+[2023-06-07T01:59:45.555Z]  [31merror[39m: uncaughtException: Cannot find module 'express-async-handler'
+Require stack:
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\student.route.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\index.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\index.js
+Error: Cannot find module 'express-async-handler'
+Require stack:
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\student.route.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\index.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1090:15)
+    at Module._load (node:internal/modules/cjs/loader:934:27)
+    at Module.require (node:internal/modules/cjs/loader:1157:19)
+    at require (node:internal/modules/helpers:119:18)
+    at Object.<anonymous> (C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js:1:22)
+    at Module._compile (node:internal/modules/cjs/loader:1275:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1329:10)
+    at Module.load (node:internal/modules/cjs/loader:1133:32)
+    at Module._load (node:internal/modules/cjs/loader:972:12)
+    at Module.require (node:internal/modules/cjs/loader:1157:19)
+[2023-06-07T01:59:45.555Z]  [31merror[39m: uncaughtException: Cannot find module 'express-async-handler'
+Require stack:
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\student.route.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\index.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\index.js
+Error: Cannot find module 'express-async-handler'
+Require stack:
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\student.route.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\src\routes\index.js
+- C:\Users\HP\Desktop\Internship\Backend-Server\index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1090:15)
+    at Module._load (node:internal/modules/cjs/loader:934:27)
+    at Module.require (node:internal/modules/cjs/loader:1157:19)
+    at require (node:internal/modules/helpers:119:18)
+    at Object.<anonymous> (C:\Users\HP\Desktop\Internship\Backend-Server\src\controllers\student.controller.js:1:22)
+    at Module._compile (node:internal/modules/cjs/loader:1275:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1329:10)
+    at Module.load (node:internal/modules/cjs/loader:1133:32)
+    at Module._load (node:internal/modules/cjs/loader:972:12)
+    at Module.require (node:internal/modules/cjs/loader:1157:19)
+[2023-06-07T02:30:11.747Z]  [31merror[39m: No write concern mode named 'majority/Prod' found in replica set configuration
