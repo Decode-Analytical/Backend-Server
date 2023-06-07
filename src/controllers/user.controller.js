@@ -6,10 +6,9 @@ const crypto = require("crypto");
 
 const signUp = async (req, res) => {
   try {
-    const { email, firstName ,lastName} = req.body;
+    const { email, firstName, lastName } = req.body;
     const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return CommonService.conflictResponse("User already exist", res);
+    if (existingUser) return CommonService.conflictResponse("User already exist", res);
     const user = await User.create(req.body);
     //Generate token using JWT
     const token = await user.generateAuthToken();
@@ -17,7 +16,9 @@ const signUp = async (req, res) => {
     sendEmail({
       email: email,
       subject: "Thanks for joining in!",
-      message: `Welcome to Learn More, ${firstName, lastName}. Let us know how you get along with the app`,
+      message: `Welcome to Learn More, ${
+        (firstName, lastName)
+      }. Let us know how you get along with the app`,
     });
     return CommonService.createdResponse(user, token, res);
   } catch (error) {
@@ -43,18 +44,12 @@ const forgetPassword = async (req, res) => {
 
   // Search for user Account
   const user = await User.findOne({ email });
-  if (!user)
-    return CommonService.notFoundResponse(
-      "Sorry, we don't recognize this account",
-      res
-    );
+  if (!user) return CommonService.notFoundResponse("Sorry, we don't recognize this account", res);
 
   //Generate reset Token
   const resetToken = await user.generateResetPasswordToken();
   // Create reset url
-  const resetURl = `${req.protocol}://${req.get(
-    "host"
-  )}/resetpassword/${resetToken}`;
+  const resetURl = `${req.protocol}://${req.get("host")}/resetpassword/${resetToken}`;
   const message = `You are receiving this email because you (or someone else) has requested the reset of a password. 
   Please make a PUT request to: \n\n ${resetURl}`;
 
@@ -77,10 +72,7 @@ const resetPassword = async (req, res) => {
   const resetToken = req.params.resetToken;
 
   // Hash token
-  const resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+  const resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
   try {
     const user = await User.findOne({
@@ -88,8 +80,7 @@ const resetPassword = async (req, res) => {
       resetPasswordExpire: { $gt: Date.now() },
     });
 
-    if (!user)
-      return CommonService.failureResponse("Invalid or Expired Token", res);
+    if (!user) return CommonService.failureResponse("Invalid or Expired Token", res);
     // Set new password
     user.password = req.body.password;
     user.resetPasswordToken = undefined;

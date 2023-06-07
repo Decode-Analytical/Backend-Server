@@ -9,3 +9,5 @@
 [2023-05-18T09:47:56.381Z]  [31merror[39m: Course Not FOund
 [2023-05-18T09:48:27.195Z]  [31merror[39m: title is not defined
 [2023-05-18T09:49:23.430Z]  [31merror[39m: Cast to ObjectId failed for value "{ id: '646565f953b67b1756ad2ae7' }" (type Object) at path "_id" for model "Course"
+[2023-06-07T02:30:11.747Z]  [31merror[39m: No write concern mode named 'majority/Prod' found in replica set configuration
+[2023-06-07T02:42:27.062Z]  [32minfo[39m: Email sent: 250 2.0.0 Ok: queued
