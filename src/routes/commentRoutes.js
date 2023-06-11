@@ -1,7 +1,6 @@
 const express = require("express");
 const auth = require("../middleware/auth");
 const commentCrtl = require('../controllers/commentCtrl');
-const { getaCourse } = require("../controllers/courseCtrl");
 const router = express.Router();
 
 router.post('/comment', commentCrtl.addComment);
