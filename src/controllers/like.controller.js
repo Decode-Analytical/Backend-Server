@@ -1,7 +1,5 @@
-const express = require('express');
-const Comment = require('../models/commentModel');
+const Comment = require('../models/comment.model');
 const jwt = require('jsonwebtoken');
-
 
 exports.likeComment = ( async (req, res) => {
     const { token, _id } = req.body;

@@ -1,4 +1,4 @@
-const express = require("express");
+const router = require("express").Router();
 const validator = require("../middleware/validator");
 const joiSchema = require("../utils/joiSchema");
 const auth = require("../middleware/auth");
@@ -7,21 +7,24 @@ const {
   userLogin,
   resetPassword,
   forgetPassword,
-} = require("../controllers/user");
+} = require("../controllers/user.controller");
 
-const router = express.Router();
-
+router.get("/ping", (req, res, next) => {
+  return res.send("pong");
+});
 router.post("/signup", validator(joiSchema.signup, "body"), signUp);
 router.post("/login", validator(joiSchema.login, "body"), userLogin);
-router.use(auth);
+
 router.post(
   "/forgotpassword",
+  auth,
   validator(joiSchema.email, "body"),
   forgetPassword
 );
-// router.get('/forget-password',)
+
 router.post(
   "/resetpassword/:resetToken",
+  auth,
   validator(joiSchema.password, "body"),
   resetPassword
 );

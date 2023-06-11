@@ -1,4 +1,4 @@
-const Course = require("../models/courseModel");
+const Course = require("../models/course.model");
 const cloudinary = require("../utils/cloudinary");
 //const Student = require('../models/studentModel');
 

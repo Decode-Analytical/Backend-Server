@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const TutorSchema = new mongoose.Schema({
-  name: {
+  fullName: {
     type: String,
     required: true,
   },
@@ -10,10 +10,6 @@ const TutorSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
   },
   bio: {
     type: String,
@@ -25,6 +21,10 @@ const TutorSchema = new mongoose.Schema({
   ],
   profileImage: {
     type: String,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   courses: [
     {

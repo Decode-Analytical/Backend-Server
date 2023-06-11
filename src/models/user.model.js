@@ -8,9 +8,14 @@ const crypto = require("crypto");
 
 const userSchema = new Schema(
   {
-    fullName: {
+    firstName: {
       type: String,
-      required: [true, "Name must be Provided"],
+      required: [true, "firstName must be Provided"],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, "lastName must be Provided"],
       trim: true,
     },
 
@@ -48,6 +53,10 @@ const userSchema = new Schema(
     tokens: [{ token: { type: String, required: true } }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    tutor: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -55,10 +64,7 @@ const userSchema = new Schema(
 // User Token Generation
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = await jwt.sign(
-    { _id: user._id.toString() },
-    process.env.JWT_SECRET
-  );
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
@@ -110,6 +116,6 @@ userSchema.methods.generateResetPasswordToken = async function () {
   return resetToken;
 };
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
