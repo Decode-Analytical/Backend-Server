@@ -3147,3 +3147,4 @@ Require stack:
     at Module._load (node:internal/modules/cjs/loader:972:12)
     at Module.require (node:internal/modules/cjs/loader:1157:19)
 [2023-06-07T02:30:11.747Z]  [31merror[39m: No write concern mode named 'majority/Prod' found in replica set configuration
+[2023-06-20T02:52:39.776Z]  [31merror[39m: Invalid email or password
