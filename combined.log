@@ -11,3 +11,14 @@
 [2023-05-18T09:49:23.430Z]  [31merror[39m: Cast to ObjectId failed for value "{ id: '646565f953b67b1756ad2ae7' }" (type Object) at path "_id" for model "Course"
 [2023-06-07T02:30:11.747Z]  [31merror[39m: No write concern mode named 'majority/Prod' found in replica set configuration
 [2023-06-07T02:42:27.062Z]  [32minfo[39m: Email sent: 250 2.0.0 Ok: queued
+[2023-06-07T15:57:51.978Z]  [31merror[39m: User does not exist
+[2023-06-07T16:03:31.951Z]  [31merror[39m: queryA ETIMEOUT sandbox.smtp.mailtrap.io
+[2023-06-17T21:13:40.960Z]  [31merror[39m: User does not exist
+[2023-06-17T21:33:50.244Z]  [32minfo[39m: Email sent: 250 2.0.0 Ok: queued
+[2023-06-17T21:35:09.583Z]  [32minfo[39m: Email sent: 250 2.0.0 Ok: queued
+[2023-06-17T21:37:03.743Z]  [32minfo[39m: Email sent: 250 2.0.0 Ok: queued
+[2023-06-17T21:43:42.091Z]  [31merror[39m: User does not exist
+[2023-06-17T21:43:51.744Z]  [31merror[39m: User does not exist
+[2023-06-17T21:44:16.718Z]  [31merror[39m: User does not exist
+[2023-06-17T21:44:57.021Z]  [31merror[39m: User does not exist
+[2023-06-17T21:45:07.116Z]  [31merror[39m: Invalid email or password

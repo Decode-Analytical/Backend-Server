@@ -3147,3 +3147,31 @@ Require stack:
     at Module._load (node:internal/modules/cjs/loader:972:12)
     at Module.require (node:internal/modules/cjs/loader:1157:19)
 [2023-06-07T02:30:11.747Z]  [31merror[39m: No write concern mode named 'majority/Prod' found in replica set configuration
+[2023-06-07T15:57:51.978Z]  [31merror[39m: User does not exist
+[2023-06-07T16:03:31.951Z]  [31merror[39m: queryA ETIMEOUT sandbox.smtp.mailtrap.io
+[2023-06-07T16:03:32.193Z]  [31merror[39m: uncaughtException: Cannot read properties of undefined (reading 'response')
+TypeError: Cannot read properties of undefined (reading 'response')
+    at /home/bosslady/groupA/Backend-Server/src/emails/email.js:24:42
+    at /home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/mailer/index.js:230:21
+    at SMTPConnection.<anonymous> (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-transport/index.js:176:24)
+    at Object.onceWrapper (node:events:628:26)
+    at SMTPConnection.emit (node:events:513:28)
+    at SMTPConnection._onError (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-connection/index.js:780:14)
+    at Immediate.<anonymous> (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-connection/index.js:334:52)
+    at processImmediate (node:internal/timers:466:21)
+[2023-06-07T16:03:32.193Z]  [31merror[39m: uncaughtException: Cannot read properties of undefined (reading 'response')
+TypeError: Cannot read properties of undefined (reading 'response')
+    at /home/bosslady/groupA/Backend-Server/src/emails/email.js:24:42
+    at /home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/mailer/index.js:230:21
+    at SMTPConnection.<anonymous> (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-transport/index.js:176:24)
+    at Object.onceWrapper (node:events:628:26)
+    at SMTPConnection.emit (node:events:513:28)
+    at SMTPConnection._onError (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-connection/index.js:780:14)
+    at Immediate.<anonymous> (/home/bosslady/groupA/Backend-Server/node_modules/nodemailer/lib/smtp-connection/index.js:334:52)
+    at processImmediate (node:internal/timers:466:21)
+[2023-06-17T21:13:40.960Z]  [31merror[39m: User does not exist
+[2023-06-17T21:43:42.091Z]  [31merror[39m: User does not exist
+[2023-06-17T21:43:51.744Z]  [31merror[39m: User does not exist
+[2023-06-17T21:44:16.718Z]  [31merror[39m: User does not exist
+[2023-06-17T21:44:57.021Z]  [31merror[39m: User does not exist
+[2023-06-17T21:45:07.116Z]  [31merror[39m: Invalid email or password
