@@ -137,6 +137,10 @@ var courseSchema = new mongoose.Schema({
             }
         }
     ], 
+    Paid:{
+        type: Boolean,
+        required: true
+    },
     comment_count: {type: Number, default: 0},
     like_count: {type: Number, default: 0},
     dislike_count: {type: Number, default: 0},

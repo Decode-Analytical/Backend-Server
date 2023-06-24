@@ -213,3 +213,48 @@ exports.getCourseVideos = (async(req, res, next)=>{
   return res.status(200).json({status: true, data: course.video})
 })
 
+exports.getaCourse = (async (req, res, next) => {
+
+  const {token}  = req.body;
+  const {courseId} = req.params;
+  if (!token)
+    return res
+      .status(400)
+      .send({ status: "error", msg: "All fields must be filled" });
+
+  try {
+    // token verification
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const post = await Course.find({ owner_id: user.id })
+      .select(["body", "title", "likes","summary",
+      "description", "price","category","language",
+       "comment_count", "owner_name", "objectives", 
+       "requirements", "sold", "currriculum", 
+       "totalrating","comment_count","like_count","dislike_count" ])
+      .lean();
+
+    return res
+      .status(200)
+      .send({ status: "ok", msg: "Course gotten successfully", post });
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(400)
+      .send({ status: "error", msg: "Some error occurred" });
+  }
+});
+
+exports.getAllCourse = (async (req, res, next)=> {
+    
+  try{
+      const getallCourse = await Course.find()
+      res.json({
+          status: 'Success',
+          getallCourse
+      })
+  } catch(error){
+      throw new Error(error);
+  }
+});
+
