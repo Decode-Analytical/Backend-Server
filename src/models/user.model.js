@@ -61,6 +61,25 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+// User document relationship with other document (to enable populate)
+//Virtual fields
+userSchema.virtual("courses", {
+  ref: "Course",
+  localField: "_id",
+  foreignField: "ratings.postedby",
+});
+
+userSchema.virtual("students", {
+  ref: "Student",
+  localField: "_id",
+  foreignField: "user",
+});
+
+userSchema.virtual("tutors", {
+  ref: "Tutor",
+  localField: "_id",
+  foreignField: "userId",
+});
 // User Token Generation
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
@@ -103,10 +122,7 @@ userSchema.methods.generateResetPasswordToken = async function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
 
   // Hash token and send to resetPassword token field
-  this.resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+  this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
   // Set expire
   this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
