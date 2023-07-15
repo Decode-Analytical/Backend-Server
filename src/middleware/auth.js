@@ -1,20 +1,27 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
-const commonService = require("../utils/commonService");
+const jwt = require ('jsonwebtoken');
+const User = require('../models/user.model');
 
-const auth = async (req, res, next) => {
+exports.auth = async (req, res, next) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
-    if (!token) return commonService.unAuthorizedResponse("Please authenticate", res);
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: decoded._id, "tokens.token": token });
-    if (!user) return commonService.unAuthorizedResponse("Please authenticate", res);
-    req.user = user;
-    req.token = token;
+    // 0      1
+    // Bearer token
+    const token = req.headers.authorization.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).json({ message: 'Token Is missing' });
+    }
+
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET); 
+    if (!decoded) {
+      throw new Error();
+    }
+    req.user = await User.findById(decoded._id);
     next();
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    return res
+      .status(401)
+      .json({ message: 'Token expired', error: error.message });
   }
 };
 
-module.exports = auth;
+

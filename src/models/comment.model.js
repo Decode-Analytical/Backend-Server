@@ -1,21 +1,29 @@
 const mongoose = require('mongoose');
 
-const commentSchema = mongoose.Schema({
-    comment: String,
-    course_id: String,
-    comment_id: String,
-    owner_id: String,
-    owner_name: String,
-    owner_img: String,
+const commentSchema = new mongoose.Schema({
+    comment: {
+        type: String,
+    },
+    courseId: {
+        type: String,
+    },
+    ownerId: {
+        type: String,
+    },
+    owner_name: { 
+        type: String,
+    },
     edited: {type: Boolean, default: false},
-    likes: [String],
     like_count: {type: Number, default: 0},
-    dislikes: [String],
+    dislikes: {
+        type: Array,
+        default: []
+    },
+    like: {type: Boolean, default: false},
+    dislike: {type: Boolean, default: false},
     dislike_count: {type: Number, default: 0},
     reply_count: {type: Number, default: 0}
    
-},  {timestamps: true},
-{collection: 'comments'});
+},   {timestamps: true});
 
-const model = mongoose.model('Comment', commentSchema);
-module.exports = model; 
+module.exports = mongoose.model('Comment', commentSchema);

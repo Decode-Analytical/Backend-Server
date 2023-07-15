@@ -1,260 +1,163 @@
 const Course = require("../models/course.model");
-const cloudinary = require("../utils/cloudinary");
-//const Student = require('../models/studentModel');
+const User = require("../models/user.model");
 
-// const { parse, stringify, toJSON, fromJSON } = require("flatted");
-// const { findById } = require("../models/courseModel");
 
-exports.addCourse = (async (req, res) => {
-  try {
-    const addCourse = await Course.create(req.body);
-    res.json(addCourse);
-  } catch (error) {
-    console.log(error);
-  }
-});
 
-exports.uploadVideos = (async (req, res) => {
-  const { id } = req.params;
-
-  let course = await Course.findById(id);
-
-  const newVideoArray = course.video;
-
-  if (req.files) {
-    if (req.files.length != 0) {
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await cloudinary.uploader.upload(
-          req.files[i].path,
-          {
-            folder: "video",
-            resource_type: "video",
-          },
-          (endresult) => {
-            console.log(endresult);
-          }
-        );
-
-        newVideoArray.push({
-          name: req.files[i].originalname,
-          url: result.url,
-          cloudinary_id: result.public_id,
-          description: req.body.description,
+exports.createCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === "admin"){
+        const { title, description, price, summary, category, language, objectives, requirement  } = req.body;
+        if(req.files){
+            images = req.files.images,
+            video = req.files.video,
+            audio = req.files.audio        
+        const course = await Course.create({
+            userId: userStatus._id,
+            title, 
+            description, 
+            price,
+            summary,
+            images: images,
+            category,
+            language,
+            objectives,
+            requirement,
+            audio: audio,
+            video: video,
         });
-      }
-    }
-    course.update({
-      video: newVideoArray,
-    });
-
-    course.save();
-
-    console.log('all saved?');
-    res.json(course)
-
-  } else {
-    res.json("An error occured somewhere");
-  }
-});
-
-
-exports.uploadAudios = (async (req, res) => {
-  const { id } = req.params;
-try{ 
-
-  let course = await Course.findById(id);
- 
-
-  const newAudioArray = course.audio;
-  
-
-  if (req.files) {
-    if (req.files.length != 0) {
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await cloudinary.uploader.upload(
-          req.files[i].path,
-          {
-            folder: "audio",
-            resource_type: "video",
-          },
-          
-        );
-
-        newAudioArray.push({
-          name: req.files[i].originalname,
-          url: result.url,
-          cloudinary_id: result.public_id,
-          description: req.body.description,
+        return res.status(201).json({
+            message: "Course successfully created",
+            course
         });
-      }
+    }else{
+        return res.status(400).json({ error: "User must login as Admin in order to create a course" });
     }
-    course.update({
-      audio: newAudioArray,
-    });
-
-    course.save();
-
-    console.log('all saved?');
-    res.json(course)
-
-  }
 }
-  catch(error) {
-    res.json(error);
-  }
-});
-
-exports.uploadDocs = (async (req, res) => {
-  const { id } = req.params;
-try{ 
-
-  let course = await Course.findById(id);
- 
-
-  const newDocsArray = course.docs;
-  
-
-  if (req.files) {
-    if (req.files.length != 0) {
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await cloudinary.uploader.upload(
-          req.files[i].path,
-          {
-            folder: "docs",
-            resource_type: "raw",
-            
-          },
-          
-        );
-
-        newDocsArray.push({
-          name: req.files[i].originalname,
-          url: result.url,
-          cloudinary_id: result.public_id,
-          description: req.body.description,
+ } catch (error)
+    {
+        return res.status(400).json({ 
+            message: "Error creating course",
+            error: error.message 
         });
-      }
     }
-    course.update({
-      audio: newDocsArray,
-    });
-
-    course.save();
-
-    console.log('all saved?');
-    res.json(course)
-
-  }
 }
-  catch(error) {
-    res.json(error);
-  }
-});
 
-exports.uploadImage = (async (req, res) => {
-  const { id } = req.params;
-try{ 
 
-  let course = await Course.findById(id);
- 
-
-  const newImageArray = course.image;
-  
-
-  if (req.files) {
-    if (req.files.length != 0) {
-      for (let i = 0; i < req.files.length; i++) {
-        let result = await cloudinary.uploader.upload(
-          req.files[i].path,
-          {
-            folder: "image",
-            resource_type: "image",
-            
-          },
-          
-        );
-
-        newImageArray.push({
-          name: req.files[i].originalname,
-          url: result.url,
-          cloudinary_id: result.public_id,
-          description: req.body.description,
+// view the Course registered  by Admin(one user)
+exports.getCourses = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            const courses = await Course.find({ userId: userStatus._id });
+            return res.status(200).json({
+                message: "Courses fetched successfully",
+                courses
+            });
+        } else {
+            return res.status(400).json({ error: "User must login as Admin in order to view a course" });
+        }
+    } catch (error) {
+        return res.status(400).json({ 
+            message: "Error fetching courses",
+            error: error.message 
         });
-      }
     }
-    course.update({
-      audio: newImageArray,
-    });
-
-    course.save();
-
-    console.log('all saved?');
-    res.json(course)
-
-  }
 }
-  catch(error) {
-    res.json(error);
-  }
-});
 
-exports.getCourseVideos = (async(req, res, next)=>{
-  const {
-    courseId
-  } = req.params;
 
-  const course = await Course.findById(courseId);
-  if(!course){
-    const error = new Error('Invalid Id');
-    error.statusCode = 404;
-    throw error; 
-  }
 
-  return res.status(200).json({status: true, data: course.video})
-})
+// update the courses
 
-exports.getaCourse = (async (req, res, next) => {
+exports.updateCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            const { title, description, price, summary, category, language, objectives, requirement  } = req.body;
+            if(req.files){
+                images = req.files.images,
+                video = req.files.video,
+                audio = req.files.audio        
+            const course = await Course.findByIdAndUpdate(req.params.id, {
+                title, 
+                description, 
+                price,
+                summary,
+                category,
+                language,
+                objectives,
+                requirement,
+                audio: audio,
+                video: video,
+                images: images
+            }, { new: true });
+            return res.status(200).json({
+                message: "Course successfully updated",
+                course
+            });
+        } else {
+            return res.status(400).json({ error: "User must login as Admin in order to update a course" });
+        }
+    }
+    } catch (error) {
+        return res.status(400).json({ 
+            message: "Error updating course",
+            error: error.message 
+        });
+    }
+}
 
-  const {token}  = req.body;
-  const {courseId} = req.params;
-  if (!token)
-    return res
-      .status(400)
-      .send({ status: "error", msg: "All fields must be filled" });
 
-  try {
-    // token verification
-    const user = jwt.verify(token, process.env.JWT_SECRET);
+// delete the course
+exports.deleteCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            await Course.findByIdAndDelete(req.params.id);
+            return res.status(200).json({
+                message: "Course successfully deleted",
+            });
+        } else {
+            return res.status(400).json({ error: "User must login as Admin in order to delete a course" });
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error deleting course",
+            error: error.message 
+        });
+    }
+}
 
-    const post = await Course.find({ owner_id: user.id })
-      .select(["body", "title", "likes","summary",
-      "description", "price","category","language",
-       "comment_count", "owner_name", "objectives", 
-       "requirements", "sold", "currriculum", 
-       "totalrating","comment_count","like_count","dislike_count" ])
-      .lean();
 
-    return res
-      .status(200)
-      .send({ status: "ok", msg: "Course gotten successfully", post });
-  } catch (e) {
-    console.log(e);
-    return res
-      .status(400)
-      .send({ status: "error", msg: "Some error occurred" });
-  }
-});
 
-exports.getAllCourse = (async (req, res, next)=> {
-    
-  try{
-      const getallCourse = await Course.find()
-      res.json({
-          status: 'Success',
-          getallCourse
-      })
-  } catch(error){
-      throw new Error(error);
-  }
-});
-
+// search course by first letter
+exports.searchCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        const { title } = req.query;
+        if (userStatus.roles === "admin") {
+            const course = await Course.find({ title: { $regex: 'title', $options: "i"  } });
+            return res.status(200).json({
+                message: "Course fetched successfully",
+                course
+            });
+        } else {
+            return res.status(400).json({ error: "User must login as Admin in order to search a course" });
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error fetching course",
+            error: error.message 
+        });
+    }
+}

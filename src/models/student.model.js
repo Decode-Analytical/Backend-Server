@@ -1,55 +1,23 @@
 const mongoose = require('mongoose');
 
-const studentSchema = mongoose.Schema(
+const studentSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
       ref: 'User',
     },
-    orderCourses: [
-      {
-        title: { type: String, require: true },
-        description: { type: Number, require: true },
-        image: { type: String, require: true },
-        category: { type: Number, require: true },
-        language: { type: Number, require: true },
-        price: { type: Number, require: true },
-        courses: {
-          type: mongoose.Schema.Types.ObjectId,
-          require: true,
-          ref: 'Course',
-        },
-      },
-    ],
-    paymentMethod: {
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+    },
+    title: {
       type: String,
-      require: true,
-      default: 'paystack',
-    },
-    paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
-    },
-    points: {
-      type: Number,
-      default: 0,
-    },
-
+    },    
     price: {
       type: Number,
-      require: true,
-      default: 0.0,
     },
-    isPaid: {
-      type: Boolean,
-      require: true,
-      default: false,
-    },
-    paidAt: {
-      type: Date,
+    category: {
+      type: String,
     },
   },
   {
@@ -57,6 +25,4 @@ const studentSchema = mongoose.Schema(
   }
 );
 
-const Student = mongoose.model('Student', studentSchema);
-
-module.exports = Student;
+module.exports = mongoose.model('Student', studentSchema);
