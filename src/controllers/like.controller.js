@@ -61,31 +61,57 @@ exports.likeComment = async (req, res) => {
     });
 };
 
+//students can only like or dislike, they cant delete their like or dislike
 exports.likeCourse = async (req, res) => {
-    try{
-        const {courseId, studentId} = req.body
-        const course = await Course.findById(courseId); //fetch the course to like
-        if(!course){
-            return res.status(404).json({message: 'course not found'});
+    try {
+      const { courseId, studentId, like } = req.body;
+
+      const course = await Course.findById(courseId); //fetch the course to like
+      if (!course) {
+        return res.status(404).json({ message: "course not found" });
+      }
+      //check if the student exist and he registered for the course
+      const student = (doesStudentRegistered = await Student.findOne(
+        {
+          _id: studentId,
+          registeredCourses: { $in: [courseId] },
+        },
+        ""
+      )); // return nothing
+      if (!doesStudentRegistered) {
+        return res.status(401).json({
+          message: `student with the id: ${studentId} has not been registered for this course`,
+        });
+      }
+
+      /**if student already like(i.e stu.regC.like = 1), he cannot like again 
+         but he can like if he only unlike (i.e stu.regC.like = -1) 
+         previously or hasn't liked at all (i.e stu.regC.like = 0) */
+
+      if (Number(like) > 0 ) {
+        if( student.registeredCourses.like > 0){ //incase he want to like again after liking
+            return res.status(409).json({message: 'you can only have a like per course'});
         }
-        //check if the student exist and he registered for the course
-        const doesStudentRegistered = await Student.findOne({
-            _id: studentId,
-            registeredCourses: { $in: [courseId] }
-          }, '') // return nothing
-          if(!doesStudentRegistered){
-            return res.status(401).json({ message: `student with the id: ${studentId} has not been registered for this course`});
-          }
-
-        //if student already like, he cannot like again but if not, he can like
-
-        //increment the like
+        //he has not liked at yet and want to like
+        //increment the like by one and return the course
         const updatedCourse = await Course.findByIdAndUpdate(
-            courseId,
-            { $inc: { like_count: 1 } },
-            { new: true }
-          );
+          courseId,
+          { $inc: { like_count: 1 } },
+          { new: true }
+        );
+        return res
+          .status(200)
+          .json({ message: "course like successful", updatedCourse });
+      }
+      if (Number(like) < 1 && student.registeredCourses.like > -1) {
+        //he has not dislike yet and want to
+        return res
+          .status(200)
+          .json({ message: "you unlike the course", updatedCourse });
+      }
+      return res.status(409).json({message: 'you can only have a dislike per course'});
 
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
-    catch{}
 }

@@ -10,8 +10,16 @@ const studentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
     },
-    registeredCourses: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Course" }, //needed instead of using courseId
+    registeredCourses: [  //needed instead of using courseId
+      { type: mongoose.Schema.Types.ObjectId, 
+        ref: "Course", 
+        like: {
+          type: number,
+          enum: [0, 1, -1],
+          required: true,
+          default: 0
+        }
+      },
     ],
     title: {
       type: String,
