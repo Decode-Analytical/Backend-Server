@@ -1,29 +1,32 @@
 const mongoose = require('mongoose');
 
+const likeSchema = new mongoose.Schema({
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+  },
+  like: {
+    type: Number,
+    enum: [0, 1, -1],
+    required: true,
+    default: 0,
+  },
+});
+
 const studentSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
+      ref: "Course",
     },
-    registeredCourses: [  //needed instead of using courseId
-      { type: mongoose.Schema.Types.ObjectId, 
-        ref: "Course", 
-        like: {
-          type: number,
-          enum: [0, 1, -1],
-          required: true,
-          default: 0
-        }
-      },
-    ],
+    registeredCourses: [likeSchema], //needed instead of using courseId bcoz a student can have more than one course
     title: {
       type: String,
-    },    
+    },
     price: {
       type: Number,
     },
@@ -35,5 +38,7 @@ const studentSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+
 
 module.exports = mongoose.model('Student', studentSchema);

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Comment = require('../models/comment.model');
 const Course = require('../models/course.model');
 const User = require('../models/user.model');
@@ -65,20 +66,24 @@ exports.likeComment = async (req, res) => {
 exports.likeCourse = async (req, res) => {
     try {
       const { courseId, studentId, like } = req.body;
+      const objectIdCourseId = mongoose.Types.ObjectId(courseId);
 
       const course = await Course.findById(courseId); //fetch the course to like
+    //   console.log({course});
       if (!course) {
         return res.status(404).json({ message: "course not found" });
       }
       //check if the student exist and he registered for the course
-      const student = (doesStudentRegistered = await Student.findOne(
-        {
-          _id: studentId,
-          registeredCourses: { $in: [courseId] },
-        },
-        ""
-      )); // return nothing
+      const student = (doesStudentRegistered = await Student.findOne({
+        _id: studentId,
+        registeredCourses: { $in: [objectIdCourseId] },
+      }));
+      const stu = await Student.findById(studentId);
+      console.log({ student}, {stu });
+    //   console.log({ doesStudentRegistered });
+
       if (!doesStudentRegistered) {
+        // return res.send({stu})
         return res.status(401).json({
           message: `student with the id: ${studentId} has not been registered for this course`,
         });
@@ -97,12 +102,16 @@ exports.likeCourse = async (req, res) => {
         const updatedCourse = await Course.findByIdAndUpdate(
           courseId,
           { $inc: { like_count: 1 } },
-          { new: true }
+          { new: true, select: {_id: 1, title: 1,like_count: 1, dislike_count: 1 } },
+          
         );
         return res
           .status(200)
           .json({ message: "course like successful", updatedCourse });
       }
+
+
+
       if (Number(like) < 1 && student.registeredCourses.like > -1) {
         //he has not dislike yet and want to
         return res
@@ -112,6 +121,22 @@ exports.likeCourse = async (req, res) => {
       return res.status(409).json({message: 'you can only have a dislike per course'});
 
     } catch (error) {
+        console.error(error);
       res.status(500).send({ message: error.message });
     }
+}
+
+exports.test = async (req, res) => {
+    
+
+    if(req.query.c){
+        const c = await Course.find({}, '_id title' )
+    return res.status(200).send({ message: 'hello world from here', c });
+    }
+    const s = await Student.findOne().limit(1).populate('registeredCourses', 'like')
+    s.registeredCourses.push("64b1c96f718f354f21c3a701")
+    await s.save()
+    res.status(200).send({ message: 'hello world from here', s });
+
+    
 }

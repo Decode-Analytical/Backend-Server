@@ -6,6 +6,7 @@ const xss = require('xss-clean');
 const { useTreblle } = require("treblle");
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const logger = require('morgan')
 const connectDB = require("./src/database/db");
 const cloudinaryConfig = require('./src/utils/cloudinary');
 const courseRoutes = require('./src/routes/course.routes');
@@ -14,6 +15,7 @@ const studentRoutes = require('./src/routes/student.routes');
 const commentRoutes = require('./src/routes/comment.routes');
 const likeRoutes = require('./src/routes/like.routes');
 const paymentRoutes = require('./src/routes/payment.routes');
+
 // const tutorRoutes = require('./src/routes/tutor.routes');
 
 const app = express();
@@ -27,6 +29,7 @@ app.use(cors());
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
+app.use(logger("dev")); //logger to log every request and response summary
 
 app.get("/", (req, res) => {
   res.send("Hello World");
