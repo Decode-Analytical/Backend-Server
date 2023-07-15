@@ -200,7 +200,6 @@ exports.studentViewPaidCourse = async(req, res) => {
 
 // student update his status or role
 
-https://github.com/Decode-Analytical/Backend-Server.git
 exports.studentUpdateStatus = async(req, res) => {
     try {
         const id = req.user;
