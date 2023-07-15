@@ -1,6 +1,5 @@
 const User = require("../models/user.model");
 const Tutor = require("../models/tutor.model");
-const CommonService = require("../utils/commonService");
 const Course = require("../models/course.model");
 
 exports.addTutor = async (req, res, next) => {

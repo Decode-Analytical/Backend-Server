@@ -1,58 +1,62 @@
 const Comment = require('../models/comment.model');
-const jwt = require('jsonwebtoken');
+const Course = require('../models/course.model');
+const User = require('../models/user.model');
 
-exports.likeComment = ( async (req, res) => {
-    const { token, _id } = req.body;
 
-    if(!token || !_id)
-      return res.status(400).send({status: 'error', msg: 'All fields must be filled'});
-
-    try{
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-
-        let comment = await Comment.findOne({_id, likes: user._id}).lean();
-        if(comment)
-          return res.status(400).send({status: 'error', msg: "You've already liked this comment"});
-
-        comment = await Comment.findOneAndUpdate(
-            {_id},
-            {
-                '$push': {likes: user._id},
-                '$inc': {like_count: 1}
-            },
-            {new: true}
-        );
-        return res.status(200).send({status: 'ok', msg: 'Comment liked successfully', comment});
-    }catch(e) {
-        console.log(e);
-        return res.status(400).send({status: 'error', msg: 'Some error occurred', e});
+// like a comment
+exports.likeComment = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'student') {
+            return res.status(400).json({
+                message: 'You can not like your own comment',
+            });
+        }
+        const comment = await Comment.findById(req.params.commentId);
+        if (!comment) {
+            return res.status(404).json({
+                message: 'Comment not found',
+            });
+        }
+        comment.likes.push(user._id);
+        await comment.save();
+        return res.status(200).json({
+            message: 'Comment liked',
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Something went wrong',
+        });
     }
-});
 
 
-exports.unlikeComment = (async (req, res) => {
-    const { _id, token } = req.body;
 
-    if(!_id || !token) 
-      return res.status(400).send({status: 'error', msg: 'All fields must be filled'});
 
-    try{
-        const user = jwt.verify(token, process.env.JWT_SECRET);
 
-        let comment = Comment.findOne({_id, likes: user._id}).lean();
-        if(!comment) 
-          return res.status(400).send({status: 'error', msg: 'You have not liked this comment before'});
 
-        comment = await Comment.findOneAndUpdate(
-            {_id, likes: user._id},
-            {
-                '$pull': {likes: user._id},
-                '$inc': {like_count: -1}
-            }
-        ).lean();
-        return res.status(200).send({status: 'ok', msg: 'Comment unliked successfully', comment});
-    }catch(e) {
-        console.log(e);
-        return res(400).send({status: 'error', msg: 'Some error occurred', e})
+
+
+
+
+    const { commentId } = req.params;
+    const { userId } = req.user;
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+        return res.status(404).json({
+            message: 'Comment not found',
+        });
     }
-})
+    if (comment.userId.toString() === userId.toString()) {
+        return res.status(400).json({
+            message: 'You can not like your own comment',
+        });
+    }
+    comment.likes.push(userId);
+    await comment.save();
+    return res.status(200).json({
+        message: 'Comment liked',
+    });
+};
