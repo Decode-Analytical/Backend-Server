@@ -61,10 +61,10 @@ exports.likeComment = async (req, res) => {
     });
 };
 
-//students can only like or dislike, they cant delete their like or dislike
+/**students can only like when they haven't like and they can't delete their like */
 exports.likeCourse = async (req, res) => {
     try {
-      const { courseId, studentId, like, userId } = req.body;
+      const { courseId, studentId } = req.params;
 
       const course = await Course.findById(courseId); //fetch the course to like
       if (!course) {
@@ -72,60 +72,36 @@ exports.likeCourse = async (req, res) => {
       }
       //check if the student exist and he registered for the course
       const student = await Student.findOne({
-        userId,
+        _id: studentId,
         registeredCourses: { $elemMatch: { _id: courseId } },
       });
-      //   console.log({student})
 
       if (!student) {
         return res.status(401).json({
-          message: `user with the id: ${userId} has not been registered for this course`,
+          message: `student with the id: ${studentId} has not been registered for this course`,
         });
       }
+      /**index of the course in the student registered course list */
+      const registeredCourseIndex = student.registeredCourses.findIndex(course => course._id.toString() === courseId);        
+      
+      /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
+      const likedValue = student.registeredCourses[registeredCourseIndex].like
 
-      const likedValue = student.registeredCourses.find(
-        (course) => course._id.toString() === courseId
-      ).like;
-
-      /**if student already like(i.e stu.regC.like = 1), he cannot like again 
-         but he can like if he only unlike (i.e stu.regC.like = -1) 
-         previously or hasn't liked at all (i.e stu.regC.like = 0) */
-    //      const updatedStudent = await Student.findOneAndUpdate(
-    //         {
-    //           _id: studentId,
-    //           "registeredCourses._id": courseId,
-    //         },
-    //         { $inc: { "registeredCourses.$.like": 0 } },
-    //         { new: true }
-    //       );
-    //       course.like_count=0
-    //     await course.save()
-    //    return res.send({updatedStudent, course})
-    //    return res.send({student, course})
-
-
-      if (Number(like) > 0 && likedValue > 0) {//incase he want to like again after liking
+      if (likedValue > 0) {//incase he wants to like again after liking
         return res
           .status(409)
-          .json({ message: "you can only have a like per course" });
+          .json({ message: "you can only have a like per course", student: student});
       }
-      if (Number(like) > likedValue && likedValue <= 0) { //he hasn't liked the course yet
-        const updatedCourse = await Course.findByIdAndUpdate(
-          courseId,
-          { $inc: { like_count: 1 } },
-          { new: true }
-        );
-        //update the student model
-        await Student.findOneAndUpdate(
-          {
-            _id: studentId,
-            "registeredCourses._id": courseId,
-          },
-          { $inc: { "registeredCourses.$.like": 1 } }
-        );
+      if (likedValue <= 0) { //he hasn't liked the course yet
+        //increment the course like_count and save it
+        course.like_count++; 
+        course.save({ new: true })
+
+        student.registeredCourses[registeredCourseIndex].like += 1
+        student.save({ new: true })
         return res
           .status(200)
-          .json({ message: "you like the course", updatedCourse });
+          .json({ message: "you like the course", course });
       }
       res.status(409).send({ message: "conflicting request" });
      
@@ -135,7 +111,59 @@ exports.likeCourse = async (req, res) => {
     }
 }
 
+/**students can only dislike when they haven't dislike and they can't delete their dislike */
+exports.dislikeCourse = async (req, res) => {
+  try {
+    const { courseId, studentId } = req.params;
+
+    const course = await Course.findById(courseId); //fetch the course to like
+    if (!course) {
+      return res.status(404).json({ message: "course not found" });
+    }
+    //check if the student exist and he registered for the course
+    const student = await Student.findOne({
+      _id: studentId,
+      registeredCourses: { $elemMatch: { _id: courseId } },
+    });
+
+    if (!student) {
+      return res.status(401).json({
+        message: `student with the id: ${studentId} has not been registered for this course`,
+      });
+    }
+    /**index of the course in the student registered course list */
+    const registeredCourseIndex = student.registeredCourses.findIndex(course => course._id.toString() === courseId);        
+    
+    /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
+    const likedValue = student.registeredCourses[registeredCourseIndex].like
+
+    if (likedValue < 0) {//incase he wants to dislike again after disliking
+      return res
+        .status(409)
+        .json({ message: "you can only dislike once"});
+    }
+    if (likedValue >= 0) { //he hasn't disliked the course yet
+      //decrement the course like_count and save it
+      course.like_count--; 
+      course.save({ new: true })
+
+      student.registeredCourses[registeredCourseIndex].like -= 1
+      student.save({ new: true })
+      return res
+        .status(200)
+        .json({ message: "you like the course", course });
+    }
+    res.status(409).send({ message: "conflicting request" });
+   
+  } catch (error) {
+      console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+}
+
+
 exports.test = async (req, res) => {
+  return res.status(200).send({ message: 'hello world from here' });
     
 
     if(req.query.c){

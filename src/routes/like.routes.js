@@ -1,10 +1,13 @@
 const express = require("express");
-const auth = require("../middleware/auth");
+const {auth} = require("../middleware/auth");
 const likeController = require('../controllers/like.controller');
-const router = express.Router();
+const likeRouter = express.Router();
 
 // likeCourse
+likeRouter.get('/random', likeController.test)
 
-router.get('/', likeController.test)
-router.put('/', likeController.likeCourse)
-module.exports = router;
+// likeRouter.use(auth);
+likeRouter.put('/:courseId/:studentId/like', likeController.likeCourse)
+likeRouter.put('/:courseId/:studentId/dislike', likeController.dislikeCourse)
+
+module.exports = likeRouter;
