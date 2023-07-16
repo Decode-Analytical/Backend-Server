@@ -12,7 +12,7 @@ exports.addComment = async (req, res) => {
     await Comment.create({ ...newComment }); //create a new comment
     course.comment_count += 1; //increment the comment count for the course
 
-    course.save({ new: true });
+    await course.save({ new: true });
     return res
       .status(200)
       .json({ message: "Comment added successfully", course });
@@ -22,12 +22,44 @@ exports.addComment = async (req, res) => {
   }
 };
 
-exports.fetchCommentById = async (req, res) => {
+/**Get some comments of a course sorted by time created */
+exports.getComments = async (req, res) => {
     try {
       const {commentId} = req.params;
-      const course = req.course; //passed by the fetch course middleware
-  
+      const {limit} = req.query || 6 //to specify the total number of comments to return
+        const course = req.course;
+        limit = limit * 1;
+        const latestComments = await Comment.find({})
+          .sort({ timestamp: "desc" })
+          .limit(10); //converted to number
+        if (latestComments.length < 1) {
+          return res
+            .status(200)
+            .json({
+              message: " no comment available for this course at the moment",
+            });
+        }  
+      return res
+        .status(200)
+        .json({ message: "Comment deleted successfully", course, latestComments });
+      
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
+    }
+  };
+
+/**Get a particular comment by id */
+exports.getCommentById = async (req, res) => {
+    try {
+      const {commentId} = req.params;
+      const course = req.course; //passed by the fetch course middleware 
       const comment = await Comment.findById(commentId);
+      if(!comment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
       return res
         .status(200)
         .json({ message: "Comment added successfully", course, comment });
@@ -36,6 +68,49 @@ exports.fetchCommentById = async (req, res) => {
       res.status(500).send({ message: error.message });
     }
   };
+
+  /**update a commentBody */
+  exports.updateComment = async (req, res) => {
+    try {
+      const { commentBody } = req.body;
+      const course = req.course; //passed by the fetch course middleware
+      
+      const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,commentBody );
+      if(!updatedComment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
+      return res
+        .status(200)
+        .json({ message: "Comment updated successfully", course, updatedComment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
+    }
+  };  
+
+  /**update a commentBody */
+  exports.deleteComment = async (req, res) => {
+    try {
+      const course = req.course; //passed by the fetchCourse middleware      
+      const comment = await Comment.findByIdAndDelete(req.params.commentId,commentBody );
+      const latestComments = await Comment.find()
+      if(!comment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
+      course.comment_count -= 1; //decrement the comment count for the course
+      await course.save({ new: true });
+      return res
+        .status(200)
+        .json({ message: "Comment deleted successfully", course, latestComments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
+    }
+  };  
 
 // endpoint to get comments of a post
 exports.getComment = ( async (req, res) => {
