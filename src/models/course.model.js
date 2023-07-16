@@ -63,6 +63,9 @@ const courseSchema = new mongoose.Schema({
     docs: {
       type: Array,
     },
+    comments: {
+      type: Array,
+    },
     comment_count: { type: Number, default: 0 },
     like_count: { type: Number, default: 0 },
     dislike_count: { type: Number, default: 0 },

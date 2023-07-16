@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema(
     picture: {
       type: Array,
     },
+    replies: {
+      type: Array,
+    },
+    comments: {
+      type: Array,
+    },
     roles: {
       type: String,
       enum: ["admin", "student", "IT"],

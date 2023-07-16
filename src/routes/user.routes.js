@@ -1,5 +1,6 @@
 const express = require("express");
 const upload = require("../utils/multer");
+const { limiter } = require("../middleware/rateLimit");
 const { auth } = require("../middleware/auth");
 const {
   signUp,
@@ -9,21 +10,24 @@ const {
   emailVerify,
   viewUserProfile,
   updateStudentProfile,
-  deleteUser
+  deleteUser,
+  updateStudentProfilePicture
 } = require("../controllers/user.controller");
 const router = express.Router();
 
-
+router.use(limiter);
 router.post("/signup", upload.fields([{ name: "picture", maxCount: 1}]), signUp);
-router.post("/login",  userLogin);
+router.post("/login", userLogin);
 router.get("/emailVerify/:token", emailVerify );
 router.post("/forgotpassword", forgotPassword );
 router.get("/resetpassword/:token",  resetPassword );
 
 router.use(auth);
 router.get("/viewprofile",  viewUserProfile );
-router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile)
+router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
 router.delete("/studentDeleteCourse", deleteUser)
+router.put("/updatePictureOnly", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfilePicture);
+
 
 
 module.exports = router;
