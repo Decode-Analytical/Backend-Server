@@ -1,5 +1,6 @@
 const express = require("express");
 const upload = require("../utils/multer");
+const limiter = require("../middleware/rateLimit");
 const { auth } = require("../middleware/auth");
 const {
   signUp,
@@ -16,7 +17,7 @@ const router = express.Router();
 
 
 router.post("/signup", upload.fields([{ name: "picture", maxCount: 1}]), signUp);
-router.post("/login",  userLogin);
+router.post("/login", limiter, userLogin);
 router.get("/emailVerify/:token", emailVerify );
 router.post("/forgotpassword", forgotPassword );
 router.get("/resetpassword/:token",  resetPassword );
