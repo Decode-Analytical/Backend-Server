@@ -9,7 +9,8 @@ const {
   emailVerify,
   viewUserProfile,
   updateStudentProfile,
-  deleteUser
+  deleteUser,
+  updateStudentProfilePicture
 } = require("../controllers/user.controller");
 const router = express.Router();
 
@@ -22,8 +23,10 @@ router.get("/resetpassword/:token",  resetPassword );
 
 router.use(auth);
 router.get("/viewprofile",  viewUserProfile );
-router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile)
+router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
 router.delete("/studentDeleteCourse", deleteUser)
+router.put("/updatePictureOnly", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfilePicture);
+
 
 
 module.exports = router;
