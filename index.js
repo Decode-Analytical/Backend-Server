@@ -52,6 +52,10 @@ app.use("/api/comment", commentRoutes);
 // app.use("/api/tutor", tutorRoutes);
 app.use("/api/payment", paymentRoutes);
 
+
+app.use('/',( req, res)=>{
+  res.status('404').send('<h1>The requested API URI is not available</h1>');
+} )
 //start server
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);

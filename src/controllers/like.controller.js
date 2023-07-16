@@ -61,7 +61,7 @@ exports.likeComment = async (req, res) => {
     });
 };
 
-/**students can only like when they haven't like and they can't delete their like */
+/**students can only like when they haven't like or dislike and they can't delete their like */
 exports.likeCourse = async (req, res) => {
     try {
       const { courseId, studentId } = req.params;
@@ -87,23 +87,20 @@ exports.likeCourse = async (req, res) => {
       /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
       const likedValue = student.registeredCourses[registeredCourseIndex].like
 
-      if (likedValue > 0) {//incase he wants to like again after liking
+      if (likedValue != 0) {//incase he wants to like again after like or dislike
         return res
           .status(409)
-          .json({ message: "you can only have a like per course", student: student});
+          .json({ message: "you can only like or dislike a course once"});
       }
-      if (likedValue <= 0) { //he hasn't liked the course yet
-        //increment the course like_count and save it
+      // if he hasn't liked or disliked the course yet, increment the course like_count and save it
         course.like_count++; 
         course.save({ new: true })
 
-        student.registeredCourses[registeredCourseIndex].like += 1
+        student.registeredCourses[registeredCourseIndex].like = 1
         student.save({ new: true })
         return res
           .status(200)
           .json({ message: "you like the course", course });
-      }
-      res.status(409).send({ message: "conflicting request" });
      
     } catch (error) {
         console.error(error);
@@ -111,7 +108,7 @@ exports.likeCourse = async (req, res) => {
     }
 }
 
-/**students can only dislike when they haven't dislike and they can't delete their dislike */
+/**students can only dislike when they haven't like or dislike and they can't delete their dislike */
 exports.dislikeCourse = async (req, res) => {
   try {
     const { courseId, studentId } = req.params;
@@ -137,23 +134,21 @@ exports.dislikeCourse = async (req, res) => {
     /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
     const likedValue = student.registeredCourses[registeredCourseIndex].like
 
-    if (likedValue < 0) {//incase he wants to dislike again after disliking
+    if (likedValue != 0) {//incase he wants to dislike again after like or dislike
       return res
         .status(409)
-        .json({ message: "you can only dislike once"});
+        .json({ message: "you can only like or dislike once for a course"});
     }
-    if (likedValue >= 0) { //he hasn't disliked the course yet
-      //decrement the course like_count and save it
-      course.like_count--; 
+
+    // if he hasn't like or disliked the course yet, increment the course dislike_count and save it
+      course.dislike_count++; 
       course.save({ new: true })
 
-      student.registeredCourses[registeredCourseIndex].like -= 1
+      student.registeredCourses[registeredCourseIndex].like = -1
       student.save({ new: true })
       return res
         .status(200)
-        .json({ message: "you like the course", course });
-    }
-    res.status(409).send({ message: "conflicting request" });
+        .json({ message: "you dislike the course, you can watch again", course });
    
   } catch (error) {
       console.error(error);
