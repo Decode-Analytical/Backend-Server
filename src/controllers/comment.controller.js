@@ -1,40 +1,41 @@
 const Course = require('../models/course.model');
-const Comment = require('../models/comment.model')
-const jwt = require('jsonwebtoken');
-
+const Comment = require("../models/comment.model");
+const jwt = require("jsonwebtoken");
 
 // endpoint to make a comment on a course
-exports.addComment = ( async (req, res) => {
-    const {token, comment, course_id, owner_name, owner_img} = req.body;
+exports.addComment = async (req, res) => {
+  try {
+    const { commentBy, commentBody } = req.body;
+    const course = req.course; //passed by the fetch course middleware
+    const newComment = { commentBody, courseId: course._id, commentBy };
 
-    if(!token || !course_id || !comment || !owner_name){
-        return res.status(400).send({status: 'error', msg: 'All fields must be filled'});
+    await Comment.create({ ...newComment }); //create a new comment
+    course.comment_count += 1; //increment the comment count for the course
+
+    course.save({ new: true });
+    return res
+      .status(200)
+      .json({ message: "Comment added successfully", course });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.fetchCommentById = async (req, res) => {
+    try {
+      const {commentId} = req.params;
+      const course = req.course; //passed by the fetch course middleware
+  
+      const comment = await Comment.findById(commentId);
+      return res
+        .status(200)
+        .json({ message: "Comment added successfully", course, comment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
     }
-
-    try{
-        let user = jwt.verify(token, process.env.JWT_SECRET);
-
-        let mComment = await new Comment;
-        mComment.comment = comment;
-        mComment.course_id = course_id;
-        mComment.owner_id = user._id;
-        mComment.owner_name = owner_name;
-        mComment.owner_img = owner_img || '';
-        mComment = await mComment.save();
-
-        const course = await Course.findOneAndUpdate(
-            {_id: course_id},
-            {"$inc": {comment_count: 1}},
-            {new: true}
-        );
-        return res.status(200).send({status: 'ok', msg: 'Success', course, comment: mComment});
-
-    }catch(e){
-        console.log(e);
-        return res.status({status: 'error', msg: 'An error occured'});
-    }
-});
-
+  };
 
 // endpoint to get comments of a post
 exports.getComment = ( async (req, res) => {
