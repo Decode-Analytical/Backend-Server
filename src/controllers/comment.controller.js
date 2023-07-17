@@ -111,6 +111,47 @@ exports.getCommentById = async (req, res) => {
     }
   };  
 
+  exports.replyComment = async (req, res) => {
+    try {
+      const validation = validatedCommentSchema(req.body);
+      if (validation.error) {
+        res.status(422).send(validation.error.details[0].message);
+        return;
+      }
+      const { commentBody } = validation.value;
+      const parentCommentId = req.params.commentId;
+      const parentComment = await Comment.findByIdAndUpdate(
+        parentCommentId,
+        (parentComment.reply_count += 1),
+        { new: true }
+      );
+      if (!parentComment) {
+        return res
+          .status(404)
+          .json({ message: " comment not found to reply to" });
+      }
+      const course = req.course; //passed by the fetch course middleware
+      const { commentBy } = req.body;
+
+      const reply = {
+        commentBody,
+        courseId: course._id,
+        commentBy,
+        parentCommentId,
+      };
+
+      const commentReply = await Comment.create({ ...reply }); //create a new comment
+      return res.status(200).json({
+        message: "Comment reply added successfully",
+        parentComment,
+        commentReply,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
+    }
+  };
+  
   /**Delete a comment */
   exports.deleteComment = async (req, res) => {
     try {
