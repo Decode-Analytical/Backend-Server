@@ -31,17 +31,15 @@ exports.createCourse = async (req, res) => {
         return res.status(201).json({
             message: "Course successfully created",
             course
-        });
-    }else{
-        return res.status(400).json({ error: "User must login as Admin in order to create a course" });
-    }
-}
- } catch (error)
-    {
-        return res.status(400).json({ 
-            message: "Error creating course",
-            error: error.message 
-        });
+        })}
+        }else{
+            return res.status(401).json({ error: "User must login as Admin in order to create a course" });
+        }
+        } catch (error){
+            return res.status(501).json({ 
+                message: "Error creating course",
+                error: error.message 
+                });
     }
 }
 
