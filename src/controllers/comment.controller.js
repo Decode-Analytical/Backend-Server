@@ -111,6 +111,7 @@ exports.getCommentById = async (req, res) => {
     }
   };  
 
+  /**Reply to comment. Comment with a parent comment */
   exports.replyComment = async (req, res) => {
     try {
       const validation = validatedCommentSchema(req.body);
@@ -152,7 +153,7 @@ exports.getCommentById = async (req, res) => {
     }
   };
   
-  /**Delete a comment */
+  /**Delete a comment */ //NEEDED TO DELETE ALL CHILDREN COMMENTS
   exports.deleteComment = async (req, res) => {
     try {
       const course = req.course; //passed by the fetchCourse middleware      
@@ -171,6 +172,39 @@ exports.getCommentById = async (req, res) => {
       return res
         .status(200)
         .json({ message: "Comment deleted successfully", course, latestComments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: error.message });
+    }
+  };  
+
+   /**Delete a child comment */
+   exports.deleteCommentReply = async (req, res) => {
+    try {
+      const comment = await Comment.findByIdAndDelete(req.params.commentId );
+      const parentCommentId = req.params.commentId;
+      const parentComment = await Comment.findByIdAndUpdate(
+        parentCommentId,
+        (parentComment.reply_count -= 1), //reduce the reply count by 1
+        { new: true }
+      );
+      if (!parentComment) {
+        return res
+          .status(404)
+          .json({ message: " comment not found to reply to" });
+      }
+      const course = req.course; //passed by the fetch course middleware
+      const latestComments = await Comment.find({}) //returns the latest comments
+      .sort({ createdAt: -1 })
+      .limit(5); 
+      if(!comment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
+      return res
+        .status(200)
+        .json({ message: "reply deleted successfully", course, latestComments });
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: error.message });
