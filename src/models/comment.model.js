@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema(
   {
     commentBody: {
       type: String,
-      required: [true, 'only 255 characters allowed'],
+      required: [true, "only 255 characters allowed"],
       maxLength: 255,
     },
     courseId: {
@@ -29,6 +29,20 @@ const commentSchema = new mongoose.Schema(
         required: false, // if populated, then its a top level comment i.e, it has reply fields
       },
     ],
+    likeBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: false,
+      },
+    ],
+    dislikeBy: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: false,
+        },
+      ],
     like_count: { type: Number, default: 0 },
     dislike_count: { type: Number, default: 0 },
     reply_count: { type: Number, default: 0 },

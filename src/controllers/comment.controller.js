@@ -11,8 +11,8 @@ exports.addComment = async (req, res) => {
       res.status(422).send(validation.error.details[0].message);
       return;
     }
-    const { commentBy } = req.body;
-    const {commentBody} = validation.value
+    const commentBy = req.user._id;
+    const { commentBody } = validation.value;
     const course = req.course; //passed by the fetch course middleware
     const newComment = { commentBody, courseId: course._id, commentBy };
 
@@ -98,7 +98,7 @@ exports.getCommentById = async (req, res) => {
       if(commentBy.toString() ===  comment.commentBy.toString()) { //another user trying to update the comment
         return res
         .status(401)
-        .json({message: "user not allowed to edit comment"})
+        .json({message: "cannot update another user comment"})
       }
       const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,commentBody );
       const course = req.course; //passed by the fetch course middleware
@@ -156,25 +156,40 @@ exports.getCommentById = async (req, res) => {
   /**Delete a comment */ //NEEDED TO DELETE ALL CHILDREN COMMENTS
   exports.deleteComment = async (req, res) => {
     try {
-      const course = req.course; //passed by the fetchCourse middleware      
-      const comment = await Comment.findByIdAndDelete(req.params.commentId );
-
-      const latestComments = await Comment.find({})
-      .sort({ createdAt: -1 })
-      .limit(5); 
+      const course = req.course; //passed by the fetchCourse middleware  
+      const  commentBy  = req.user._id;
+      const {commentId} = req.param;
+      const comment = await Comment.findById(commentId)
       if(!comment) {
         return res
         .status(404)
-        .json({message: " comment not found"})
+        .json({error: " comment not found"})
       }
-      course.comment_count -= 1; //decrement the comment count for the course
-      await course.save({ new: true });
-      return res
-        .status(200)
-        .json({ message: "Comment deleted successfully", course, latestComments });
+      if(commentBy.toString() ===  comment.commentBy.toString()) { //another user trying to delete the comment
+        return res
+        .status(401)
+        .error({message: "cannot delete another user comment"})
+      }
+      
+    await Comment.deleteMany({ _id: { $in: comment.commentReplies } });// Delete all child comments (replies)
+    await comment.remove(); //Delete the main comment
+
+    course.comment_count -= 1; //decrement the comment count for the course
+    await course.save({ new: true });
+    const latestComments = await Comment.find({}) //comments to return
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    return res
+      .status(200)
+      .json({
+        message: "Comment deleted successfully, all replies are deleted too",
+        course,
+        latestComments,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };  
 
