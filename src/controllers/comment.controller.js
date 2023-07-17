@@ -1,11 +1,18 @@
 const Course = require('../models/course.model');
 const Comment = require("../models/comment.model");
 const jwt = require("jsonwebtoken");
+const {validatedCommentSchema} = require('../utils/joiSchema')
 
-// endpoint to make a comment on a course
+/**  endpoint to make a comment on a course */
 exports.addComment = async (req, res) => {
   try {
-    const { commentBy, commentBody } = req.body;
+    const validation = validatedCommentSchema(req.body);
+    if (validation.error) {
+      res.status(422).send(validation.error.details[0].message);
+      return;
+    }
+    const { commentBy } = req.body;
+    const {commentBody} = validation.value
     const course = req.course; //passed by the fetch course middleware
     const newComment = { commentBody, courseId: course._id, commentBy };
 
@@ -15,7 +22,7 @@ exports.addComment = async (req, res) => {
     await course.save({ new: true });
     return res
       .status(200)
-      .json({ message: "Comment added successfully", course });
+      .json({ message: "Comment added successfully", course, newComment });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
@@ -72,15 +79,20 @@ exports.getCommentById = async (req, res) => {
   /**update a commentBody */
   exports.updateComment = async (req, res) => {
     try {
-      const { commentBody } = req.body;
-      const course = req.course; //passed by the fetch course middleware
-      
+      const validation = validatedCommentSchema(req.body);
+      if (validation.error) {
+        res.status(422).send(validation.error.details[0].message);
+        return;
+      }
+      const { commentBy } = req.body;
+      const {commentBody} = validation.value
       const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,commentBody );
       if(!updatedComment) {
         return res
         .status(404)
         .json({message: " comment not found"})
       }
+      const course = req.course; //passed by the fetch course middleware
       return res
         .status(200)
         .json({ message: "Comment updated successfully", course, updatedComment });

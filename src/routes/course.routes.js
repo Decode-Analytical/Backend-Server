@@ -20,6 +20,7 @@ router.put("/editCourse/:id", upload.fields([
 
 router.delete("/deleteCourse/:id", deleteCourse);
 router.get("/searchingCourse", searchCourse);
+
 router.use('/', likeRouter)
 
 

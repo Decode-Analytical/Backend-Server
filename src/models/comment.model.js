@@ -18,7 +18,7 @@ const commentSchema = new mongoose.Schema(
       required: true,
     },
     parentCommentId: {
-      type: ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
       required: false, // if not populated, then its a top level comment
     },
