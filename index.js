@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const xss = require('xss-clean');
 const { useTreblle } = require("treblle");
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
@@ -25,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
-app.use(xss());
 app.use(mongoSanitize());
 
 app.get("/", (req, res) => {

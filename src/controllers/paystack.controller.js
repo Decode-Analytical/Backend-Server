@@ -5,6 +5,7 @@ const StudentCourse = require('../models/student.model');
 const sendEmail = require('../emails/email');
 const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
 
+
 exports.paystackPayment= async(req, res) => {
     const { email } = req.body;
     const existingEmail = await User.findOne({ email });
