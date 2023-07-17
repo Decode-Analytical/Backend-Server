@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { useTreblle } = require("treblle");
 const mongoSanitize = require('express-mongo-sanitize');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const connectDB = require("./src/database/db");
 const cloudinaryConfig = require('./src/utils/cloudinary');
 const courseRoutes = require('./src/routes/course.routes');
@@ -23,7 +23,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 app.use(mongoSanitize());
 
 app.get("/", (req, res) => {
