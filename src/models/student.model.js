@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const likeSchema = new mongoose.Schema({
   courseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course',
+    ref: 'Course', 
   },
   like: {
     type: Number,
