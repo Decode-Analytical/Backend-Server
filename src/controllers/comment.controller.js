@@ -1,3 +1,5 @@
+const Comment = require("../models/comment.model");
+const User = require("../models/user.model");
 const Course = require('../models/course.model');
 const Comment = require("../models/comment.model");
 const jwt = require("jsonwebtoken");

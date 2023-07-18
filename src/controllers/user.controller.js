@@ -19,15 +19,12 @@ exports.signUp = async (req, res) => {
         message: 'User already exists'
       });
     }
-    if(req.files){
-        const picture = req.files.picture;
     const newUser = await User.create({
       firstName,
       lastName,
       phoneNumber,
       email,
       password: hashedPassword,
-      picture: picture
     });
     const jwtoken = crypto.randomBytes(16).toString('hex');
     const token = await Token.create({
@@ -46,7 +43,6 @@ exports.signUp = async (req, res) => {
       user: newUser,
       token
     });
-  }
   } catch (error) {
     return res.status(500).json({
       message: 'Internal server error',
@@ -128,7 +124,6 @@ exports.userLogin = async(req, res) => {
         };
         const token = jwt.sign({
              _id: user._id,
-             email: user.email,
             }, process.env.JWT_SECRET, { expiresIn: '24h' });
         return res.status(200).json({
             message: 'User logged in successfully',
@@ -300,6 +295,63 @@ exports.deleteUser = async(req, res) => {
     } catch (error) {
         return res.status(400).json({
             message: 'Error while deleting user',
+            error: error.message
+        });
+    }
+};
+
+
+// user logout
+
+exports.logout = async(req, res) => {
+    try {
+        const { token } = req.body;
+        const user = await Token.findOne({ token });
+        if (user) {
+            await Token.findByIdAndDelete(user._id);
+            return res.status(200).json({
+                message: 'User logged out successfully'
+            });
+        } else {
+            return res.status(400).json({
+                message: 'Token not valid',
+            });
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while logging out',
+            error: error.message
+        });
+    }
+};
+
+
+// update user profile picture
+
+exports.updateStudentProfilePicture = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id)
+        if (userStatus.roles === "student" && userStatus.roles === "IT") {
+            if(req.files){
+                const picture = req.files.picture;
+            const updatedUser = await User.findByIdAndUpdate(userStatus._id, {
+                picture: picture,
+            }, { new: true });
+            return res.status(200).json({
+                message: 'User profile picture updated successfully',
+                updatedUser
+            });
+        } else {
+            return res.status(400).json({
+                message: 'You are not authorized a student or IT Student to perform this task',
+            });
+        }
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while updating user profile picture',
             error: error.message
         });
     }

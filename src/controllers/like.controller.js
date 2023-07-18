@@ -1,64 +1,33 @@
-const Comment = require('../models/comment.model');
 const Course = require('../models/course.model');
 const User = require('../models/user.model');
 const Student = require('../models/student.model'); //needed to be able to authorize the the student to like the course
 
-// like a comment
-exports.likeComment = async (req, res) => {
+exports.likeCourse = async (req, res) => {
     try {
         const id = req.user;
-        const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'student') {
+        const existingUser = await User.findById(id);
+        const userStatus = await User.findById(existingUser._id);
+        if (userStatus.roles === 'admin' && userStatus.roles === 'student' && userStatus.roles === 'IT') {
+        const _id = req.body._id;
+        const course = await Course.findById( _id );
+        const likecouse = await Course.findOneAndUpdate({ _id: course._id }, { $inc: { like_count: 1 } });
+        if (likecouse) {
+            return res.status(200).json({
+                message: 'Like added successfully',
+                course                    
+                });
+            } 
+        } else {
             return res.status(400).json({
-                message: 'You can not like your own comment',
+                message: 'you are not allowed to like this course'
             });
-        }
-        const comment = await Comment.findById(req.params.commentId);
-        if (!comment) {
-            return res.status(404).json({
-                message: 'Comment not found',
-            });
-        }
-        comment.likes.push(user._id);
-        await comment.save();
-        return res.status(200).json({
-            message: 'Comment liked',
-        });
-    } catch (err) {
-        console.log(err);
+        }           
+    }catch (error) {
         return res.status(500).json({
-            message: 'Something went wrong',
+            message: 'Internal server error',
+            error: error.message
         });
     }
-
-
-
-
-
-
-
-
-
-
-    const { commentId } = req.params;
-    const { userId } = req.user;
-    const comment = await Comment.findById(commentId);
-    if (!comment) {
-        return res.status(404).json({
-            message: 'Comment not found',
-        });
-    }
-    if (comment.userId.toString() === userId.toString()) {
-        return res.status(400).json({
-            message: 'You can not like your own comment',
-        });
-    }
-    comment.likes.push(userId);
-    await comment.save();
-    return res.status(200).json({
-        message: 'Comment liked',
-    });
 };
 
 /**students can only like when they haven't like or dislike and they can't delete their like */

@@ -1,5 +1,0 @@
-Student EndPoints
-GET /api/students/
-POST /api/students/:id
-GET /api/students/:id
-PUT /api/students/:id/pay

@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const xss = require('xss-clean');
 const { useTreblle } = require("treblle");
 const mongoSanitize = require('express-mongo-sanitize');
+// const helmet = require('helmet');
 const helmet = require('helmet');
 const logger = require('morgan')
 const connectDB = require("./src/database/db");
@@ -15,6 +15,7 @@ const studentRoutes = require('./src/routes/student.routes');
 const commentRoutes = require('./src/routes/comment.routes');
 const likeRoutes = require('./src/routes/like.routes');
 const paymentRoutes = require('./src/routes/payment.routes');
+const adminRoutes = require('./src/routes/admin.routes');
 
 // const tutorRoutes = require('./src/routes/tutor.routes');
 
@@ -26,8 +27,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(helmet());
-app.use(xss());
+// app.use(helmet());
 app.use(mongoSanitize());
 app.use(logger("dev")); //logger to log every request and response summary
 
@@ -51,6 +51,7 @@ app.use("/api/student", studentRoutes);
 app.use("/api/comment/", commentRoutes);
 // app.use("/api/tutor", tutorRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/admin", adminRoutes);
 
 
 app.use("/", (req, res) => {

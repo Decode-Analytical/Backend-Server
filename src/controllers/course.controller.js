@@ -9,11 +9,11 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin"){
-        const { title, description, price, summary, category, language, objectives, requirement  } = req.body;
+        const { title, description, price, summary, category, language, objectives, requirement  } = req.body;    
         if(req.files){
             images = req.files.images,
             video = req.files.video,
-            audio = req.files.audio        
+            audio = req.files.audio  
         const course = await Course.create({
             userId: userStatus._id,
             title, 
@@ -31,17 +31,15 @@ exports.createCourse = async (req, res) => {
         return res.status(201).json({
             message: "Course successfully created",
             course
-        });
-    }else{
-        return res.status(400).json({ error: "User must login as Admin in order to create a course" });
-    }
-}
- } catch (error)
-    {
-        return res.status(400).json({ 
-            message: "Error creating course",
-            error: error.message 
-        });
+        })}
+        }else{
+            return res.status(401).json({ error: "User must login as Admin in order to create a course" });
+        }
+        } catch (error){
+            return res.status(501).json({ 
+                message: "Error creating course",
+                error: error.message 
+                });
     }
 }
 
