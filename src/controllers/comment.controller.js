@@ -33,7 +33,6 @@ exports.addComment = async (req, res) => {
 exports.getComments = async (req, res) => {
     try {
       let limit = req.query.limit  //to specify the total number of comments to return
-        const course = req.course;
         limit = limit * 1; //convert the string to a number
         if(!limit){
             limit = 4
@@ -62,7 +61,6 @@ exports.getComments = async (req, res) => {
 exports.getCommentById = async (req, res) => {
     try {
       const {commentId} = req.params;
-      const course = req.course; //passed by the fetch course middleware 
       const comment = await Comment.findById(commentId);
       if(!comment) {
         return res
@@ -71,7 +69,7 @@ exports.getCommentById = async (req, res) => {
       }
       return res
         .status(200)
-        .json({ message: "success", course, comment });
+        .json({ message: "success",  comment });
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: error.message });
@@ -81,33 +79,35 @@ exports.getCommentById = async (req, res) => {
   /**update a commentBody */ //NOT YET TESTED FULLY
   exports.updateComment = async (req, res) => {
     try {
-      const validation = validatedCommentSchema(req.body);
+        
+      const validation = validatedCommentSchema(req.body); //validating user input
       if (validation.error) {
         res.status(422).send(validation.error.details[0].message);
         return;
       }
-      const { commentBy } = req.body;
-      const {commentId} = req.param;
+      const  commentBy  = req.user_id;
+      const {commentId} = req.params;
       const {commentBody} = validation.value
       const comment = await Comment.findById(commentId)
       if(!comment) {
         return res
         .status(404)
-        .json({message: " comment not found"})
+        .json({error: " comment not found"})
       }
       if(commentBy.toString() ===  comment.commentBy.toString()) { //another user trying to update the comment
         return res
         .status(401)
-        .json({message: "cannot update another user comment"})
+        .json({error: "cannot update another user comment"})
       }
+
       const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,commentBody );
       const course = req.course; //passed by the fetch course middleware
       return res
         .status(200)
-        .json({ message: "Comment updated successfully", course, updatedComment });
+        .json({ message: "Comment updated successfully", updatedComment });
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ error: error.message });
     }
   };  
 
@@ -121,32 +121,51 @@ exports.getCommentById = async (req, res) => {
       }
       const { commentBody } = validation.value;
       const parentCommentId = req.params.commentId;
-      const parentComment = await Comment.findByIdAndUpdate(
-        parentCommentId,
-        (parentComment.reply_count += 1),
-        { new: true }
-      );
+      const course = req.course; //passed by the fetch course middleware'
+
+      const parentComment = await Comment.findById(parentCommentId);
       if (!parentComment) {
         return res
           .status(404)
-          .json({ message: " comment not found to reply to" });
+          .json({ error: " comment not found to reply to" });
       }
-      const course = req.course; //passed by the fetch course middleware
-      const { commentBy } = req.body;
-
+      const { commentBy } = req.user._id;
       const reply = {
         commentBody,
         courseId: course._id,
         commentBy,
         parentCommentId,
       };
-
       const commentReply = await Comment.create({ ...reply }); //create a new comment
+      /**if the comment that want to reply to is also another reply to a comment, the new comment
+      will be added to the reply list of the main comment. Otherwise we add the new comment as reply **/
+      if (parentComment.parentCommentId){ //if the parentComment is also a reply to another comment
+        const mainComment = await Comment.findByIdAndUpdate(
+            parentComment.parentCommentId,
+            {
+                $inc: { reply_count: 1 },
+                $push: { commentReplies: { commentReplies: commentReply } },
+              },
+              { new: true }
+        )
+        return res.status(200).json({
+            message: "Comment reply added successfully to the main thread",
+            mainComment,
+            commentReply,
+          });
+      }
+        //if the comment to reply has no parent       
+        parentComment.reply_count +=1 //increment the comment reply count
+        parentComment.commentReplies.push(commentReply); // add the reply to the comment reply Id list
+
+        await parentComment.save({new: true}); // save and return the new comment
+            
       return res.status(200).json({
         message: "Comment reply added successfully",
         parentComment,
         commentReply,
       });
+      
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: error.message });
@@ -158,7 +177,7 @@ exports.getCommentById = async (req, res) => {
     try {
       const course = req.course; //passed by the fetchCourse middleware  
       const  commentBy  = req.user._id;
-      const {commentId} = req.param;
+      const {commentId} = req.params;
       const comment = await Comment.findById(commentId)
       if(!comment) {
         return res
@@ -196,30 +215,31 @@ exports.getCommentById = async (req, res) => {
    /**Delete a child comment */
    exports.deleteCommentReply = async (req, res) => {
     try {
-      const comment = await Comment.findByIdAndDelete(req.params.commentId );
-      const parentCommentId = req.params.commentId;
-      const parentComment = await Comment.findByIdAndUpdate(
-        parentCommentId,
-        (parentComment.reply_count -= 1), //reduce the reply count by 1
-        { new: true }
-      );
-      if (!parentComment) {
-        return res
-          .status(404)
-          .json({ message: " comment not found to reply to" });
-      }
-      const course = req.course; //passed by the fetch course middleware
-      const latestComments = await Comment.find({}) //returns the latest comments
-      .sort({ createdAt: -1 })
-      .limit(5); 
-      if(!comment) {
-        return res
-        .status(404)
-        .json({message: " comment not found"})
-      }
+        const parentCommentId = req.params.commentId;
+        const commentBy = req.user._id;
+        const comment = await Comment.findById(req.params.commentId);
+        if (commentBy.toString() === comment.commentBy.toString()) {
+          //another user trying to delete the comment
+          return res
+            .status(401)
+            .error({ error: "cannot delete another user comment" });
+        }
+        if (!comment) {
+          return res.status(404).json({ message: " comment not found" });
+        }
+        const parentComment = await Comment.findByIdAndUpdate(
+          parentCommentId,
+          (parentComment.reply_count -= 1), //reduce the reply count by 1
+          { new: true }
+        );
+
+        const latestComments = await Comment.find({}) //returns the latest comments
+          .sort({ createdAt: -1 })
+          .limit(5); 
+     
       return res
         .status(200)
-        .json({ message: "reply deleted successfully", course, latestComments });
+        .json({ message: "reply deleted successfully", latestComments });
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: error.message });

@@ -20,7 +20,7 @@ const commentSchema = new mongoose.Schema(
     parentCommentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-      required: false, // if not populated, then its a top level comment
+      default: null // if not populated, then its a top level comment
     },
     commentReplies: [
       {
