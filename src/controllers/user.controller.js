@@ -16,16 +16,18 @@ exports.signUp = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if(existingUser) {
       return res.status(400).json({
-        message: 'User already exists' 
+        message: 'User already exists'
       });
     }
-    
+    if(req.files){
+        const picture = req.files.picture;
     const newUser = await User.create({
       firstName,
       lastName,
       phoneNumber,
       email,
       password: hashedPassword,
+      picture: picture
     });
     const jwtoken = crypto.randomBytes(16).toString('hex');
     const token = await Token.create({
@@ -44,6 +46,7 @@ exports.signUp = async (req, res) => {
       user: newUser,
       token
     });
+  }
   } catch (error) {
     return res.status(500).json({
       message: 'Internal server error',
