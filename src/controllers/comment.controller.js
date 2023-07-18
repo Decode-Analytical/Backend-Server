@@ -112,6 +112,10 @@ exports.deleteComment = async(req, res) => {
             message: "Comment deleted successfully",
             comment: comment
         });
+    }else{
+        return res.status(401).json({
+            message: 'You are not authorized here'
+        })
     }
     } catch (error) {
         res.status(500).json({
