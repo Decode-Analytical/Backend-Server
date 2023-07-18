@@ -7,7 +7,7 @@ const likeSchema = new mongoose.Schema({
   },
   like: {
     type: Number,
-    enum: [0, 1, -1],
+    enum: [0, 1, -1], //has the student like the course or not
     required: true,
     default: 0,
   },

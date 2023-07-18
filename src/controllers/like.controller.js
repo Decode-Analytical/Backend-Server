@@ -158,16 +158,16 @@ exports.dislikeCourse = async (req, res) => {
 
 
 exports.test = async (req, res) => {
-  return res.status(200).send({ message: 'hello world from here' });
+  // return res.status(200).send({ message: 'hello world from here' });
     
 
-    if(req.query.c){
-        const c = await Course.find({}, '_id title' )
-    return res.status(200).send({ message: 'hello world from here', c });
-    }
-    const s = await Student.findOne().limit(1).populate('registeredCourses', 'like')
-    s.registeredCourses.push("64b1c96f718f354f21c3a701")
-    await s.save()
+  //   if(req.query.c){
+  //       const c = await Course.find({}, '_id title' )
+  //   return res.status(200).send({ message: 'hello world from here', c });
+  //   }
+    const s = await Student.find({}, '_id registeredCourses userId')
+    // s.registeredCourses.push("64b1c96f718f354f21c3a701")
+    // await s.save()
     res.status(200).send({ message: 'hello world from here', s });
 
     

@@ -24,5 +24,4 @@ router.get("/searchingCourse", searchCourse);
 router.use('/', likeRouter)
 
 
-
 module.exports = router;

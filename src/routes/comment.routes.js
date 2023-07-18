@@ -1,7 +1,13 @@
 const express = require("express");
-const {auth} = require("../middleware/auth");
-const  {addComment,getComments,getCommentById,deleteComment,updateComment} = commentController = require('../controllers/comment.controller');
-const course = require('../middleware/course');
+const { auth } = require("../middleware/auth");
+const {
+  addComment,
+  getComments,
+  getCommentById,
+  deleteComment,
+  updateComment,
+} = (commentController = require("../controllers/comment.controller"));
+const course = require("../middleware/course");
 const router = express.Router();
 
 router.use(auth);
@@ -16,12 +22,6 @@ router
   .delete(deleteComment);
 
 
-// router.post('/:courseId/', addComment);
-// router.get('/:courseId/', getComments);
-// router.get('/:courseId/:commentId', getCommentById);
-// router.delete('/:courseId/:commentId', deleteComment);
-// router.put('/:courseId/:commentId', updateComment);
- 
 // router.post('/replyComment', commentController.replyComment);
 
 // router.post('/comment', commentController.addComment);
@@ -29,6 +29,5 @@ router
 // router.post('/deleteComment', commentController.deleteComment);
 // router.post('/edit/Comment', commentController.editComment);
 // router.post('/replyComment', commentController.replyComment);
-
 
 module.exports = router;
