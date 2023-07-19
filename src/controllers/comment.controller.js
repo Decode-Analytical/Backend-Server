@@ -1,7 +1,7 @@
 const Comment = require("../models/comment.model");
 const User = require("../models/user.model");
+const Student = require('../models/student.model'); //needed to be able to authorize the the student to like the course
 const Course = require('../models/course.model');
-const Comment = require("../models/comment.model");
 const jwt = require("jsonwebtoken");
 const {validatedCommentSchema} = require('../utils/joiSchema')
 
@@ -13,9 +13,32 @@ exports.addComment = async (req, res) => {
       res.status(422).send(validation.error.details[0].message);
       return;
     }
-    const commentBy = req.user._id;
+    const userId = commentBy = req.user._id;
     const { commentBody } = validation.value;
     const course = req.course; //passed by the fetch course middleware
+
+    //check if the student exist and he registered for the course by checking his registered courses list
+    const student = await Student.findOne({
+      userId,
+      registeredCourses: { $elemMatch: { _id: course._id } },
+    });
+
+    if (!student) {
+      return res.status(401).json({
+        error: `please register so you can like the course`,
+      });
+    }
+    // /**index of the course in the student registered course list */
+    // const registeredCourseIndex = student.registeredCourses.findIndex(courseObj => courseObj._id.toString() === course._id);        
+    
+    // /**commented can be true or false */
+    // const commented = student.registeredCourses[registeredCourseIndex].commented
+
+    // if (commented) {//incase he wants to comment again after comment
+    //   return res
+    //     .status(409)
+    //     .json({ error: "you can only comment  a course once"});
+    // }
     const newComment = { commentBody, courseId: course._id, commentBy };
 
     await Comment.create({ ...newComment }); //create a new comment
@@ -139,14 +162,16 @@ exports.getCommentById = async (req, res) => {
         parentCommentId,
       };
       const commentReply = await Comment.create({ ...reply }); //create a new comment
+
       /**if the comment that want to reply to is also another reply to a comment, the new comment
       will be added to the reply list of the main comment. Otherwise we add the new comment as reply **/
+
       if (parentComment.parentCommentId){ //if the parentComment is also a reply to another comment
         const mainComment = await Comment.findByIdAndUpdate(
             parentComment.parentCommentId,
             {
                 $inc: { reply_count: 1 },
-                $push: { commentReplies: { commentReplies: commentReply } },
+                $push: { commentReplies: { commentReplies: commentReply._id } },
               },
               { new: true }
         )
@@ -158,7 +183,7 @@ exports.getCommentById = async (req, res) => {
       }
         //if the comment to reply has no parent       
         parentComment.reply_count +=1 //increment the comment reply count
-        parentComment.commentReplies.push(commentReply); // add the reply to the comment reply Id list
+        parentComment.commentReplies.push(commentReply._id); // add the reply to the comment reply Id list
 
         await parentComment.save({new: true}); // save and return the new comment
             
@@ -174,7 +199,7 @@ exports.getCommentById = async (req, res) => {
     }
   };
   
-  /**Delete a comment */ //NEEDED TO DELETE ALL CHILDREN COMMENTS
+  /**Delete a comment */ 
   exports.deleteComment = async (req, res) => {
     try {
       const course = req.course; //passed by the fetchCourse middleware  
@@ -217,24 +242,29 @@ exports.getCommentById = async (req, res) => {
    /**Delete a child comment */
    exports.deleteCommentReply = async (req, res) => {
     try {
-        const parentCommentId = req.params.commentId;
+        const {commentId} = req.params;
         const commentBy = req.user._id;
-        const comment = await Comment.findById(req.params.commentId);
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+          return res.status(404).json({ message: " comment not found" });
+        }
+
         if (commentBy.toString() === comment.commentBy.toString()) {
           //another user trying to delete the comment
           return res
             .status(401)
             .error({ error: "cannot delete another user comment" });
         }
-        if (!comment) {
-          return res.status(404).json({ message: " comment not found" });
-        }
-        const parentComment = await Comment.findByIdAndUpdate(
-          parentCommentId,
-          (parentComment.reply_count -= 1), //reduce the reply count by 1
+      //decrement the parentComment reply count
+        await Comment.findOneAndUpdate(
+          { parentCommentId: comment.parentCommentId },
+          {
+            $inc: { reply_count: -1 }, 
+            $pop: { commentReplies: { commentReplies: commentReply._id } },
+          },
           { new: true }
         );
-
+        
         const latestComments = await Comment.find({}) //returns the latest comments
           .sort({ createdAt: -1 })
           .limit(5); 

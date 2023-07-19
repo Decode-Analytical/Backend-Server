@@ -3,13 +3,17 @@ const mongoose = require('mongoose');
 const likeSchema = new mongoose.Schema({
   courseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course', 
+    ref: "Course",
   },
   like: {
     type: Number,
     enum: [0, 1, -1], //has the student like the course or not
     required: true,
     default: 0,
+  },
+  commented: {
+    type: Boolean,
+    default: false,
   },
 });
 

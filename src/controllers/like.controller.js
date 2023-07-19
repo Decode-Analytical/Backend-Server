@@ -2,38 +2,39 @@ const Course = require('../models/course.model');
 const User = require('../models/user.model');
 const Student = require('../models/student.model'); //needed to be able to authorize the the student to like the course
 
-exports.likeCourse = async (req, res) => {
-    try {
-        const id = req.user;
-        const existingUser = await User.findById(id);
-        const userStatus = await User.findById(existingUser._id);
-        if (userStatus.roles === 'admin' && userStatus.roles === 'student' && userStatus.roles === 'IT') {
-        const _id = req.body._id;
-        const course = await Course.findById( _id );
-        const likecouse = await Course.findOneAndUpdate({ _id: course._id }, { $inc: { like_count: 1 } });
-        if (likecouse) {
-            return res.status(200).json({
-                message: 'Like added successfully',
-                course                    
-                });
-            } 
-        } else {
-            return res.status(400).json({
-                message: 'you are not allowed to like this course'
-            });
-        }           
-    }catch (error) {
-        return res.status(500).json({
-            message: 'Internal server error',
-            error: error.message
-        });
-    }
-};
+// exports.likeCourse = async (req, res) => {
+//     try {
+//         const id = req.user;
+//         const existingUser = await User.findById(id);
+//         const userStatus = await User.findById(existingUser._id);
+//         if (userStatus.roles === 'admin' && userStatus.roles === 'student' && userStatus.roles === 'IT') {
+//         const _id = req.body._id;
+//         const course = await Course.findById( _id );
+//         const likecouse = await Course.findOneAndUpdate({ _id: course._id }, { $inc: { like_count: 1 } });
+//         if (likecouse) {
+//             return res.status(200).json({
+//                 message: 'Like added successfully',
+//                 course                    
+//                 });
+//             } 
+//         } else {
+//             return res.status(400).json({
+//                 message: 'you are not allowed to like this course'
+//             });
+//         }           
+//     }catch (error) {
+//         return res.status(500).json({
+//             message: 'Internal server error',
+//             error: error.message
+//         });
+//     }
+// };
 
 /**students can only like when they haven't like or dislike and they can't delete their like */
 exports.likeCourse = async (req, res) => {
     try {
-      const { courseId, studentId } = req.params;
+      const { courseId } = req.params;
+      const userId = req.user._id;
 
       const course = await Course.findById(courseId); //fetch the course to like
       if (!course) {
@@ -41,13 +42,13 @@ exports.likeCourse = async (req, res) => {
       }
       //check if the student exist and he registered for the course
       const student = await Student.findOne({
-        _id: studentId,
+        userId,
         registeredCourses: { $elemMatch: { _id: courseId } },
       });
 
       if (!student) {
         return res.status(401).json({
-          message: `student with the id: ${studentId} has not been registered for this course`,
+          message: `student with the userId: ${userId} has not been registered for this course`,
         });
       }
       /**index of the course in the student registered course list */
@@ -80,7 +81,8 @@ exports.likeCourse = async (req, res) => {
 /**students can only dislike when they haven't like or dislike and they can't delete their dislike */
 exports.dislikeCourse = async (req, res) => {
   try {
-    const { courseId, studentId } = req.params;
+    const { courseId} = req.params;
+    const userId = req.user._id;
 
     const course = await Course.findById(courseId); //fetch the course to like
     if (!course) {
@@ -88,13 +90,13 @@ exports.dislikeCourse = async (req, res) => {
     }
     //check if the student exist and he registered for the course
     const student = await Student.findOne({
-      _id: studentId,
+      userId,
       registeredCourses: { $elemMatch: { _id: courseId } },
     });
 
     if (!student) {
       return res.status(401).json({
-        message: `student with the id: ${studentId} has not been registered for this course`,
+        message: `student with the id: ${userId} has not been registered for this course`,
       });
     }
     /**index of the course in the student registered course list */
@@ -134,10 +136,13 @@ exports.test = async (req, res) => {
   //       const c = await Course.find({}, '_id title' )
   //   return res.status(200).send({ message: 'hello world from here', c });
   //   }
-    const s = await Student.find({}, '_id registeredCourses userId')
-    // s.registeredCourses.push("64b1c96f718f354f21c3a701")
-    // await s.save()
-    res.status(200).send({ message: 'hello world from here', s });
+    // const s = await Student.find({}, '_id registeredCourses userId')
+    const { courseId} = req.params;
+    const userId = req.user._id;
+    const student = await Student.findOne({ userId });
+    student.registeredCourses.pop(courseId);
+    await student.save()
+    res.status(200).send({ message: 'hello world from here', student });
 
     
 }
