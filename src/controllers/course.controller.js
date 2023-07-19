@@ -44,6 +44,7 @@ exports.createCourse = async (req, res) => {
 }
 
 
+
 // view the Course registered  by Admin(one user)
 exports.getCourses = async (req, res) => {
     try {
@@ -66,6 +67,31 @@ exports.getCourses = async (req, res) => {
         });
     }
 }
+
+// admin view all courses
+
+exports.getAllCourses = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === "admin"){
+            const courses = await Course.find();
+            return res.status(200).json({
+                message: "Courses fetched successfully",
+                courses
+            });
+        } else {
+            return res.status(400).json({ error: "User must login as Admin in order to view a course" });
+        }
+    } catch (error) {
+        return res.status(400).json({ 
+            message: "Error fetching courses",
+            error: error.message 
+        });
+    }
+}
+
 
 
 
