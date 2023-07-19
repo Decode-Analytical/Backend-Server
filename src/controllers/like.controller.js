@@ -38,7 +38,7 @@ exports.likeCourse = async (req, res) => {
 
       const course = await Course.findById(courseId); //fetch the course to like
       if (!course) {
-        return res.status(404).json({ message: "course not found" });
+        return res.status(404).json({ Error: "course not found" });
       }
       //check if the student exist and he registered for the course
       const student = await Student.findOne({
@@ -48,7 +48,7 @@ exports.likeCourse = async (req, res) => {
 
       if (!student) {
         return res.status(401).json({
-          message: `student with the userId: ${userId} has not been registered for this course`,
+          Error: `student with the userId: ${userId} has not been registered for this course`,
         });
       }
       /**index of the course in the student registered course list */
@@ -60,7 +60,7 @@ exports.likeCourse = async (req, res) => {
       if (likedValue != 0) {//incase he wants to like again after like or dislike
         return res
           .status(409)
-          .json({ message: "you can only like or dislike a course once"});
+          .json({ Error: "you can only like or dislike a course once"});
       }
       // if he hasn't liked or disliked the course yet, increment the course like_count and save it
         course.like_count++; 
@@ -86,7 +86,7 @@ exports.dislikeCourse = async (req, res) => {
 
     const course = await Course.findById(courseId); //fetch the course to like
     if (!course) {
-      return res.status(404).json({ message: "course not found" });
+      return res.status(404).json({ error: "course not found" });
     }
     //check if the student exist and he registered for the course
     const student = await Student.findOne({
@@ -96,7 +96,7 @@ exports.dislikeCourse = async (req, res) => {
 
     if (!student) {
       return res.status(401).json({
-        message: `student with the id: ${userId} has not been registered for this course`,
+        error: `student with the id: ${userId} has not been registered for this course`,
       });
     }
     /**index of the course in the student registered course list */
@@ -108,7 +108,7 @@ exports.dislikeCourse = async (req, res) => {
     if (likedValue != 0) {//incase he wants to dislike again after like or dislike
       return res
         .status(409)
-        .json({ message: "you can only like or dislike once for a course"});
+        .json({ Error: "you can only like or dislike once for a course"});
     }
 
     // if he hasn't like or disliked the course yet, increment the course dislike_count and save it
@@ -130,19 +130,21 @@ exports.dislikeCourse = async (req, res) => {
 
 exports.test = async (req, res) => {
   // return res.status(200).send({ message: 'hello world from here' });
+  const { courseId} = req.params;
     
 
-  //   if(req.query.c){
-  //       const c = await Course.find({}, '_id title' )
-  //   return res.status(200).send({ message: 'hello world from here', c });
-  //   }
+    if(req.query.c){
+        const c = await Course.findById(courseId, '_id title description comment_count' )
+    return res.status(200).send({ message: 'hello world from here', c });
+    }
     // const s = await Student.find({}, '_id registeredCourses userId')
-    const { courseId} = req.params;
     const userId = req.user._id;
     const student = await Student.findOne({ userId });
+    const u = await User.findOne({})
+
     student.registeredCourses.pop(courseId);
-    await student.save()
-    res.status(200).send({ message: 'hello world from here', student });
+    // await student.save()
+    res.status(200).send({ message: 'hello world from here', u });
 
     
 }

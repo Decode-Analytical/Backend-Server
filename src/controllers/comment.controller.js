@@ -104,28 +104,30 @@ exports.getCommentById = async (req, res) => {
   /**update a commentBody */ //NOT YET TESTED FULLY
   exports.updateComment = async (req, res) => {
     try {
-        
       const validation = validatedCommentSchema(req.body); //validating user input
       if (validation.error) {
         res.status(422).send(validation.error.details[0].message);
         return;
       }
-      const  commentBy  = req.user_id;
-      const {commentId} = req.params;
-      const {commentBody} = validation.value
-      const comment = await Comment.findById(commentId)
-      if(!comment) {
-        return res
-        .status(404)
-        .json({error: " comment not found"})
+      const commentBy = req.user._id
+      const { commentId } = req.params;
+      const { commentBody } = validation.value;
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json({ error: " comment not found" });
       }
-      if(commentBy.toString() ===  comment.commentBy.toString()) { //another user trying to update the comment
+      if (commentBy.toString() !== comment.commentBy.toString()) {
+        //another user trying to update the comment
         return res
-        .status(401)
-        .json({error: "cannot update another user comment"})
+          .status(401)
+          .json({ error: "cannot update another user comment" });
       }
-
-      const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,commentBody );
+      const updatedComment = await Comment.findByIdAndUpdate(
+        commentId,
+        {commentBody},
+        { new: true }
+      );
+      // console.log({updatedComment})
       const course = req.course; //passed by the fetch course middleware
       return res
         .status(200)
@@ -154,10 +156,10 @@ exports.getCommentById = async (req, res) => {
           .status(404)
           .json({ error: " comment not found to reply to" });
       }
-      const { commentBy } = req.user._id;
+      const  commentBy  = req.user._id;
       const reply = {
         commentBody,
-        courseId: course._id,
+        courseId: parentComment.courseId,
         commentBy,
         parentCommentId,
       };
@@ -211,10 +213,11 @@ exports.getCommentById = async (req, res) => {
         .status(404)
         .json({error: " comment not found"})
       }
-      if(commentBy.toString() ===  comment.commentBy.toString()) { //another user trying to delete the comment
+      console.log({commentBy}, 'comment.commentBy.toString(): ', comment.commentBy.toString())
+      if(commentBy.toString() !==  comment.commentBy.toString()) { //another user trying to delete the comment
         return res
         .status(401)
-        .error({message: "cannot delete another user comment"})
+        .json({error: "cannot delete another user comment"})
       }
       
     await Comment.deleteMany({ _id: { $in: comment.commentReplies } });// Delete all child comments (replies)
@@ -249,7 +252,7 @@ exports.getCommentById = async (req, res) => {
           return res.status(404).json({ message: " comment not found" });
         }
 
-        if (commentBy.toString() === comment.commentBy.toString()) {
+        if (commentBy.toString() !== comment.commentBy.toString()) {
           //another user trying to delete the comment
           return res
             .status(401)
@@ -333,60 +336,4 @@ exports.getCommentById = async (req, res) => {
 // });
 
 
-// exports.editComment = (async (req, res) => {
-//     const { token, _id, comment_body } = req.body;
 
-//     if(!token || !_id)
-//       return res.status(400).send({status: 'error', msg: 'All fields must be filled'});
-
-//     try{
-//         const user = jwt.verify(token, process.env.JWT_SECRET);
-//         console.log("dee")
-//         const filter = {_id: _id};
-//         const comments = {comment: comment_body || comment.comment}
-
-//         let comment = await Comment.findByIdAndUpdate(filter, comments, {
-//             new: true
-//         });
-    
-//         if(!comment) 
-//           return res.status(404).send({status: 'ENOENT', msg: 'Comment not found'});
-    
-//         return res.status(200).send({status: 'ok', msg: 'Comment updated successfully', comment});
-//     }catch(e) {
-//          console.log(e);
-//         return res.status(400).send({status: 'error', msg: 'Some error occurred'})
-//     }
-// });
-
-
-// exports.replyComment = ( async (req, res) => {
-//     const { _id, token, comment_body, owner_img, owner_name} = req.body;
-
-//     if(!_id || !token)
-//       return res.status(400).send({status: 'error', msg: 'All fields must be filled'});
-
-//     try{
-//         const user = jwt.verify(token, process.env.JWT_SECRET);
-
-//         let comment = await Comment.findByIdAndUpdate(
-//             {_id},
-//             {'$inc': {reply_count: +1}},
-//             {new: true}
-//         ).lean();
-        
-//         comment = await new Comment;
-//         comment.comment = comment_body;
-//         comment.comment_id = _id;
-//         comment.owner_id = user._id;
-//         comment.owner_name = owner_name;
-//         comment.owner_img = owner_img || '';
-
-//         comment = await comment.save();
-//         return res.status(200).send({status: 'ok', msg: 'Success', comment});
-        
-//     }catch(e) {
-//         console.log(e);
-//         return res.status(400).send({status: 'error', msg: 'Some error occurred', e});
-//     }
-// });
