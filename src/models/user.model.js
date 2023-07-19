@@ -32,8 +32,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       trim: true,
-      select: true,
-      match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, "Password must be at least 8 characters, with at least one uppercase letter, one lowercase letter, one number and one special character"],
+      select: false
     },
     phoneNumber: {
       type: Number,
@@ -52,6 +51,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "student", "IT"],
       default: "student",
+  },
+  courseLimit: {
+    type: mongoose.Decimal128,
+    default: 0,
   },
   points: {
     type: Number,
