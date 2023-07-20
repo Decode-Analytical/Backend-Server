@@ -35,21 +35,9 @@ exports.likeCourse = async (req, res) => {
     try {
       const { courseId } = req.params;
       const userId = req.user._id;
-
-      const course = await Course.findById(courseId); //fetch the course to like
-      if (!course) {
-        return res.status(404).json({ Error: "course not found" });
-      }
-      // //check if the student exist and he registered for the course
-      // const student = await Student.findOne({
-      //   userId,
-      //   registeredCourses: { $elemMatch: { _id: courseId } },
-      // });
-       //check if the student exist and he registered for the course
-       const student = await Student.find({
-        userId,
-        registeredCourses: { $elemMatch: { _id: courseId } },
-      });
+      const course = req.course;
+      //check if the user registered for this course
+       const student = await Student.find({ userId, courseId: course._id });
       if (!student) {
         return res.status(401).json({
           Error: `student with the userId: ${userId} has not been registered for this course`,
