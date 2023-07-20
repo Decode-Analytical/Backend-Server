@@ -1,7 +1,6 @@
 const express = require("express");
 const { auth } = require("../middleware/auth");
 const upload = require('../utils/multer');
-const likeRouter = require('./like.routes')
 const { createCourse, getCourses, updateCourse, deleteCourse, searchCourse,   } = require('../controllers/course.controller');
 const router = express.Router();
 
@@ -21,7 +20,6 @@ router.put("/editCourse/:id", upload.fields([
 router.delete("/deleteCourse/:id", deleteCourse);
 router.get("/searchingCourse", searchCourse);
 
-router.use('/', likeRouter)
 
 
 module.exports = router;

@@ -70,7 +70,7 @@ const courseSchema = new mongoose.Schema({
         required: false, 
       },
     ],
-    likes:[
+    likeAndDislikeUsers:[
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

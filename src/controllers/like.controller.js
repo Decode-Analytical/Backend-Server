@@ -30,104 +30,90 @@ const Student = require('../models/student.model'); //needed to be able to autho
 //     }
 // };
 
-/**students can only like when they haven't like or dislike and they can't delete their like */
+/**middleware to like a course students can only like when they haven't like or dislike */
 exports.likeCourse = async (req, res) => {
     try {
       const { courseId } = req.params;
       const userId = req.user._id;
       const course = req.course;
-      //check if the user registered for this course
-       const student = await Student.find({ userId, courseId: course._id });
+      const { likeAndDislikeUsers } = course;
+      // //check if the student exist and he registered for the course
+      const student = await Student.find({ userId, courseId });
       if (!student) {
         return res.status(401).json({
           Error: `student with the userId: ${userId} has not been registered for this course`,
         });
       }
-      /**index of the course in the student registered course list */
-      const registeredCourseIndex = student.registeredCourses.findIndex(course => course._id.toString() === courseId);        
-      
-      /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
-      const likedValue = student.registeredCourses[registeredCourseIndex].like
-
-      if (likedValue != 0) {//incase he wants to like again after like or dislike
+      /**Check if student already liked or disliked the course */
+      const hasLikedCourse = likeAndDislikeUsers.includes(userId);
+      if (hasLikedCourse) {
         return res
           .status(409)
-          .json({ Error: "you can only like or dislike a course once"});
+          .json({ Error: "you can only like or dislike a course once" });
       }
       // if he hasn't liked or disliked the course yet, increment the course like_count and save it
-        course.like_count++; 
-        course.save({ new: true })
+      course.like_count +=1;
 
-        student.registeredCourses[registeredCourseIndex].like = 1
-        student.save({ new: true })
-        return res
-          .status(200)
-          .json({ message: "you like the course", course });
-     
+      course.likeAndDislikeUsers.push(userId); //add the userId to the list of users that have liked the course
+      course.save({ new: true });
+
+      return res.status(200).json({ message: "you like the course", course });
     } catch (error) {
         console.error(error);
       res.status(500).send({ message: error.message });
     }
 }
 
-/**students can only dislike when they haven't like or dislike and they can't delete their dislike */
+/**middleware to dislike course students can only dislike when they haven't like or dislike*/
 exports.dislikeCourse = async (req, res) => {
   try {
-    const { courseId} = req.params;
+    const { courseId } = req.params;
     const userId = req.user._id;
-
-    const course = await Course.findById(courseId); //fetch the course to like
-    if (!course) {
-      return res.status(404).json({ error: "course not found" });
-    }
-    //check if the student exist and he registered for the course
-    const student = await Student.findOne({
-      userId,
-      registeredCourses: { $elemMatch: { _id: courseId } },
-    });
-
+    const course = req.course;
+    const { likeAndDislikeUsers } = course;
+    // //check if the student exist and he registered for the course
+    const student = await Student.find({ userId, courseId });
     if (!student) {
       return res.status(401).json({
-        error: `student with the id: ${userId} has not been registered for this course`,
+        Error: `student with the userId: ${userId} has not been registered for this course`,
       });
     }
-    /**index of the course in the student registered course list */
-    const registeredCourseIndex = student.registeredCourses.findIndex(course => course._id.toString() === courseId);        
-    
-    /**likedValue can be 1, 0 or -1. 1 for like, 0 for no decision yet and 0 for unlike */
-    const likedValue = student.registeredCourses[registeredCourseIndex].like
-
-    if (likedValue != 0) {//incase he wants to dislike again after like or dislike
+    /**Check if student already liked or disliked the course */
+    const hasLikedCourse = likeAndDislikeUsers.includes(userId);
+    if (hasLikedCourse) {
       return res
         .status(409)
-        .json({ Error: "you can only like or dislike once for a course"});
+        .json({ Error: "you can only like or dislike a course once" });
     }
+    // if he hasn't liked or disliked the course yet, increment the course like_count and save it
+    course.dislike_count +=1;
 
-    // if he hasn't like or disliked the course yet, increment the course dislike_count and save it
-      course.dislike_count++; 
-      course.save({ new: true })
+    course.likeAndDislikeUsers.push(userId); //add the userId to the list of users that have liked the course
+    course.save({ new: true });
 
-      student.registeredCourses[registeredCourseIndex].like = -1
-      student.save({ new: true })
-      return res
-        .status(200)
-        .json({ message: "you dislike the course, you can watch again", course });
-   
+    return res.status(200).json({ message: "you dislike the course", course });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });
   }
 }
 
-const getLikes = async (req, res) => {
-  const { courseId} = req.params;
+exports.getLikes = async (req, res) => {
+  try{
+    const { courseId} = req.params;
   const userId = req.user._id;
 
-  const course = await Course.findById(courseId, 'title like_counts dislike_count'); //fetch the course to like
+  const course = await Course.findById(courseId, 'title like_count dislike_count'); //fetch the course to like
   if (!course) {
     return res.status(404).json({ error: "course not found" });
   }
-  return res.json.status(200).json({message: 'success', course});
+
+   res.status(200).json({message: 'success', course});
+  }
+  catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: err.message });
+  }
 };
 
 exports.test = async (req, res) => {

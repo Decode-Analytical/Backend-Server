@@ -1,13 +1,19 @@
 const express = require("express");
 const {auth} = require("../middleware/auth");
-const likeController = require('../controllers/like.controller');
-const likeRouter = express.Router();
+const {fetchCourse} = require("../middleware/course");
 
+const {test,getLikes,likeCourse,dislikeCourse} = require('../controllers/like.controller');
+const router = express.Router();
+ 
 // likeCourse
-likeRouter.all('/:courseId/random', likeController.test)
+router.all('/:courseId/random', test)
 
-// likeRouter.use(auth);
-likeRouter.put('/:courseId/like', likeController.likeCourse)
-likeRouter.put('/:courseId/dislike', likeController.dislikeCourse)
+router.use(auth);
+router.get('/:courseId/',getLikes)
 
-module.exports = likeRouter;
+router.use('/:courseId/',fetchCourse); 
+
+router.route('/:courseId/like').put(likeCourse).put(dislikeCourse)
+
+
+module.exports = router;
