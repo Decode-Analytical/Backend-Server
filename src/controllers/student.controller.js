@@ -12,7 +12,7 @@ exports.studentRegisterCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
           if( userStatus.courseLimit === 3) {
             return res.status(400).json({
               message: 'You have reached your limit of 3 courses'
@@ -56,11 +56,38 @@ exports.studentViewCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const course = await StudentCourse.find({ userId: user._id });
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
                 course
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+
+// student view all registered courses
+
+exports.studentViewAllCourse = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'IT' || userStatus.roles === 'student') {
+            const courses = await StudentCourse.find({ }).sort({ createdAt: -1 });
+            return res.status(200).json({
+                message: 'Course registered fetched successfully',
+                courses
         });
     }else{
         return res.status(400).json({
@@ -83,7 +110,7 @@ exports.studentDeleteCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const course = await StudentCourse.findOneAndDelete(req.params.courseId);
             return res.status(200).json({
                 message: 'Course deleted successfully',
@@ -110,7 +137,7 @@ exports.studentViewPaidCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const course = await Transaction.find({ userId: userStatus._id });
             return res.status(200).json({
                 message: 'Course paid for fetched successfully',
@@ -137,7 +164,7 @@ exports.studentUpdateStatus = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const course = await User.findOneAndUpdate({ userId: userStatus._id }, {
                 $set: {
                     role: "IT",

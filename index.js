@@ -15,6 +15,8 @@ const likeRoutes = require('./src/routes/like.routes');
 const paymentRoutes = require('./src/routes/payment.routes');
 const adminRoutes = require('./src/routes/admin.routes');
 // const tutorRoutes = require('./src/routes/tutor.routes');
+const questionRoutes = require('./src/routes/quiz.routes');
+const answerRoutes = require('./src/routes/answer.routes');
 
 const app = express();
 //connect to DB
@@ -48,6 +50,8 @@ app.use("/api/like", likeRoutes);
 // app.use("/api/tutor", tutorRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/question", questionRoutes);
+app.use("/api/answer", answerRoutes);
 
 //start server
 app.listen(port, () => {

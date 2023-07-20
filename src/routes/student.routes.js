@@ -5,7 +5,8 @@ const {
     studentViewCourse, 
     studentDeleteCourse, 
     studentViewPaidCourse,
-    studentUpdateStatus } = require('../controllers/student.controller.js')
+    studentUpdateStatus,
+    studentViewAllCourse } = require('../controllers/student.controller.js')
 const { auth } = require('../middleware/auth.js');
 
 
@@ -15,5 +16,6 @@ router.get('/studentGet', studentViewCourse );
 router.delete('/studentDelete/:courseId', studentDeleteCourse );
 router.get('/studentViewPaidCourse', studentViewPaidCourse );
 router.put("/studentUpdateStatus", studentUpdateStatus );
+router.get('/studentViewAllCourse', studentViewAllCourse );
 
 module.exports = router;
