@@ -1,5 +1,7 @@
 const Course = require('../models/course.model');
 const User = require('../models/user.model');
+const Comment = require("../models/comment.model");
+
 const Student = require('../models/student.model'); //needed to be able to authorize the the student to like the course
 
 // exports.likeCourse = async (req, res) => {
@@ -115,6 +117,88 @@ exports.getLikes = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
+exports.likeComment = async (req, res) => {
+  try {
+    const {commentId} = req.params;
+      const comment = await Comment.findById(commentId);
+      if(!comment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
+    const  course  = await Course.findById(comment.courseId);
+    const userId = req.user._id;
+    // //check if the student exist and he registered for the course
+    const student = await Student.find({ userId, courseId: course._id });
+    if (!student) {
+      return res.status(401).json({
+        Error: `student with the userId: ${userId} has not been registered for this course`,
+      });
+    }
+
+    const { likeBy, dislikeBy } = course;
+
+    /**Check if student already liked or disliked the course */
+    const hasLikedCourse = likeBy.includes(userId) || dislikeBy.includes(userId);
+    if (hasLikedCourse) {
+      return res
+        .status(409)
+        .json({ Error: "you can only like or dislike a comment once" });
+    }
+    // if he hasn't liked or disliked the comment yet, increment the course like_count and save it
+    comment.like_count +=1;
+
+    comment.likeBy.push(userId); //add the userId to the list of users that have liked the comment
+    comment.save({ new: true });
+
+    return res.status(200).json({ message: "you like the course", course });
+  } catch (error) {
+      console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+}
+
+exports.dislikeComment = async (req, res) => {
+  try {
+    const {commentId} = req.params;
+      const comment = await Comment.findById(commentId);
+      if(!comment) {
+        return res
+        .status(404)
+        .json({message: " comment not found"})
+      }
+    const  course  = await Course.findById(comment.courseId);
+    const userId = req.user._id;
+    // //check if the student exist and he registered for the course
+    const student = await Student.find({ userId, courseId: course._id });
+    if (!student) {
+      return res.status(401).json({
+        Error: `student with the userId: ${userId} has not been registered for this course`,
+      });
+    }
+
+    const { likeBy, dislikeBy } = course;
+
+    /**Check if student already liked or disliked the course */
+    const hasLikedCourse = likeBy.includes(userId) || dislikeBy.includes(userId);
+    if (hasLikedCourse) {
+      return res
+        .status(409)
+        .json({ Error: "you can only like or dislike a comment once" });
+    }
+    // if he hasn't liked or disliked the comment yet, increment the course dislike_count and save it
+    comment.dislike_count +=1;
+
+    comment.dislikeBy.push(userId); //add the userId to the list of users that have disliked the comment
+    comment.save({ new: true });
+
+    return res.status(200).json({ message: "you dislike the comment", course });
+  } catch (error) {
+      console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+}
 
 exports.test = async (req, res) => {
   // return res.status(200).send({ message: 'hello world from here' });
