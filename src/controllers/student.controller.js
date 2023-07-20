@@ -56,7 +56,7 @@ exports.studentViewCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if(userStatus.roles === 'student') {
             const course = await StudentCourse.find({ userId: user._id });
             return res.status(200).json({
                 message: 'Course registered fetched successfully',

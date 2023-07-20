@@ -45,7 +45,7 @@ exports.likeCourse = async (req, res) => {
         userId,
         registeredCourses: { $elemMatch: { _id: courseId } },
       });
-
+      
       if (!student) {
         return res.status(401).json({
           Error: `student with the userId: ${userId} has not been registered for this course`,
@@ -127,18 +127,30 @@ exports.dislikeCourse = async (req, res) => {
   }
 }
 
+const getLikes = async (req, res) => {
+  const { courseId} = req.params;
+  const userId = req.user._id;
+
+  const course = await Course.findById(courseId, 'title like_counts dislike_count'); //fetch the course to like
+  if (!course) {
+    return res.status(404).json({ error: "course not found" });
+  }
+  return res.json.status(200).json({message: 'success', course});
+};
 
 exports.test = async (req, res) => {
   // return res.status(200).send({ message: 'hello world from here' });
   const { courseId} = req.params;
+  const userId = req.user._id;
     
-
+  const s = await Student.find({ userId })
+  return res.send({s})
     if(req.query.c){
         const c = await Course.findById(courseId, '_id title description comment_count' )
     return res.status(200).send({ message: 'hello world from here', c });
     }
     // const s = await Student.find({}, '_id registeredCourses userId')
-    const userId = req.user._id;
+    // const userId = req.user._id;
     const student = await Student.findOne({ userId });
     const u = await User.findOne({})
 
