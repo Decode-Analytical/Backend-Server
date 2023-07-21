@@ -10,11 +10,12 @@ router.all('/:courseId/random', test)
 
 router.use(auth);
 router.get('/:courseId/',getLikes)
+router.put('/:commentId/like',likeComment)
+router.put('/:commentId/dislike',dislikeComment)
 
 router.use('/:courseId/',fetchCourse); //middle ware that fetches course and return error if course not found
-router.route('/:courseId/like').put(likeCourse).put(dislikeCourse)
+router.put('/:courseId/like',likeCourse)
+router.put('/:courseId/dislike',likeCourse)
 
-router.put('/:comment/like',likeComment)
-router.put('/:comment/dislike',dislikeComment)
 
 module.exports = router;

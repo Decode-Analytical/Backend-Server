@@ -47,7 +47,7 @@ app.use('/api', cloudinaryConfig);
 app.use("/api/course", courseRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/student", studentRoutes);
-app.use("/api/comment/", commentRoutes);
+app.use("/api/comments/", commentRoutes);
 // app.use("/api/tutor", tutorRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);

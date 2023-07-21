@@ -133,14 +133,7 @@ exports.getCommentById = async (req, res) => {
       }
       const { commentBody } = validation.value;
       const parentCommentId = req.params.commentId;
-      const course = req.course; //passed by the fetch course middleware'
-      //check if the student exist and he registered for the course
-      const student = await Student.find({ userId, courseId });
-      if (!student) {
-        return res.status(401).json({
-          error: `please register so you can comment the course`,
-        });
-      }
+      const userId = req.user._id;
 
       const parentComment = await Comment.findById(parentCommentId);
       if (!parentComment) {
@@ -148,7 +141,16 @@ exports.getCommentById = async (req, res) => {
           .status(404)
           .json({ error: " comment not found to reply to" });
       }
-      const commentBy = req.user._id;
+
+      //check if the student exist and he registered for the course
+      const student = await Student.find({ userId , courseId: parentComment.courseId });
+      if (!student) {
+        return res.status(401).json({
+          error: `please register so you can comment the course`,
+        });
+      }
+
+      const commentBy = userId;
       const reply = {
         commentBody,
         courseId: parentComment.courseId,
@@ -218,8 +220,17 @@ exports.getCommentById = async (req, res) => {
     await Comment.deleteMany({ _id: { $in: comment.commentReplies } });// Delete all child comments (replies)
     await comment.remove(); //Delete the main comment
 
-    course.comment_count -= 1; //decrement the comment count for the course
-    await course.save({ new: true });
+    await Course.findByIdAndUpdate(comment.courseId, 
+      {
+        $inc: { comment_count: -1 },
+        $pull : { comments: { comments:  commentId} },
+      }, 
+
+      { new: true }
+      )
+      
+    // course.comment_count -= 1; //decrement the comment count for the course
+    // await course.save({ new: true });
     const latestComments = await Comment.find({}) //comments to return
       .sort({ createdAt: -1 })
       .limit(limit);
@@ -228,7 +239,6 @@ exports.getCommentById = async (req, res) => {
       .status(200)
       .json({
         message: "Comment deleted successfully, all replies are deleted too",
-        course,
         latestComments,
       });
     } catch (error) {
@@ -240,38 +250,40 @@ exports.getCommentById = async (req, res) => {
    /**Delete a child comment */
    exports.deleteCommentReply = async (req, res) => {
     try {
-        const {commentId} = req.params;
-        const commentBy = req.user._id;
-        let limit = req.query.limit  //to specify the total number of comments to return
-        limit = limit * 1; //convert the string to a number
-        if(!limit){
-            limit = 4 //if limit is not specified then limit will be 4
-        }
-        const comment = await Comment.findById(commentId);
-        if (!comment) {
-          return res.status(404).json({ message: " comment not found" });
-        }
+      const { commentId } = req.params;
+      const commentBy = req.user._id;
+      let limit = req.query.limit; //to specify the total number of comments to return
+      limit = limit * 1; //convert the string to a number
+      if (!limit) {
+        limit = 4; //if limit is not specified then limit will be 4
+      }
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json({ message: " comment not found" });
+      }
 
-        if (commentBy.toString() !== comment.commentBy.toString()) {
-          //another user trying to delete the comment
-          return res
-            .status(401)
-            .error({ error: "cannot delete another user comment" });
-        }
+      if (commentBy.toString() !== comment.commentBy.toString()) {
+        //another user trying to delete the comment
+        return res
+          .status(401)
+          .error({ error: "cannot delete another user comment" });
+      }
+      await comment.remove(); //Delete the  comment
+
       //decrement the parentComment reply count
-        await Comment.findOneAndUpdate(
-          { parentCommentId: comment.parentCommentId },
-          {
-            $inc: { reply_count: -1 }, 
-            $pop: { commentReplies: { commentReplies: commentReply._id } },
-          },
-          { new: true }
-        );
-        
-        const latestComments = await Comment.find({}) //returns the latest comments
-          .sort({ createdAt: -1 })
-          .limit(limit); 
-     
+      await Comment.findOneAndUpdate(
+        { parentCommentId: comment.parentCommentId },
+        {
+          $inc: { reply_count: -1 },
+          $pull: { commentReplies: { commentReplies: commentId } },
+        },
+        { new: true }
+      );
+
+      const latestComments = await Comment.find({}) //returns the latest comments
+        .sort({ createdAt: -1 })
+        .limit(limit);
+
       return res
         .status(200)
         .json({ message: "reply deleted successfully", latestComments });

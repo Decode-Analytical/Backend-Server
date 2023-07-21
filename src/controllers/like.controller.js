@@ -137,10 +137,10 @@ exports.likeComment = async (req, res) => {
       });
     }
 
-    const { likeBy, dislikeBy } = course;
+    const { likeAndDislikeUsers } = course;
 
     /**Check if student already liked or disliked the course */
-    const hasLikedCourse = likeBy.includes(userId) || dislikeBy.includes(userId);
+    const hasLikedCourse = likeAndDislikeUsers.includes(userId)
     if (hasLikedCourse) {
       return res
         .status(409)
@@ -178,10 +178,10 @@ exports.dislikeComment = async (req, res) => {
       });
     }
 
-    const { likeBy, dislikeBy } = course;
+    const { likeAndDislikeUsers } = course;
 
     /**Check if student already liked or disliked the course */
-    const hasLikedCourse = likeBy.includes(userId) || dislikeBy.includes(userId);
+    const hasLikedCourse = likeAndDislikeUsers.includes(userId)
     if (hasLikedCourse) {
       return res
         .status(409)

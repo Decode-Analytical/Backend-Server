@@ -2,7 +2,7 @@ const express = require("express");
 const { auth } = require("../middleware/auth");
 const {
   addComment,
-  getComments,
+  getCourseComments,
   getCommentById,
   deleteComment,
   updateComment,
@@ -14,15 +14,16 @@ const router = express.Router();
 
 router.use(auth);
 
-router.route("/reply/:commentId").post(replyComment).delete(deleteCommentReply);
+router.post("/reply/:commentId",replyComment) //reply to comment
+router.delete("/reply/:commentId",deleteCommentReply); //delete a reply to comment
+router.get("/course/:courseId/",getCourseComments) //get comments for a course
+router.put("/:commentId", updateComment) //edit a comment
+router.delete("/:commentId", deleteComment); //delete a comment
+router.get("/:commentId",getCommentById) //get comment by id
+
 
 router.use("/:courseId/", course.fetchCourse); // middleware that checks if the course exists
-router.route("/:courseId/").post(addComment).get(getComments)
-router
-  .route("/:courseId/:commentId")
-  .get(getCommentById)
-  .put(updateComment)
-  .delete(deleteComment);
+router.post("/:courseId/",addComment) //add a comment
 
 
 module.exports = router;
