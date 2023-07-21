@@ -10,8 +10,8 @@ const {
 } = require('../controllers/quiz.controller');
 
 router.use(auth);
-router.get('/ getAllQuizzes', getQuizQuestions);
-router.get('/:id', getQuizQuestionsById);
+router.get('/getAllQuizzes', getQuizQuestions);
+router.get('/viewQuestion/:id', getQuizQuestionsById);
 router.post('/createQuiz', createQuizQuestions);
 router.put('/updateQuiz/:id', updateQuizQuestions);
 router.delete('/deleteQuiz/:id', deleteQuizQuestions);

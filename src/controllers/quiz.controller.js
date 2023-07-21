@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 
 
 
-exports.createQuizQuestions = async () => {
+exports.createQuizQuestions = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
@@ -34,16 +34,16 @@ exports.createQuizQuestions = async () => {
 }
 
 
-exports.getQuizQuestions = async () => {
+exports.getQuizQuestions = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const quizQuestions = await Question.find();
+            const quizQuestions = await Question.find({});
             return res.status(200).json({
                 message: 'Quiz questions retrieved from the database.',
-                quizQuestions
+                quizQuestions: quizQuestions
             });
         } else {
             return res.status(401).json({
@@ -60,7 +60,7 @@ exports.getQuizQuestions = async () => {
 
 // update the quiz questions
 
-exports.updateQuizQuestions = async () => {
+exports.updateQuizQuestions = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
@@ -87,7 +87,7 @@ exports.updateQuizQuestions = async () => {
 
 // delete quiz questions
 
-exports.deleteQuizQuestions = async () => {
+exports.deleteQuizQuestions = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
@@ -114,7 +114,7 @@ exports.deleteQuizQuestions = async () => {
 
 // get quiz questions by id
 
-exports.getQuizQuestionsById = async () => {
+exports.getQuizQuestionsById = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
