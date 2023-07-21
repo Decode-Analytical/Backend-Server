@@ -39,7 +39,7 @@ exports.getQuizQuestions = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
+        if(userStatus.roles === "student" || userStatus.roles === "teacher") {
             const quizQuestions = await Question.find({});
             return res.status(200).json({
                 message: 'Quiz questions retrieved from the database.',

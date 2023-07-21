@@ -56,7 +56,11 @@ const userSchema = new mongoose.Schema(
     default: 0,
   },
   points: {
-    type: Number,
+    type: mongoose.Decimal128,
+    default: 0,
+  },
+  score: {
+    type: mongoose.Decimal128,
     default: 0,
   },
 },

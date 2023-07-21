@@ -1,11 +1,11 @@
 const express = require('express');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
-const { answerQuestion, studentViewAnswers } = require('../controllers/answer.controller');
+const { studentAnswerQuestions, studentViewAnswers } = require('../controllers/answer.controller');
 
 
 router.use(auth);
-router.post('/createAnswer', answerQuestion);
+router.post('/answerQuestion/:questionId', studentAnswerQuestions);
 router.get('/viewAnswer', studentViewAnswers);
 
 

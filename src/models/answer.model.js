@@ -13,6 +13,9 @@ const answerSchema = new mongoose.Schema({
         ref: 'Question',
         required: true,
     },
+    question: {
+        type: String,
+    },
     answer: {
         type: String,
         required: true,
