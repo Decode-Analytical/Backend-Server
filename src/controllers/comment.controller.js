@@ -26,15 +26,19 @@ exports.addComment = async (req, res) => {
       });
     }
    
-    const newComment = { commentBody, courseId: course._id, commentBy };
+    const newComment = await Comment.create({ commentBody, courseId: course._id, commentBy })//create a new comment
+    //increment the comment count for the course and add the Id to the course comment list
+    await Course.findByIdAndUpdate(courseId, 
+      {
+        $inc: { comment_count: 1 },
+        $push: { comments:   savedComment._id  },
+      },
+      { new: true }
+    )
 
-    await Comment.create({ ...newComment }); //create a new comment
-    course.comment_count += 1; //increment the comment count for the course
-
-    await course.save({ new: true });
     return res
       .status(200)
-      .json({ message: "Comment added successfully", course, newComment });
+      .json({ message: "Comment added successfully", newComment });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
@@ -44,12 +48,19 @@ exports.addComment = async (req, res) => {
 /**Get some comments of a course sorted by time created */
 exports.getCourseComments = async (req, res) => {
     try {
+      const {courseId} = req.params
+    
+      const course = await Course.findById( courseId  );
+      if (!course) {
+        return res.status(404).json({ message: "course not found" });
+      }
       let limit = req.query.limit  //to specify the total number of comments to return
         limit = limit * 1; //convert the string to a number
         if(!limit){
             limit = 4 //if limit is not specified then limit will be 4
         }
-        const latestComments = await Comment.find({})
+       
+        const latestComments = await Comment.find({courseId: course})
           .sort({ createdAt: -1 })
           .limit(limit); //converted to number
         if (latestComments.length < 1) {
