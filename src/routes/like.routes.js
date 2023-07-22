@@ -15,9 +15,9 @@ router.put('/:commentId/dislike',dislikeComment)
 router.get('/:commentId/like',getCommentLikes)
 
 
-router.use('/:courseId/',fetchCourse); //middle ware that fetches course and return error if course not found
-router.put('/:courseId/like',likeCourse)
-router.put('/:courseId/dislike',dislikeCourse)
+router.use('/course/:courseId/',fetchCourse); //middle ware that fetches course and return error if course not found
+router.put('/course/:courseId/like',likeCourse)
+router.put('/course/:courseId/dislike',dislikeCourse)
 
 
 module.exports = router;

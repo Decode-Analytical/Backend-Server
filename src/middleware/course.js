@@ -5,7 +5,7 @@ exports.fetchCourse = async ( req, res, next ) => {
     const {courseId} = req.params
     
     const course = await Course.findById( courseId,
-         "id title comments comment_count likAndDislikeUsers like_count dislike_count"  );
+         "id title comments comment_count likeAndDislikeUsers like_count dislike_count"  );
     if (!course) {
       return res.status(404).json({ message: "course not found" });
     }

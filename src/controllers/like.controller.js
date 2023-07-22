@@ -46,6 +46,7 @@ exports.likeCourse = async (req, res) => {
           Error: `student with the userId: ${userId} has not been registered for this course`,
         });
       }
+      
       /**Check if student already liked or disliked the course */
       const hasLikedCourse = likeAndDislikeUsers.includes(userId);
       if (hasLikedCourse) {
@@ -53,13 +54,20 @@ exports.likeCourse = async (req, res) => {
           .status(409)
           .json({ Error: "you can only like or dislike a course once" });
       }
+    
       // if he hasn't liked or disliked the course yet, increment the course like_count and save it
-      course.like_count +=1;
-
+      
       course.likeAndDislikeUsers.push(userId); //add the userId to the list of users that have liked the course
-      course.save({ new: true });
+      const courseAfterLiked = await Course.findByIdAndUpdate(
+        courseId,{
+          new: true, 
+          $inc: {like_count: 1},
+          $push: {likeAndDislikeUsers: userId},
+          title: 1, like_count: 1, dislike_count: 1, likeAndDislikeUsers: 1
+        }
+      )
 
-      return res.status(200).json({ message: "you like the course", course });
+      return res.status(200).json({ message: "you like the course", courseAfterLiked });
     } catch (error) {
         console.error(error);
       res.status(500).send({ message: error.message });
@@ -87,13 +95,18 @@ exports.dislikeCourse = async (req, res) => {
         .status(409)
         .json({ Error: "you can only like or dislike a course once" });
     }
-    // if he hasn't liked or disliked the course yet, increment the course like_count and save it
-    course.dislike_count +=1;
+    // if he hasn't liked or disliked the course yet, increment the course dislike_count
+    //add the userId to the list of users that have liked the course
+    const courseAfterDisliked = await Course.findByIdAndUpdate(
+      courseId,{
+        new: true, 
+        $inc: {dislike_count: 1},
+        $push: {likeAndDislikeUsers: userId},
+        title: 1, like_count: 1, dislike_count: 1, likeAndDislikeUsers: 1
+      }
+    )
 
-    course.likeAndDislikeUsers.push(userId); //add the userId to the list of users that have liked the course
-    course.save({ new: true });
-
-    return res.status(200).json({ message: "you dislike the course", course });
+    return res.status(200).json({ message: "you dislike the course", courseAfterDisliked });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });
@@ -106,7 +119,7 @@ exports.getLikes = async (req, res) => {
     const { courseId} = req.params;
   const userId = req.user._id;
 
-  const course = await Course.findById(courseId, 'title like_count dislike_count'); //fetch the course to like
+  const course = await Course.findById(courseId, 'title like_count dislike_count likeAndDislikeUsers'); //fetch the course to like
   if (!course) {
     return res.status(404).json({ error: "course not found" });
   }

@@ -54,12 +54,13 @@ exports.getCourseComments = async (req, res) => {
       if (!course) {
         return res.status(404).json({ message: "course not found"});
       }
+
       let limit = req.query.limit  //to specify the total number of comments to return
         limit = limit * 1; //convert the string to a number
         if(!limit){
             limit = 4 //if limit is not specified then limit will be 4
         }
-       
+        
         const latestComments = await Comment.find({courseId: course._id})
           .sort({ createdAt: -1 })
           .limit(limit); //converted to number
@@ -269,16 +270,17 @@ exports.getCommentReplies = async (req, res) => {
         limit = 4 //if limit is not specified then limit will be 4
     } 
     const {commentId} = req.params;
-    const comment = await Comment.find({parentCommentId: commentId }).sort({createdAt: -1})
-      // .limit(limit)
-      // .populate(commentReplies);
+    const totalReply = await Comment.findById(commentId , {reply_count: 1, _id: 0});
+    const latestComments = await Comment.find({parentCommentId: commentId })
+    .limit(limit)
+    .sort({createdAt: -1})
 
-    if (!comment || comment.length < 1) {
-      return res.status(404).json({ error: " comment  found or replies not found" });
+    if (!latestComments || latestComments.length < 1) {
+      return res.status(404).json({ error: " latestComments  found or replies not found" });
     }
     return res
       .status(200)
-      .json({ message: "success",  comment });
+      .json({ message: "success", totalReply: totalReply.reply_count , latestComments });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: error.message });
