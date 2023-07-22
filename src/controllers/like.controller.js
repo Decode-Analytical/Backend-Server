@@ -100,6 +100,7 @@ exports.dislikeCourse = async (req, res) => {
   }
 }
 
+/**Get all likes of a course */
 exports.getLikes = async (req, res) => {
   try{
     const { courseId} = req.params;
@@ -118,6 +119,7 @@ exports.getLikes = async (req, res) => {
   }
 };
 
+/**like a comment by registered users */
 exports.likeComment = async (req, res) => {
   try {
     const {commentId} = req.params;
@@ -159,6 +161,7 @@ exports.likeComment = async (req, res) => {
   }
 }
 
+/**Dislike a comment by registered users */
 exports.dislikeComment = async (req, res) => {
   try {
     const {commentId} = req.params;
@@ -194,6 +197,28 @@ exports.dislikeComment = async (req, res) => {
     comment.save({ new: true });
 
     return res.status(200).json({ message: "you dislike the comment", course });
+  } catch (error) {
+      console.error(error);
+    res.status(500).send({ message: error.message });
+  }
+}
+
+/**Get the total likes or dislikes of a comment together with the email of the likers */
+exports.getCommentLikes = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const comment = await Comment.findById(
+      commentId,
+      "_id like_count dislike_count likeAndUnlikeUsers likeBy"
+    ).populate(likeBy, "email"); //only return user email and likes information
+
+    if (!comment) {
+      return res.status(404).json({ message: " comment not found" });
+    }
+    const  course  = await Course.findById(comment.courseId);
+  
+
+    return res.status(200).json({ message: "you like the course", course });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });

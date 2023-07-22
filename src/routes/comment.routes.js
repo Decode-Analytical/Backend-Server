@@ -7,7 +7,8 @@ const {
   deleteComment,
   updateComment,
   replyComment,
-  deleteCommentReply
+  getCommentReplies
+  
 } = (commentController = require("../controllers/comment.controller"));
 const course = require("../middleware/course");
 const router = express.Router();
@@ -15,7 +16,8 @@ const router = express.Router();
 router.use(auth);
 
 router.post("/reply/:commentId",replyComment) //reply to comment
-router.delete("/reply/:commentId",deleteCommentReply); //delete a reply to comment
+router.get("/reply/:commentId",getCommentReplies) //get to comment replies
+
 router.get("/course/:courseId/",getCourseComments) //get comments for a course
 router.put("/:commentId", updateComment) //edit a comment
 router.delete("/:commentId", deleteComment); //delete a comment
