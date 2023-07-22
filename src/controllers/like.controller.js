@@ -113,8 +113,8 @@ exports.dislikeCourse = async (req, res) => {
   }
 }
 
-/**Get all likes of a course */
-exports.getLikes = async (req, res) => {
+/**Get all likes and dislikes of a course */
+exports.getCourseLikesAndDislikes = async (req, res) => {
   try{
     const { courseId} = req.params;
   const userId = req.user._id;
@@ -152,10 +152,9 @@ exports.likeComment = async (req, res) => {
       });
     }
 
-    const { likeAndDislikeUsers } = course;
-
+    const { likeBy } = comment;
     /**Check if student already liked or disliked the course */
-    const hasLikedCourse = likeAndDislikeUsers.includes(userId)
+    const hasLikedCourse = likeBy.includes(userId)
     if (hasLikedCourse) {
       return res
         .status(409)
@@ -165,9 +164,9 @@ exports.likeComment = async (req, res) => {
     comment.like_count +=1;
 
     comment.likeBy.push(userId); //add the userId to the list of users that have liked the comment
-    comment.save({ new: true });
+    await comment.save({ new: true });
 
-    return res.status(200).json({ message: "you like the course", course });
+    return res.status(200).json({ message: "you like the comment", comment });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });
@@ -223,15 +222,14 @@ exports.getCommentLikes = async (req, res) => {
     const comment = await Comment.findById(
       commentId,
       "_id like_count dislike_count likeAndUnlikeUsers likeBy"
-    ).populate(likeBy, "email"); //only return user email and likes information
+    ).populate("likeBy", "email") //only return user email and likes information
+    .populate("dislikeBy", "email");
 
     if (!comment) {
       return res.status(404).json({ message: " comment not found" });
-    }
-    const  course  = await Course.findById(comment.courseId);
-  
+    }  
 
-    return res.status(200).json({ message: "you like the course", course });
+    return res.status(200).json({ message: "success", comment });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });
