@@ -111,16 +111,23 @@ exports.studentDeleteCourse = async(req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const course = await StudentCourse.findOneAndDelete(req.params.courseId);
-            return res.status(200).json({
-                message: 'Course deleted successfully',
-                course
-        });
-    }else{
-        return res.status(400).json({
-            message: 'You must be registered student to delete your course'
-        });
-    }
+            const ownerId = await StudentCourse.findById(req.params.courseId);
+            if(ownerId.userId === userStatus._id) {
+                const course = await StudentCourse.findOneAndDelete(req.params.courseId);
+                return res.status(200).json({
+                    message: 'Course deleted successfully',
+                    course
+                });
+            }else{
+                return res.status(400).json({
+                    message: 'You are not the owner of this course'
+                });
+            }
+        }else{
+            return res.status(400).json({
+                message: 'You must be registered student to delete your course'
+            });
+        }
     } catch (error) {
         return res.status(400).json({
             message: 'Error while deleting course',
@@ -128,7 +135,7 @@ exports.studentDeleteCourse = async(req, res) => {
         });
     }
 };
-
+  
 
 // student view his paid registered course
 

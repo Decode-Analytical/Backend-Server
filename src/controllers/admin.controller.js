@@ -10,7 +10,7 @@ exports.adminUpdateUserRoles = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student') {
+        if(userStatus.roles === 'superAdmin') {
             const newRole = await User.findOneAndUpdate({ _id: userStatus._id }, {
                 $set: {
                     roles: "admin"
@@ -22,7 +22,7 @@ exports.adminUpdateUserRoles = async (req, res) => {
             });
         } else {
             return res.status(200).json({
-                message: 'You can not update this role since you are an admin already'
+                message: 'You can not update this role since you are not a Supper admin'
             });
         }
     } catch (error) {

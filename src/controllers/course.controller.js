@@ -144,14 +144,19 @@ exports.deleteCourse = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === "admin") {
-            await Course.findByIdAndDelete(req.params.id);
-            return res.status(200).json({
-                message: "Course successfully deleted",
-            });
+        if (userStatus.roles === "student") {
+            const ownerId = await Course.findById(req.params.id);
+            if(ownerId.userId === userStatus._id){
+                await Course.findByIdAndDelete(req.params.id);
+                return res.status(200).json({
+                    message: "Course successfully deleted",
+                });
+            } else {
+                return res.status(400).json({ error: "You are not the owner of this course" });
+            }
         } else {
             return res.status(400).json({ error: "User must login as Admin in order to delete a course" });
-        }
+        } 
     } catch (error) {
         return res.status(400).json({
             message: "Error deleting course",

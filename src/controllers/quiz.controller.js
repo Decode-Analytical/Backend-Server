@@ -93,11 +93,18 @@ exports.deleteQuizQuestions = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const quizQuestions = await Question.findOneAndDelete({ _id: req.params.id });
-            return res.status(200).json({
-                message: 'Quiz questions deleted.',
-                quizQuestions
-            });
+            const ownerId = await Question.findById(req.params.id);
+            if(ownerId.userId === userStatus._id) {
+                const quizQuestions = await Question.findOneAndDelete({ _id: req.params.id });
+                return res.status(200).json({
+                    message: 'Quiz questions deleted.',
+                    quizQuestions
+                });
+            } else {
+                return res.status(401).json({
+                    message: 'You are not the owner of this question.'
+                });
+            }
         } else {
             return res.status(401).json({
                 message: 'You are not authorized to do this action.'
@@ -110,7 +117,6 @@ exports.deleteQuizQuestions = async (req, res) => {
         });
     }
 }
-
 
 // get quiz questions by id
 

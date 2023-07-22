@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
       required: true,
+      match: /\d{10}/,
     },
     picture: {
       type: Array,
@@ -48,7 +49,7 @@ const userSchema = new mongoose.Schema(
     },
     roles: {
       type: String,
-      enum: ["admin", "student", "IT"],
+      enum: ["student", "IT"],
       default: "student",
   },
   courseLimit: {
