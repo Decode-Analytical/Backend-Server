@@ -10,10 +10,10 @@ const { auth } = require('../middleware/auth.js');
 
 
 router.use(auth);
-router.post('/studentPost/:courseId', studentRegisterCourse );
-router.get('/studentGet', studentViewCourse );
-router.delete('/studentDelete/:courseId', studentDeleteCourse );
-router.get('/studentViewPaidCourse', studentViewPaidCourse );
-router.put("/studentUpdateStatus", studentUpdateStatus );
+router.post('/enroll/:courseId', studentRegisterCourse );
+router.get('/courses', studentViewCourse );
+router.delete('/course/:courseId', studentDeleteCourse );
+router.get('/courses/enrolled', studentViewPaidCourse );
+router.put("/status", studentUpdateStatus );
 
 module.exports = router;

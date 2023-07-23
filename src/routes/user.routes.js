@@ -23,7 +23,7 @@ router.get("/reset-password/:token",  resetPassword );
 router.use(auth);
 router.get("/profile",  viewUserProfile );
 router.put("/student", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
-router.delete("/", deleteUser)
+router.delete("/user", deleteUser)
 
 
 
