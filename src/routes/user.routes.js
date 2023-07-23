@@ -16,14 +16,14 @@ const router = express.Router();
 
 router.post("/signup", signUp);
 router.post("/login", limiter, userLogin);
-router.get("/emailVerify/:token", emailVerify );
-router.post("/forgotpassword", forgotPassword );
-router.get("/resetpassword/:token",  resetPassword );
+router.get("/verify-email/:token", emailVerify );
+router.post("/forgot-password", forgotPassword );
+router.get("/reset-password/:token",  resetPassword );
 
 router.use(auth);
-router.get("/viewprofile",  viewUserProfile );
-router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
-router.delete("/studentDeleteCourse", deleteUser)
+router.get("/profile",  viewUserProfile );
+router.put("/student", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
+router.delete("/", deleteUser)
 
 
 
