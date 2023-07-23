@@ -40,13 +40,13 @@ useTreblle(app, {
 app.use('/api', cloudinaryConfig);
 
 //connect to all routes
-app.use("/api/course", courseRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/student", studentRoutes);
-app.use("/api/comment", commentRoutes);
-app.use("/api/like", likeRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/comments", commentRoutes);
+app.use("/api/likes", likeRoutes);
 // app.use("/api/tutor", tutorRoutes);
-app.use("/api/payment", paymentRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 
 //start server
