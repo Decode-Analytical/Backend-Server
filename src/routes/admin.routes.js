@@ -13,11 +13,11 @@ const {
 
 router.use(auth);
 router.put('/roles', adminUpdateUserRoles);
-router.get('/viewTransaction', adminViewTransactions );
-router.get('/ViewStudent', adminViewStudents  );
+router.get('/transactions', adminViewTransactions );
+router.get('/users', adminViewStudents  ); //DOING THE SAME WITH ROUTE BELOW
 router.get('/viewCourse', adminViewCourses  );
-router.get('/viewComment', adminViewComments  );
-router.get('/totalStudent', adminTotalStudent   );
+router.get('/comments', adminViewComments  );
+router.get('/total-student', adminTotalStudent   );
 
 
 module.exports = router;

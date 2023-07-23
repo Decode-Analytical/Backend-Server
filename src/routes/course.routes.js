@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.use(auth);
-router.post("/", upload.fields([
+router.post("/new-course", upload.fields([
     { name: "images", maxCount: 1 },
     { name: "video", maxCount: 1 },
     { name: "audio", maxCount: 1 },
@@ -19,8 +19,8 @@ router.put("/:id", upload.fields([
 ]), updateCourse);
 
 router.delete("/:id", deleteCourse);
-router.get("/searchingCourse", searchCourse);
-router.get("/all", getAllCourses);
+router.get("/search", searchCourse); 
+router.get("/", getAllCourses);
 
 
 
