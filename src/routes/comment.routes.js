@@ -15,8 +15,8 @@ const router = express.Router();
 
 router.use(auth);
 
-router.post("/reply/:commentId",replyComment) //reply to comment
-router.get("/reply/:commentId",getCommentReplies) //get to comment replies
+router.post("/replies/:commentId",replyComment) //reply to comment
+router.get("/replies/:commentId",getCommentReplies) //get to comment replies
 
 router.get("/course/:courseId/",getCourseComments) //get comments for a course
 router.put("/:commentId", updateComment) //edit a comment

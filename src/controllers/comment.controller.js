@@ -261,7 +261,7 @@ exports.getCommentById = async (req, res) => {
     }
   };
 
-  /**Get a particular comment by id */
+  /**Get replies made to a comment*/
 exports.getCommentReplies = async (req, res) => {
   try {
     let limit = req.query.limit  //to specify the total number of comments to return
@@ -272,11 +272,15 @@ exports.getCommentReplies = async (req, res) => {
     const {commentId} = req.params;
     const totalReply = await Comment.findById(commentId , {reply_count: 1, _id: 0});
     const latestComments = await Comment.find({parentCommentId: commentId })
-    .limit(limit)
     .sort({createdAt: -1})
+    .limit(limit)
 
-    if (!latestComments || latestComments.length < 1) {
-      return res.status(404).json({ error: " latestComments  found or replies not found" });
+
+    if (!latestComments ) {
+      return res.status(404).json({ error: " comment not  found" });
+    }
+    if (latestComments.length < 1 ) {
+      return res.status(404).json({ error: " no reply available at the moment" });
     }
     return res
       .status(200)
