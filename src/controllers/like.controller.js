@@ -114,7 +114,7 @@ exports.likeComment = async (req, res) => {
         .status(404)
         .json({message: " comment not found"})
       }
-    const  course  = await Course.findById(comment.courseId);
+    const  course  = await Course.findById(comment.courseId, "_id");
     const userId = req.user._id;
     // //check if the student exist and he registered for the course
     const student = await Student.find({ userId, courseId: course._id });
@@ -123,10 +123,9 @@ exports.likeComment = async (req, res) => {
         Error: `student with the userId: ${userId} has not been registered for this course`,
       });
     }
-
-    const { likeBy } = comment;
+    const { likeBy, dislikeBy } = comment;
     /**Check if student already liked or disliked the course */
-    const hasLikedCourse = likeBy.includes(userId)
+    const hasLikedCourse = likeBy.includes(userId) ||  dislikeBy.includes(userId)
     if (hasLikedCourse) {
       return res
         .status(409)
@@ -165,12 +164,10 @@ exports.dislikeComment = async (req, res) => {
       });
     }
 
-    const { likeAndDislikeUsers } = course;
-    console.log({likeAndDislikeUsers})
-
+    const { dislikeBy, likeBy } = comment;
     /**Check if student already liked or disliked the course */
-    const hasLikedCourse = likeAndDislikeUsers.includes(userId)
-    if (hasLikedCourse) {
+    const hasDisLikedTheComment = dislikeBy.includes(userId) ||  likeBy.includes(userId)
+    if (hasDisLikedTheComment) {
       return res
         .status(409)
         .json({ Error: "you can only like or dislike a comment once" });
@@ -181,7 +178,7 @@ exports.dislikeComment = async (req, res) => {
     comment.dislikeBy.push(userId); //add the userId to the list of users that have disliked the comment
     comment.save({ new: true });
 
-    return res.status(200).json({ message: "you dislike the comment", course });
+    return res.status(200).json({ message: "you dislike the comment", comment });
   } catch (error) {
       console.error(error);
     res.status(500).send({ message: error.message });
@@ -194,10 +191,8 @@ exports.getCommentLikes = async (req, res) => {
     const { commentId } = req.params;
     const comment = await Comment.findById(
       commentId,
-      "_id like_count dislike_count likeAndUnlikeUsers likeBy"
-    ).populate("likeBy", "email") //only return user email and likes information
-    .populate("dislikeBy", "email");
-
+      "_id like_count dislike_count likeBy"
+    )
     if (!comment) {
       return res.status(404).json({ message: " comment not found" });
     }  
@@ -211,15 +206,21 @@ exports.getCommentLikes = async (req, res) => {
 
 exports.test = async (req, res) => {
   // return res.status(200).send({ message: 'hello world from here' });
-  const { courseId} = req.params;
-  const userId = req.user._id;
-    
-  const s = await Student.find({ userId })
-  return res.send({s})
-    if(req.query.c){
-        const c = await Course.findById(courseId, '_id title description comment_count' )
-    return res.status(200).send({ message: 'hello world from here', c });
+  // const { courseId} = req.params;
+  // const userId = req.user._id;
+  await Course.findOneAndUpdate({},
+    {
+      $set: {comment_count: 0, like_count: 0, likeAndDislikeUsers: []},
+
     }
+    )
+  // const s = await Student.find({ userId })
+  // return res.send({s})
+    // if(req.query.c){
+        const allCourses = await Course.find({}, '_id comments like_count dislike_count likeAndDislikeUsers comment_count' )
+    
+        return res.status(200).send({ message: "success",totalCourses: allCourses.length, allCourses });
+    // }
     // const s = await Student.find({}, '_id registeredCourses userId')
     // const userId = req.user._id;
     const student = await Student.findOne({ userId });

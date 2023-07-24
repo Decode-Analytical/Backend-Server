@@ -6,7 +6,7 @@ const {test,getCourseLikesAndDislikes,likeCourse,dislikeCourse,getCommentLikes, 
 const router = express.Router();
  
 // likeCourse
-router.all('/:courseId/random', test)
+router.all('/random', test)
 
 router.use(auth);
 router.get('/course/:courseId/',getCourseLikesAndDislikes)
