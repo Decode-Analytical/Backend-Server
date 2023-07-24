@@ -249,6 +249,7 @@ exports.updateSubject = async (req, res) => {
                 video: video,
                 images: images
             }, { new: true });
+            await Course.findByIdAndUpdate(req.params.courseId, { $set: { nameOfSubject: subject }}, {new: true })
             return res.status(200).json({
                 message: "Subject successfully updated",
                 subject
