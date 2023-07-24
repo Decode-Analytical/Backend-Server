@@ -13,11 +13,17 @@ exports.addComment = async (req, res) => {
       res.status(422).send(validation.error.details[0].message);
       return;
     }
+    const {courseId} = req.params
     const userId = commentBy = req.user._id;
     const { commentBody } = validation.value;
-    const course = req.course; //passed by the fetch course middleware
+    const course = await Course.findById(
+      courseId,
+      "id title comments comment_count likeAndDislikeUsers like_count dislike_count"
+    );
+ if (!course) {
+   return res.status(404).json({ message: "course not found" });
+ }
 
-    const courseId = course._id
     //check if the student exist and he registered for the course
     const student = await Student.find({ userId, courseId });
     if (!student) {
@@ -26,19 +32,17 @@ exports.addComment = async (req, res) => {
       });
     }
    
-    const newComment = await Comment.create({ commentBody, courseId: course._id, commentBy })//create a new comment
+    const newComment = await Comment.create({ commentBody, courseId, commentBy })//create a new comment
+   
     //increment the comment count for the course and add the Id to the course comment list
-    await Course.findByIdAndUpdate(courseId, 
-      {
-        $inc: { comment_count: 1 },
-        $push: { comments:   newComment._id  },
-      },
-      { new: true }
-    )
+    await Course.findByIdAndUpdate(courseId, {
+     $inc: { comment_count: 1 },
+     $push: { comments: newComment._id },
+   });
 
     return res
       .status(200)
-      .json({ message: "Comment added successfully", newComment, course});
+      .json({ message: "Comment added successfully", totalComment: course.comment_count + 1, newComment});
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
@@ -142,6 +146,7 @@ exports.getCommentById = async (req, res) => {
       const  commentBy  = req.user._id;
       const {commentId} = req.params;
       const comment = await Comment.findById(commentId)
+      const {parentCommentId} = comment;
       let limit = req.query.limit  //to specify the total number of comments to return
         limit = limit * 1; //convert the string to a number
         if(!limit) limit = 4; //if limit is not specified then limit will be 4
@@ -160,14 +165,25 @@ exports.getCommentById = async (req, res) => {
     await Comment.deleteMany({ _id: { $in: comment.commentReplies } });// Delete all child comments (replies)
     await comment.remove(); //Delete the main comment
 
-    if(!comment.parentCommentId){ // if the comment is not a reply, we will decrement the comment count for the comment
+    
+
+    if(!parentCommentId){ // if the comment is not a reply, we will decrement the comment count for the comment
+     console.log("!comment.parentCommentId: ", )
       await Course.findByIdAndUpdate(comment.courseId, 
         {
           $inc: { comment_count: -1 },
           $pull : { comments:   commentId} 
-        }, 
-  
-        { new: true }
+        }
+        )
+    }
+    else { //i.e the comment to be deleted is reply to another comment
+     console.log("comment.parentCommentId: ", )
+
+      await Comment.findByIdAndUpdate(parentCommentId, 
+        {
+          $inc: { reply_count:  -1 },
+          $pull : { commentReplies:   commentId} 
+        }
         )
     }
 
@@ -216,7 +232,7 @@ exports.getCommentById = async (req, res) => {
         commentBody,
         courseId: parentComment.courseId,
         commentBy,
-        parentCommentId,
+        parentCommentId: parentComment.parentCommentId ? parentComment.parentCommentId : parentCommentId,
       };
       const commentReply = await Comment.create({ ...reply }); //create a new comment
 
@@ -270,15 +286,16 @@ exports.getCommentReplies = async (req, res) => {
         limit = 4 //if limit is not specified then limit will be 4
     } 
     const {commentId} = req.params;
-    const totalReply = await Comment.findById(commentId , {reply_count: 1, _id: 0});
-    const latestComments = await Comment.find({parentCommentId: commentId })
-    .sort({createdAt: -1})
-    .limit(limit)
-
-
-    if (!latestComments ) {
+    const totalReply = await Comment.findById(commentId);
+       
+    if (!totalReply ) {
       return res.status(404).json({ error: " comment not  found" });
     }
+
+    const latestComments = await Comment.find({parentCommentId: commentId })
+    .sort({createdAt: -1})
+    // .limit(limit)
+
     if (latestComments.length < 1 ) {
       return res.status(404).json({ error: " no reply available at the moment" });
     }

@@ -24,8 +24,7 @@ router.delete("/:commentId", deleteComment); //delete a comment
 router.get("/:commentId",getCommentById) //get comment by id
 
 
-router.use("/:courseId/", course.fetchCourse); // middleware that checks if the course exists
-router.post("/:courseId/",addComment) //add a comment
+router.post("/course/:courseId/",addComment) //add a comment
 
 
 module.exports = router;
