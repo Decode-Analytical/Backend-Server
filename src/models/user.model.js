@@ -6,11 +6,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "firstName must be Provided"],
       trim: true,
+      match: [/^\w+$/, "Please enter a valid firstName"],
     },
     lastName: {
       type: String,
       required: [true, "lastName must be Provided"],
       trim: true,
+      match: [/^\w+$/, "Please enter a valid lastName"],
     },
 
     email: {
@@ -36,7 +38,7 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
       required: true,
-      match: /\d{10}/,
+      match: /[0-9]{10}/
     },
     picture: {
       type: Array,

@@ -1,6 +1,6 @@
 const Answer = require('../models/answer.model');
 const User = require('../models/user.model');
-const Questions = require('../models/quiz.model');
+const Questions = require('../models/question.model');
 
 
 exports.studentViewAnswers = async(req, res) => {

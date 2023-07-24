@@ -8,15 +8,15 @@ const questionSchema = new mongoose.Schema({
     },
     question: {
         type: String,
-        required: true,
+        required: true ['write the question here']
     },
     choices: {
         type: [String],
-        required: true,
+        required: true ['write the choices here']
     },
     correctAnswer: {
         type: String,
-        required: true,
+        required: true ['write the correct answer here']
   },
 });
 

@@ -23,13 +23,19 @@ exports.studentRegisterCourse = async(req, res) => {
         const newCourse = await StudentCourse.create({
             courseId: course._id,
             title: course.title,
+            description: course.description,
+            image: course.images,
+            audio: course.audio,
             price: course.price,
             category: course.category,
             userId: userStatus._id
         });
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {
-            courseLimit: userStatus.courseLimit + 1
+            $inc: {courseLimit: + 1},
+        },
+        {
+            new: true
         });
         return res.status(200).json({
             message: 'Course registered successfully',

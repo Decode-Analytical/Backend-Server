@@ -16,6 +16,15 @@ const studentSchema = new mongoose.Schema(
     price: {
       type: Number,
     },
+    image: {
+      type: Array,
+    },
+    audio: {
+      type: Array,
+    },
+    description: {
+      type: String,
+    },
     category: {
       type: String,
     },

@@ -1,6 +1,5 @@
 const express = require("express");
 const upload = require("../utils/multer");
-const userValidator = require("../middleware/validator");
 const limiter  = require("../middleware/rateLimit");
 const { auth } = require("../middleware/auth");
 const {
@@ -13,6 +12,7 @@ const {
   updateStudentProfile,
   deleteUser,
 } = require("../controllers/user.controller");
+const userValidator = require("../middleware/validator");
 const router = express.Router();
 
 router.post("/signup", userValidator, signUp);
