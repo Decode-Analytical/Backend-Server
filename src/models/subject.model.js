@@ -20,12 +20,6 @@ const subjectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  price: {
-    type: Number,
-  },
-  language: {
-      type: String,
-  },
   objectives: {
       type: String,
   },

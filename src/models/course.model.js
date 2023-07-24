@@ -15,9 +15,23 @@ const courseSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  language: {
+    type: String,
+  },
+  price: {
+    type: Number,
+    required: true ["Pls, enter the price"]
+  },
   nameOfSubject: {
     type: Array,    
+  },  
+  comments: {
+    type: Array,
   },
+  comment_count: { type: Number, default: 0 },
+  like_count: { type: Number, default: 0 },
+  dislike_count: { type: Number, default: 0 },
+
 },
 {
   timestamps: true,
