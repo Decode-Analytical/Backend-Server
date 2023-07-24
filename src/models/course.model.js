@@ -12,6 +12,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true ['write the title of course'],
   },
+  description: {
+    type: String,
+  },
   nameOfSubject: {
     type: Array,    
   },

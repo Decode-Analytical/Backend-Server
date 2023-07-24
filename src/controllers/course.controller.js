@@ -51,13 +51,16 @@ exports.updateCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const courseId = await Course.findById(req.params.id);
+            const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-                if(courseId.userId === userStatus._id){
+                if(`${courseId.userId}` === `${userStatus._id}`){
                     const { title, description} = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         title,
                         description,
+                    },
+                    {
+                        new: true
                     })
                     return res.status(201).json({
                         message: "Course registered successfully",
@@ -95,7 +98,7 @@ exports.deleteCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const ownerId = await Course.findById(req.params.courseId);
-            if(ownerId.userId === userStatus._id){
+            if(`${ownerId.userId}` === `${userStatus._id}`){
                 await Course.findByIdAndDelete(req.params.courseId);
                 return res.status(200).json({
                     message: "Course successfully deleted",
@@ -227,7 +230,7 @@ exports.updateSubject = async (req, res) => {
         if (userStatus.roles === "admin") {            
             const subjectId = await Subject.findById(req.params.subjectId);
             if(subjectId){
-                if(subjectId.userId === userStatus._id){
+                if(`${subjectId.userId}` === `${userStatus._id}`){
             const { nameOfSubject, description, price, summary, category, language, objectives, requirement  } = req.body;
             if(req.files){
                 images = req.files.images,
@@ -304,7 +307,7 @@ exports.deleteSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const subject = await Subject.findById(req.params.subjectId);
             if(subject){
-                if(subject.userId === userStatus._id){
+                if(`${subject.userId}` === `${userStatus._id}`){
             const subjects = await Subject.findByIdAndDelete(req.params.subjectId);
             return res.status(200).json({
                 message: "Subject successfully deleted",
@@ -419,7 +422,7 @@ exports.updateQuestion = async (req, res) => {
             const courses = await Course.findById(courseId);
             if(courses){
                 const subject = await Subject.findById(subjectId);
-                if(subject.userId === userStatus._id){
+                if(`${subject.userId}` === `${userStatus._id}`){
             const { question, choices, correctAnswer } = req.body;            
             const questionUpdate = await Question.findByIdAndUpdate(req.params.questionId, {
                 question,
@@ -465,7 +468,7 @@ exports.deleteQuestion = async (req, res) => {
             const courses = await Course.findById(courseId);
             if(courses){
                 const subject = await Subject.findById(subjectId);
-                if(subject.userId === userStatus._id){
+                if(`${subject.userId}` === `${userStatus._id}`){
                     const questionDelete = await Question.findByIdAndDelete(questionId);
                     return res.status(200).json({
                         message: "Question successfully deleted",
