@@ -14,6 +14,8 @@ exports.createCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const { title, description} = req.body;
+            const existingTitle = await Course.findOne({ title });
+            if(!existingTitle){
             const newCourse = await Course.create({
                 userId: userStatus._id,
                 title,
@@ -23,6 +25,11 @@ exports.createCourse = async (req, res) => {
                 message: "Course registered successfully",
                 newCourse
             })
+        } else{
+            return res.status(301).json({
+                message: "The title of the course is existing, kindly choose topic/subject under it"
+            })
+        }
         }else {
             return res.status(401).json({
                 Message: "You are not authorised to perform this action"
