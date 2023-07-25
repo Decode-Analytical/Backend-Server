@@ -12,7 +12,7 @@ exports.createCourse = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === "student") {
+        if (userStatus.roles === "admin") {
             const { title, price, description} = req.body;
             const existingTitle = await Course.findOne({ title });
             if(!existingTitle){
