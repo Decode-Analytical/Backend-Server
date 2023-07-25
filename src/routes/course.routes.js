@@ -17,6 +17,7 @@ const { createCourse,
 const router = express.Router();
 
 
+router.get("/searchingCourse", searchCourse);
 router.use(auth);
 router.post("/registeredCourse", createCourse );
 router.put("/updateCourse/:courseId", updateCourse )
@@ -35,12 +36,10 @@ router.post("/createSubject/:courseId", upload.fields([
 ]), addSubject);
 router.get("/viewAllSubjects", viewSubjects);
 router.delete("/deleteSubject/:courseId/subjectId", deleteSubject);
-router.get("/searchingCourse", searchCourse);
 router.get("/viewAllCourses", getAllCourses);
 router.post("/addQuestion/:courseId/:subjectId", addQuestion );
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
-
 
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
 const Course = require('../models/course.model');
 const Student = require('../models/student.model');
-const Comment = require('../models/comment.model');
+// const Comment = require('../models/comment.model');
 const Payment = require('../models/transaction.model');
 
 

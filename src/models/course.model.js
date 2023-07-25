@@ -10,6 +10,7 @@ const courseSchema = new mongoose.Schema({
 
   title: {
     type: String,
+    index: true,
     required: true ['write the title of course'],
   },
   description: {
@@ -35,7 +36,7 @@ const courseSchema = new mongoose.Schema({
 },
 {
   timestamps: true,
-  versionKey: false,
+  versionKey: false
 });
 
 module.exports = mongoose.model('Course', courseSchema);

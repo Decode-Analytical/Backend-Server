@@ -8,6 +8,7 @@ const subjectSchema = new mongoose.Schema({
     },
   nameOfSubject: {
     type: String,
+    index: true
   },
   questions: {
     type: Array,
