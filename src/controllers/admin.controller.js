@@ -10,10 +10,8 @@ exports.adminUpdateUserRoles = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        const email = req.body; 
         if(userStatus.roles === 'student') {
-            const roleupdate = await User.findById({ email });
-            const newRole = await User.findOneAndUpdate({ _id: roleupdate._id }, {
+            const newRole = await User.findOneAndUpdate({ _id: userStatus._id }, {
                 $set: {
                     roles: "admin"
                 }
@@ -69,9 +67,8 @@ exports.adminViewStudents = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin') {
-            const students = await Student.find({})
+            const students = await User.find({})
             .sort({ createdAt: -1 })
-            .populate('course', 'title')
             return res.status(200).json({
                 students
             });
@@ -82,7 +79,8 @@ exports.adminViewStudents = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            message: 'Student not found'
+            message: 'Student not found',
+            error: error.message
         });
     }
 }

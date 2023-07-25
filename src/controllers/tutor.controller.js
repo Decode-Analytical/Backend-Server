@@ -7,24 +7,17 @@ exports.setExamination = async(req, res ) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(!userStatus.role === 'student') {
-            return res.status(401).json({
-                success: false,
-                message: 'You are not authorized to access this resource',
-            });
-        }
-        const {courseName, courseDuration, coursePrice, courseDescription } = req.body;
-        
+        if(userStatus.role === 'admin') {            
+        const {courseName, courseDuration, coursePrice, courseDescription } = req.body;        
         if(req.files){
             const courseImage = req.files.courseImage;
         const register = await Register.create({
-            courseName,
             courseName,
             courseDuration,
             coursePrice,
             courseDescription,
             courseImage: courseImage,
-            user: user._id,
+            user: userStatus._id,
         });          
         return res.status(200).json({
             success: true,
@@ -32,8 +25,14 @@ exports.setExamination = async(req, res ) => {
             data: register
         });
     }
+}else {
+    return res.status(401).json({
+        success: false,
+        message: 'You are not authorized to access this resource',
+    });
+}
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: 'Register failed',
             data: error.message
