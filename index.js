@@ -27,7 +27,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-// app.use(helmet());
+app.use(helmet());
 app.use(mongoSanitize());
 app.use(logger("dev")); //logger to log every request and response summary
 
