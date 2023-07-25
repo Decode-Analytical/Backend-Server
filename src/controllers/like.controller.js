@@ -32,10 +32,13 @@ exports.likeCourse = async (req, res) => {
       course.likeAndDislikeUsers.push(userId); //add the userId to the list of users that have liked the course
       const courseAfterLiked = await Course.findByIdAndUpdate(
         courseId,{
-          new: true, 
+          
           $inc: {like_count: 1},
           $push: {likeAndDislikeUsers: userId},
-          title: 1, like_count: 1, dislike_count: 1, likeAndDislikeUsers: 1
+        },
+        {
+          select: {title: 1, like_count: 1, dislike_count: 1, likeAndDislikeUsers: 1},
+          new: true
         }
       )
 
@@ -191,8 +194,20 @@ exports.getCommentLikes = async (req, res) => {
     const { commentId } = req.params;
     const comment = await Comment.findById(
       commentId,
-      "_id like_count dislike_count likeBy"
-    )
+      "_id like_count dislike_count likeBy dislikeBy"
+    ).populate("likeBy", "email firstName") //only return user email and firstName and likes information
+    .populate("dislikeBy", "email firstName");
+
+//setting the return password to null
+    for ( user of comment.likeBy){
+      delete user.password
+
+      user.password = null
+   }
+   for ( user of comment.likeBy){
+    user.password = null
+ }
+
     if (!comment) {
       return res.status(404).json({ message: " comment not found" });
     }  
@@ -210,7 +225,7 @@ exports.test = async (req, res) => {
   // const userId = req.user._id;
   await Course.findOneAndUpdate({},
     {
-      $set: {comment_count: 0, like_count: 0, likeAndDislikeUsers: []},
+      $set: {comment_count: 0, like_count: 0, dislike_count: 0, likeAndDislikeUsers: []},
 
     }
     )

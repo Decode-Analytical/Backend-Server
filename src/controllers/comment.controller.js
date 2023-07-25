@@ -26,7 +26,7 @@ exports.addComment = async (req, res) => {
 
     //check if the student exist and he registered for the course
     const student = await Student.find({ userId, courseId });
-    if (!student) {
+    if (!student || student.length == 0) {
       return res.status(401).json({
         error: `please register so you can comment the course`,
       });
@@ -54,7 +54,8 @@ exports.getCourseComments = async (req, res) => {
     try {
       const {courseId} = req.params
     
-      const course = await Course.findById( courseId, "comments comment_count"  );
+      const course = await Course.findById( courseId, "comments comment_count"  )
+      // .populate("comments");
       if (!course) {
         return res.status(404).json({ message: "course not found"});
       }
@@ -168,7 +169,6 @@ exports.getCommentById = async (req, res) => {
     
 
     if(!parentCommentId){ // if the comment is not a reply, we will decrement the comment count for the comment
-     console.log("!comment.parentCommentId: ", )
       await Course.findByIdAndUpdate(comment.courseId, 
         {
           $inc: { comment_count: -1 },
@@ -221,7 +221,7 @@ exports.getCommentById = async (req, res) => {
 
       //check if the student exist and he registered for the course
       const student = await Student.find({ userId , courseId: parentComment.courseId });
-      if (!student) {
+      if (!student || student.length == 0) {
         return res.status(401).json({
           error: `please register so you can comment the course`,
         });
