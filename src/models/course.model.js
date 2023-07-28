@@ -11,6 +11,7 @@ const courseSchema = new mongoose.Schema({
       required: true,
       trim: true,
       unique: true,
+      lowercase: true
     },
     summary: {
       type: String,
@@ -24,9 +25,11 @@ const courseSchema = new mongoose.Schema({
     },
     category: {
       type: String,
+      lowercase: true
     },
     language: {
       type: String,
+      lowercase: true
     },
     objectives: {
       type: String,
@@ -52,7 +55,9 @@ const courseSchema = new mongoose.Schema({
       default: 0,
     },
     tutor_id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     video: {
       type: Array,

@@ -167,21 +167,33 @@ exports.searchCourse = async (req, res) => {
     try {
         const id= req.user;
         const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        const { title } = req.query;
-        if (userStatus.roles === "admin") {
-            const course = await Course.find({ title: { $regex: 'title', $options: "i"  } });
-            return res.status(200).json({
-                message: "Course fetched successfully",
-                course
-            });
-        } else {
-            return res.status(400).json({ error: "User must login as Admin in order to search a course" });
-        }
-    } catch (error) {
-        return res.status(400).json({
+        const {tutor, category, title, ratings} = req.query
+
+        let searchQuery = tutor
+          ? { tutor }
+          : category
+          ? { category }
+          : title
+          ? { title }
+          : ratings
+          ? { ratings }
+          : {};
+          if (tutor) {
+            const tutorInfo = await User.find({email: tutor.toLowerCase()}, "_id")
+            searchQuery = {_id: tutorInfo._id};
+          }
+          const courses = await Course.find(searchQuery)
+        return res.status(200).json({
+            message: 'success',
+            courses: courses
+        })
+       
+    } 
+    catch (error) {
+        return res.status(500).json({
             message: "Error fetching course",
             error: error.message 
         });
     }
 }
+

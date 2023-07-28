@@ -4,6 +4,9 @@ const upload = require('../utils/multer');
 const { createCourse, getCourses, updateCourse, deleteCourse, searchCourse, getAllCourses,   } = require('../controllers/course.controller');
 const router = express.Router();
 
+router.get("/search", searchCourse);
+
+
 router.use(auth);
 router.post("/registeredCourse", upload.fields([
     { name: "images", maxCount: 1 },
