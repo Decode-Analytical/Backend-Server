@@ -223,27 +223,32 @@ exports.test = async (req, res) => {
   // return res.status(200).send({ message: 'hello world from here' });
   // const { courseId} = req.params;
   // const userId = req.user._id;
-  await Course.findOneAndUpdate({},
+  const courses = await Course.find(
+    {},
     {
-      $set: {comment_count: 0, like_count: 0, dislike_count: 0, likeAndDislikeUsers: []},
-
+      title: 1,
+      tutor_id: 1,
+      category: 1,
+      comment_count: 1,
+      like_count: 1,
+      dislike_count: 1,
+      likeAndDislikeUsers: 1,
     }
-    )
+  ).populate("tutor_id", "firstName lastName")
   // const s = await Student.find({ userId })
   // return res.send({s})
-    // if(req.query.c){
-        const allCourses = await Course.find({}, '_id comments like_count dislike_count likeAndDislikeUsers comment_count' )
-    
-        return res.status(200).send({ message: "success",totalCourses: allCourses.length, allCourses });
-    // }
-    // const s = await Student.find({}, '_id registeredCourses userId')
-    // const userId = req.user._id;
-    const student = await Student.findOne({ userId });
-    const u = await User.findOne({})
+  // if(req.query.c){
+  // const allCourses = await Course.find({}, '_id comments like_count dislike_count likeAndDislikeUsers comment_count' )
+  console.log({ courses });
 
-    student.registeredCourses.pop(courseId);
-    // await student.save()
-    res.status(200).send({ message: 'hello world from here', u });
+  return res.status(200).send({ message: "success", courses });
+  // }
+  // const s = await Student.find({}, '_id registeredCourses userId')
+  // const userId = req.user._id;
+  const student = await Student.findOne({ userId });
+  const u = await User.findOne({});
 
-    
+  student.registeredCourses.pop(courseId);
+  // await student.save()
+  res.status(200).send({ message: "hello world from here", u });
 }

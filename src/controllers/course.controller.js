@@ -182,11 +182,20 @@ exports.searchCourse = async (req, res) => {
             const tutorInfo = await User.find({email: tutor.toLowerCase()}, "_id")
             searchQuery = {_id: tutorInfo._id};
           }
-          const courses = await Course.find(searchQuery)
-        return res.status(200).json({
-            message: 'success',
-            courses: courses
-        })
+          const courses = await Course.find(searchQuery, {
+            title: 1,
+            tutor_id: 1,
+            category: 1,
+            comment_count: 1,
+            like_count: 1,
+            dislike_count: 1,
+            likeAndDislikeUsers: 1,
+          }).populate("tutor_id", "firstName lastName");
+        
+          return res.status(200).json({
+            message: "success",
+            courses,
+          });
        
     } 
     catch (error) {
