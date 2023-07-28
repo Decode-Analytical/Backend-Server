@@ -167,30 +167,22 @@ exports.searchCourse = async (req, res) => {
     try {
         const id= req.user;
         const user = await User.findById(id);
-        const {tutor, category, title, ratings} = req.query
+        const {tutor, category, title} = req.query
 
+        //established and create the searching variable
         let searchQuery = tutor
           ? { tutor }
           : category
-          ? { category }
+          ? { category: { $regex: category, $options: "i" } }
           : title
-          ? { title }
-          : ratings
-          ? { ratings }
-          : {};
+          ? {  title: { $regex: title, $options: "i" } }
+          : {}; // if nothing is specified, all courses will be returned
+
           if (tutor) {
-            const tutorInfo = await User.find({email: tutor.toLowerCase()}, "_id")
-            searchQuery = {_id: tutorInfo._id};
-          }
-          const courses = await Course.find(searchQuery, {
-            title: 1,
-            tutor_id: 1,
-            category: 1,
-            comment_count: 1,
-            like_count: 1,
-            dislike_count: 1,
-            likeAndDislikeUsers: 1,
-          }).populate("tutor_id", "firstName lastName");
+            const tutorInfo = await User.find({firstName: { $regex: tutor, $options: "i" }}, "_id");
+            searchQuery = {userId: tutorInfo._id};
+          } 
+          const courses = await Course.find(searchQuery).populate("userId", "firstName");
         
           return res.status(200).json({
             message: "success",
