@@ -178,7 +178,7 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { nameOfSubject, description, price, summary, category, language, objectives, requirement } = req.body;
+            const { nameOfSubject, description, summary, category, language, objectives, requirement } = req.body;
             if(req.files){
                 images = req.files.images,
                 video = req.files.video,
@@ -186,8 +186,7 @@ exports.addSubject = async (req, res) => {
             const newSubject = await Subject.create({
                 userId: userStatus._id,
                 nameOfSubject,
-                description, 
-                price,
+                description,
                 summary,
                 category,
                 language,

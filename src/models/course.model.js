@@ -19,10 +19,6 @@ const courseSchema = new mongoose.Schema({
   language: {
     type: String,
   },
-  price: {
-    type: Number,
-    required: true ["Pls, enter the price"]
-  },
   nameOfSubject: {
     type: Array,    
   },  

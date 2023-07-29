@@ -161,3 +161,57 @@ exports.adminTotalStudent = async (req, res) => {
         });
     }
 };
+
+
+// total course registered 
+exports.adminTotalCourse = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin' || 'superAdmin') {
+            const total = await Course.countDocuments({});
+            const totalCourse = await User.countDocuments({ roles: 'student', roles: 'admin', roles: 'IT' });
+            return res.status(200).json({
+                total,
+                totalCourse
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total course not found'
+        });
+    }
+};
+
+
+// total payment 
+exports.adminTotalPayment = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin') {
+            const total = await Payment.countDocuments({
+                student: { $exists: true },
+                course: { $exists: true },
+                paymentMethod: { $exists: true }
+            });
+            return res.status(200).json({
+                total
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total payment not found'
+        });
+    }
+};

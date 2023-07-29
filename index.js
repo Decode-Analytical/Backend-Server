@@ -11,7 +11,6 @@ const userRoutes = require('./src/routes/user.routes');
 const studentRoutes = require('./src/routes/student.routes');
 const paymentRoutes = require('./src/routes/payment.routes');
 const adminRoutes = require('./src/routes/admin.routes');
-// const tutorRoutes = require('./src/routes/tutor.routes');
 const questionRoutes = require('./src/routes/quiz.routes');
 const answerRoutes = require('./src/routes/answer.routes');
 
@@ -41,7 +40,6 @@ app.use('/api', cloudinaryConfig);
 app.use("/api/course", courseRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/student", studentRoutes);
-// app.use("/api/tutor", tutorRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/question", questionRoutes);
