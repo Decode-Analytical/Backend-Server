@@ -1,5 +1,7 @@
 const Course = require("../models/course.model");
 const User = require("../models/user.model");
+const Tutor = require("../models/tutor.model");
+
 
 
 
@@ -170,20 +172,35 @@ exports.searchCourse = async (req, res) => {
         const {tutor, category, title} = req.query
 
         //established and create the searching variable
-        let searchQuery = tutor
-          ? { tutor }
-          : category
+        let searchQuery =  category
           ? { category: { $regex: category, $options: "i" } }
           : title
           ? {  title: { $regex: title, $options: "i" } }
           : {}; // if nothing is specified, all courses will be returned
 
-          if (tutor) {
-            const tutorInfo = await User.find({firstName: { $regex: tutor, $options: "i" }}, "_id");
-            searchQuery = {userId: tutorInfo._id};
-          } 
-          const courses = await Course.find(searchQuery).populate("userId", "firstName");
-        
+        //   if (tutor) {
+        //     const tutorInfo = await User.find(
+        //       {
+        //         $or: [
+        //           {
+        //             firstName: { $regex: `^${tutor}|${tutor}$`, $options: "i" },
+        //           },
+        //           {
+        //             lastName: { $regex: `^${tutor}|${tutor}$`, $options: "i" },
+        //           },
+        //         ],
+        //       },
+        //     );
+        //     if(tutorInfo){
+        //         console.log({tutorInfo})
+        //         searchQuery = { userId: tutorInfo._id };
+        //         console.log('search query is: ' + searchQuery);
+
+        //     }
+        //   } 
+          const courses = await Course.find(searchQuery)
+            .sort({ createdAt: -1 })
+
           return res.status(200).json({
             message: "success",
             courses,
