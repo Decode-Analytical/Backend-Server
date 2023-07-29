@@ -164,7 +164,7 @@ exports.deleteCourse = async (req, res) => {
 
 
 
-// search course by first letter
+// search course by title or category
 exports.searchCourse = async (req, res) => {
     try {
         const id= req.user;
