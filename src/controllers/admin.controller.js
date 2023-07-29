@@ -171,10 +171,10 @@ exports.adminTotalCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin' || 'superAdmin') {
             const total = await Course.countDocuments({});
-            const totalCourse = await User.countDocuments({ roles: 'student', roles: 'admin', roles: 'IT' });
+            const totalCourse = await User.countDocuments({ roles: 'student' } ) + await User.countDocuments({ roles: 'admin' } ) + await User.countDocuments({ roles: 'IT' });
             return res.status(200).json({
-                total,
-                totalCourse
+                totalCourseRegistered: total,
+                totalStudentRegistered: totalCourse,
             });
         } else {
             return res.status(200).json({
@@ -183,7 +183,8 @@ exports.adminTotalCourse = async (req, res) => {
     }
     } catch (error) {
         return res.status(500).json({
-            message: 'Total course not found'
+            message: 'Total course not found',
+            error: error.message
         });
     }
 };
