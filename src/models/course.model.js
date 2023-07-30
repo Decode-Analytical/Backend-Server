@@ -22,9 +22,20 @@ const courseSchema = new mongoose.Schema({
   nameOfSubject: {
     type: Array,    
   },  
-  comments: {
-    type: Array,
-  },
+ comments:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      required: false, 
+    },
+  ],
+  likeAndDislikeUsers:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false, 
+    },
+  ],
   comment_count: { type: Number, default: 0 },
   like_count: { type: Number, default: 0 },
   dislike_count: { type: Number, default: 0 },
