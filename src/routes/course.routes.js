@@ -17,7 +17,7 @@ const { createCourse,
 const router = express.Router();
 
 
-router.get("/searchingCourse", searchCourse);
+router.get("/search", searchCourse);
 router.use(auth);
 router.post("/registeredCourse", createCourse );
 router.put("/updateCourse/:courseId", updateCourse )
