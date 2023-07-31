@@ -13,6 +13,8 @@ const paymentRoutes = require('./src/routes/payment.routes');
 const adminRoutes = require('./src/routes/admin.routes');
 const questionRoutes = require('./src/routes/quiz.routes');
 const answerRoutes = require('./src/routes/answer.routes');
+const commentRoutes = require('./src/routes/comment.routes');
+const likeRoutes = require('./src/routes/like.routes');
 
 const app = express();
 //connect to DB
@@ -44,7 +46,13 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/question", questionRoutes);
 app.use("/api/answer", answerRoutes);
+app.use("/api/comments/", commentRoutes);
+app.use("/api/likes", likeRoutes);
 
+
+app.use("/", (req, res) => {
+  res.status(404).send("<h1>The requested API URI is not available</h1>");
+});
 //start server
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);

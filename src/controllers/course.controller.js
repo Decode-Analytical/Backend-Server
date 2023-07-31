@@ -335,10 +335,10 @@ exports.deleteSubject = async (req, res) => {
 
 
 
-// search course 
+// search course by title or category
 exports.searchCourse = async (req, res) => {
     try {
-        const title = req.query
+        const title= req.query
         const course = await Course.find({title: { $regex: `${title}`, $options: "i" }})
         return res.status(200).json({
             message: "Course fetched successfully",
