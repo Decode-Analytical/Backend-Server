@@ -331,21 +331,48 @@ exports.deleteSubject = async (req, res) => {
     }
 }
 
-
-
-
+// // search course by title or category
+// exports.searchCourse = async (req, res) => {
+//     try {
+//         const title= req.query
+//         const course = await Course.find({title: { $regex: `${title}`, $options: "i" }})
+//         return res.status(200).json({
+//             message: "Course fetched successfully",
+//             course
+//             });       
+//     } catch (error) {
+//         return res.status(400).json({
+//             message: "Error fetching course",
+//             error: error.message 
+//         });
+//     }
+// }
 
 // search course by title or category
 exports.searchCourse = async (req, res) => {
     try {
-        const title= req.query
-        const course = await Course.find({title: { $regex: `${title}`, $options: "i" }})
-        return res.status(200).json({
-            message: "Course fetched successfully",
-            course
-            });       
-    } catch (error) {
-        return res.status(400).json({
+        const id= req.user;
+        const user = await User.findById(id);
+        const {category, title} = req.query
+
+        //established and create the searching variable
+        let searchQuery =  category
+          ? { category: { $regex: category, $options: "i" } }
+          : title
+          ? {  title: { $regex: title, $options: "i" } }
+          : {}; // if nothing is specified, all courses will be returned
+
+          const courses = await Course.find(searchQuery)
+            .sort({ createdAt: -1 })
+
+          return res.status(200).json({
+            message: "success",
+            courses,
+          });
+       
+    } 
+    catch (error) {
+        return res.status(500).json({
             message: "Error fetching course",
             error: error.message 
         });
