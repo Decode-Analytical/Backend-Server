@@ -13,7 +13,8 @@ const { createCourse,
     deleteSubject,
     deleteQuestion,
     updateQuestion,
-    viewSubjects,   } = require('../controllers/course.controller');
+    viewSubjects,
+    viewQuestions   } = require('../controllers/course.controller');
 const router = express.Router();
 
 
@@ -40,6 +41,7 @@ router.get("/viewAllCourses", getAllCourses);
 router.post("/addQuestion/:courseId/:subjectId", addQuestion );
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
+router.get("/viewAllQuestions", viewQuestions);
 
 
 module.exports = router;

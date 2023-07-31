@@ -338,7 +338,7 @@ exports.deleteSubject = async (req, res) => {
 // search course 
 exports.searchCourse = async (req, res) => {
     try {
-        const title= req.query
+        const title = req.query
         const course = await Course.find({title: { $regex: `${title}`, $options: "i" }})
         return res.status(200).json({
             message: "Course fetched successfully",
@@ -492,3 +492,37 @@ exports.deleteQuestion = async (req, res) => {
         error: error.message 
     });
 }}
+
+
+// admin view all questions 
+exports.viewQuestions = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            const { courseId } = req.params;
+            const courses = await Course.findById(courseId);
+            if(courses){
+                const questions = await Question.find({course: courseId});
+                return res.status(200).json({
+                    message: "Questions fetched successfully",
+                    questions
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The course not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "The course not found"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error fetching course",
+            error: error.message 
+        });
+    }
+}
