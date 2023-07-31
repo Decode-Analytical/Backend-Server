@@ -50,9 +50,8 @@ app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 
 
-app.use("/", (req, res) => {
-  res.status(404).send("<h1>The requested API URI is not available</h1>");
-});
+
+
 //start server
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);
