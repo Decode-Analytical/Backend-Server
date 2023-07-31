@@ -41,7 +41,7 @@ router.get("/viewAllCourses", getAllCourses);
 router.post("/addQuestion/:courseId/:subjectId", addQuestion );
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
-router.get("/viewAllQuestions", viewQuestions);
+router.get("/viewAllQuestions/:courseId", viewQuestions);
 
 
 module.exports = router;
