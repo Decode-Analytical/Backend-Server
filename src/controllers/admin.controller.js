@@ -11,7 +11,9 @@ exports.adminUpdateUserRoles = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'superAdmin') {
-            const newRole = await User.findOneAndUpdate({ _id: userStatus._id }, {
+            const { email } = req.body;
+            const existingUser = await User.findOne({ email: email });
+            const newRole = await User.findOneAndUpdate({ _id: existingUser._id }, {
                 $set: {
                     roles: "admin"
                 }
@@ -144,11 +146,15 @@ exports.adminTotalStudent = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);   
         if(userStatus.roles === 'admin') {
-            const total = await Student.countDocuments({});
-            const totalStudent = await User.countDocuments({ roles: 'student', roles: 'admin', roles: 'IT' });
+            const total = await User.countDocuments({});
+            const totalStudent = await User.countDocuments({ roles: 'student'});
+            const admin = await User.countDocuments({ roles: 'admin'});
+            const it = await User.countDocuments({ roles: 'IT'});
             return res.status(200).json({
-                total,
-                totalStudent
+                TotalUser: total,
+                TotalStudent: totalStudent,
+                Admin: admin,
+                IT: it
             });
         } else {
             return res.status(200).json({
@@ -157,37 +163,14 @@ exports.adminTotalStudent = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            message: 'Total student not found'
-        });
-    }
-};
-
-
-// total course registered 
-exports.adminTotalCourse = async (req, res) => {
-    try {
-        const id = req.user;
-        const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin' || 'superAdmin') {
-            const total = await Course.countDocuments({});
-            const totalCourse = await User.countDocuments({ roles: 'student' } ) + await User.countDocuments({ roles: 'admin' } ) + await User.countDocuments({ roles: 'IT' });
-            return res.status(200).json({
-                totalCourseRegistered: total,
-                totalStudentRegistered: totalCourse,
-            });
-        } else {
-            return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
-    } catch (error) {
-        return res.status(500).json({
-            message: 'Total course not found',
+            message: 'Total student not found',
             error: error.message
         });
     }
 };
+
+
+
 
 
 // total payment 
@@ -197,13 +180,14 @@ exports.adminTotalPayment = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin') {
-            const total = await Payment.countDocuments({
+            const totalPayment = await Payment.find({
                 student: { $exists: true },
                 course: { $exists: true },
                 paymentMethod: { $exists: true }
             });
             return res.status(200).json({
-                total
+                total: totalPayment.length,
+                totalPayment
             });
         } else {
             return res.status(200).json({

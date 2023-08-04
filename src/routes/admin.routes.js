@@ -8,7 +8,7 @@ const {
     adminViewCourses,
     adminViewComments,
     adminTotalStudent,
-    adminTotalCourse
+    adminTotalPayment
   } = require('../controllers/admin.controller');
 
 
@@ -19,6 +19,6 @@ router.get('/ViewStudent', adminViewStudents  );
 router.get('/viewCourse', adminViewCourses  );
 router.get('/viewComment', adminViewComments  );
 router.get('/totalStudent', adminTotalStudent   );
-router.get('/viewTotalScore', adminTotalCourse  );
+router.get('/viewTotalPayment', adminTotalPayment  );
 
 module.exports = router;
