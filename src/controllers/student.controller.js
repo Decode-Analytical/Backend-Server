@@ -11,6 +11,14 @@ exports.studentRegisterCourse = async(req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
+        const courseId  = req.params.courseId;  
+        const course = await Course.findById(courseId);
+        const hasStudentRegistered = await StudentCourse.findOne({userId: user._id, courseId})
+        if (hasStudentRegistered){
+            return res
+            .status(409)
+            .json({message: 'student already enrolled for this course'})
+        }
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
           if( userStatus.courseLimit === 3) {
@@ -18,8 +26,8 @@ exports.studentRegisterCourse = async(req, res) => {
               message: 'You have reached your limit of 3 courses'
             });
           };
-        const courseId  = req.params.courseId;  
-        const course = await Course.findById(courseId);
+        // const courseId  = req.params.courseId;  
+        // const course = await Course.findById(courseId);
         const newCourse = await StudentCourse.create({
             courseId: course._id,
             title: course.title,

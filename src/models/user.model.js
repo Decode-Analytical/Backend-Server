@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema(
       default: "student",
   },
   courseLimit: {
-    type: mongoose.Decimal128,
+    type: Number,
     default: 0,
   },
   points: {
