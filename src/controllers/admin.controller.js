@@ -3,6 +3,48 @@ const Course = require('../models/course.model');
 const Student = require('../models/student.model');
 // const Comment = require('../models/comment.model');
 const Payment = require('../models/transaction.model');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+
+
+exports.adminLogin = async(req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (user.roles === "admin") {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({
+                message: 'Incorrect username or password'
+            });
+        };
+        const isActive = await User.findOne({ _id: user._id });
+        if (isActive.isEmailActive === false) {
+            return res.status(400).json({
+                message: 'Your account is pending. kindly check your email inbox and verify it'
+            });
+        };
+        const token = jwt.sign({
+             _id: user._id,
+            }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        return res.status(200).json({
+            message: 'User logged in successfully',
+            token,
+            user
+        });
+    }else {
+        return res.status(400).json({
+            message: 'You are not admin'
+        });
+    }
+    } catch (error) {
+        res.status(400).json({
+            message: 'Error while logging in',
+            error: error.message
+        });
+    }
+};
 
 
 exports.adminUpdateUserRoles = async (req, res) => {

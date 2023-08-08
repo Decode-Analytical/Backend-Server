@@ -56,7 +56,7 @@ exports.decodePaystack = async (req, res) => {
                     _id: user._id
                 },
                 {
-                    $set: {hasPaid: true }
+                    $inc: {hasPaid: +1 }
                 },
                 {
                     new : true,

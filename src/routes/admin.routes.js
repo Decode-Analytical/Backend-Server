@@ -8,10 +8,11 @@ const {
     adminViewCourses,
     adminViewComments,
     adminTotalStudent,
-    adminTotalPayment
+    adminTotalPayment,
+    adminLogin
   } = require('../controllers/admin.controller');
 
-
+router.post('/adminSignIn', adminLogin);
 router.use(auth);
 router.put('/roles', adminUpdateUserRoles);
 router.get('/viewTransaction', adminViewTransactions );

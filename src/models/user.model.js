@@ -24,8 +24,8 @@ const userSchema = new mongoose.Schema(
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter a valid email address"],
     },
     hasPaid: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      default: 0,
     },
     isEmailActive: {
       type: Boolean,
