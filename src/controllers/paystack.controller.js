@@ -20,7 +20,6 @@ exports.paystackPayment= async(req, res) => {
     const id = req.params.id
     const course = await Course.findById( id );
     // Create a new order in the database
-    console.log(course)
     const transaction = await Transaction.create({
         reference: crypto.randomBytes(9).toString('hex'),
         amount: course.price,
@@ -55,7 +54,7 @@ exports.decodePaystack = async (req, res) => {
                 return res.status(404).json({ message: 'Transaction not found' });
             } 
             const existingCourse =   await Course.find({title: transaction.title})
-            console.log({existingCourse})    
+            // console.log({existingCourse})    
             const user = await User.findById(transaction.userId);
             if (user) {
                 await User.findOneAndUpdate(
@@ -69,7 +68,7 @@ exports.decodePaystack = async (req, res) => {
                     new : true,
                 });
             }
-            console.log({user})
+            // console.log({user})
             await sendEmail({
                 email: user.email,
                 subject: `Payment Successful`,
