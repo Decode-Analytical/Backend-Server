@@ -3,7 +3,7 @@ const { paystackPayment, decodePaystack } = require('../controllers/paystack.con
 const router = express.Router();
 
 
-router.post('/initializedPayment', paystackPayment);
+router.post('/initializedPayment/:id', paystackPayment);
 router.post('/RecievedPayment', decodePaystack);
 
 

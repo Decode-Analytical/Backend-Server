@@ -1,5 +1,7 @@
 const Transaction = require('../models/transaction.model');
 const User = require('../models/user.model');
+const Course = require('../models/course.model');
+
 const crypto = require('crypto');
 const StudentCourse = require('../models/student.model');
 const sendEmail = require('../emails/email');
@@ -14,8 +16,11 @@ exports.paystackPayment= async(req, res) => {
             message: 'Invalid Email, The email does not exist'
             }); 
     }
-    const course = await StudentCourse.findOne({ userId: existingEmail._id });
+    // 64d2553bae36cd1aca997a59
+    const id = req.params.id
+    const course = await Course.findById( id );
     // Create a new order in the database
+    console.log(course)
     const transaction = await Transaction.create({
         reference: crypto.randomBytes(9).toString('hex'),
         amount: course.price,
@@ -48,7 +53,9 @@ exports.decodePaystack = async (req, res) => {
             const transaction = await Transaction.findOne({ reference });
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
-            }            
+            } 
+            const existingCourse =   await Course.find({title: transaction.title})
+            console.log({existingCourse})    
             const user = await User.findById(transaction.userId);
             if (user) {
                 await User.findOneAndUpdate(
@@ -56,13 +63,13 @@ exports.decodePaystack = async (req, res) => {
                     _id: user._id
                 },
                 {
-                    $set: {hasPaid: true }
+                  $push: {hasPaid: existingCourse._id }
                 },
                 {
                     new : true,
                 });
             }
-
+            console.log({user})
             await sendEmail({
                 email: user.email,
                 subject: `Payment Successful`,

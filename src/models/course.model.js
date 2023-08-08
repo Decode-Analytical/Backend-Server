@@ -21,7 +21,14 @@ const courseSchema = new mongoose.Schema({
   },
   nameOfSubject: {
     type: Array,    
-  },  
+  },
+  paid: {
+    type: String,
+    enum: ['paid', 'free']
+  },
+  price:{
+    type: Number,
+  },
  comments:[
     {
       type: mongoose.Schema.Types.ObjectId,
