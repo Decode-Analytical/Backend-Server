@@ -180,28 +180,28 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { nameOfSubject, description, summary, category, language, objectives, requirement } = req.body;
+            const { modules, description, summary, category, language, requirement } = req.body;
             if(req.files){
                 images = req.files.images,
                 video = req.files.video,
                 audio = req.files.audio
             const newSubject = await Subject.create({
                 userId: userStatus._id,
-                nameOfSubject,
+                modules,
                 description,
                 summary,
                 category,
                 language,
-                objectives,
                 requirement,
                 audio: audio,
                 video: video,
                 images: images
             })
-            const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: {nameOfSubject: newSubject}}, { new: true})
+            const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Subject registered successfully",
-                addSubjectToCourse
+                addSubjectToCourse,
+                newSubject
             })
         }
         }else{
