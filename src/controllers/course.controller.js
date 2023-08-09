@@ -150,7 +150,7 @@ exports.getAllCourses = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin" && userStatus._id === "student"){
+        if(userStatus.roles === "admin" && userStatus.roles === "student"){
             const courses = await Course.find();
             return res.status(200).json({
                 message: "Courses fetched successfully",
