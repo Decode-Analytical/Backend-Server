@@ -13,7 +13,7 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { title, price, description} = req.body;
+            const { title, price, paid, description} = req.body;
             const existingTitle = await Course.findOne({ title });
             if(!existingTitle){
             const newCourse = await Course.create({
@@ -21,6 +21,7 @@ exports.createCourse = async (req, res) => {
                 title,
                 price,
                 description,
+                paid
             })
             return res.status(201).json({
                 message: "Course registered successfully",
@@ -55,10 +56,11 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { title, description} = req.body;
+                    const { title, paid, description} = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         title,
                         description,
+                        paid
                     },
                     {
                         new: true

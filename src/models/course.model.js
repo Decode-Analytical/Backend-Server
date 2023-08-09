@@ -19,7 +19,7 @@ const courseSchema = new mongoose.Schema({
   language: {
     type: String,
   },
-  nameOfSubject: {
+  modules: {
     type: Array,    
   },
   paid: {
