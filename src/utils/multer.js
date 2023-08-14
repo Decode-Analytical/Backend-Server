@@ -10,7 +10,7 @@ const storage = new CloudinaryStorage({
             resource_type: 'auto',
             allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp', 'mp3', 'mp4'],
             transformation: [
-                { width: 500, height: 500, crop: 'fill' },
+                { width: 5000, height: 5000, crop: 'fill' },
             ],
             path: file.path,
         };
