@@ -1,0 +1,19 @@
+{
+  "name": "rtmp-live-stream-server",
+  "version": "1.0.0",
+  "description": "RTMP live stream server",
+  "main": "rtmp.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "ConfidenceDev <confidostic3@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "node-media-server": "^2.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
