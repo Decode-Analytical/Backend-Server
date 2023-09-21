@@ -27,8 +27,6 @@ app.use(cors());
 app.use(mongoSanitize());
 
 
-// const express = require("express");
-// const app = express();
 const server = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 app.set("view engine", "ejs");
@@ -86,5 +84,5 @@ app.use("/api/answer", answerRoutes);
 app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 
-server.listen(process.env.PORT || 3030, () => {
+server.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`)});

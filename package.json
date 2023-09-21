@@ -1,15 +1,23 @@
 {
-  "name": "zoom",
+  "name": "backend-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend-server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
-  "author": "",
+  "repository": {
+  "type": "git",
+  "url": "git+https://github.com/Decode-Analytical/Backend-Server.git"
+  },
+  "author": "decode-analytical",
+  "type": "commonjs",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Decode-Analytical/Backend-Server/issues"
+  },
+  "homepage": "https://github.com/Decode-Analytical/Backend-Server#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
