@@ -216,3 +216,253 @@ exports.studentUpdateStatus = async(req, res) => {
     }
 };
 
+
+// student update his profile
+
+exports.studentUpdateProfile = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+            const userUpdate = await User.findOneAndUpdate({ userId: userStatus._id }, {
+                $set: {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    phoneNumber: req.body.phoneNumber,
+                    address: req.body.address,
+                }
+            }, {
+                new: true
+            });
+            return res.status(200).json({
+                message: 'Profile updated successfully',
+                userUpdate
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to update your profile'
+        });
+    }
+    }catch(error) {
+        return res.status(400).json({
+            message: 'Error while updating profile',
+            error: error.message
+        });
+    }
+};
+
+// student update his password
+
+exports.studentUpdatePassword = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+            const userUpdate = await User.findOneAndUpdate({ userId: userStatus._id }, {
+                $set: {
+                    password: req.body.password,
+                }
+            }, {
+                new: true
+            });
+            return res.status(200).json({
+                message: 'Password updated successfully',
+                userUpdate
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to update your password'
+        });
+    }
+    }catch(error) {
+        return res.status(400).json({
+            message: 'Error while updating password',
+            error: error.message
+        });
+    }
+};
+
+// student update his role
+
+exports.studentUpdateRole = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+            const userUpdate = await User.findOneAndUpdate({ userId: userStatus._id }, {
+                $set: {
+                    roles: req.body.roles,
+                }
+            }, {
+                new: true
+            });
+            return res.status(200).json({
+                message: 'Role updated successfully',
+                userUpdate
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to update your role'
+        });
+    }
+    }catch(error) {
+        return res.status(400).json({
+            message: 'Error while updating role',
+            error: error.message
+        });
+    }
+};
+
+
+// count the total number of students registered 
+
+exports.studentCount = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+            const count = await StudentCourse.find({ }).count();
+            return res.status(200).json({
+                message: 'Total number of students registered fetched successfully',
+                count
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+// count the total number of students paid for his registered course
+
+exports.studentPaidCount = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+            const count = await Transaction.find({ userId: userStatus._id }).count();
+            return res.status(200).json({
+                message: 'Total number of students paid for his registered course fetched successfully',
+                count
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+// count the total number of students registered in a specific course
+
+exports.studentCourseCount = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+            const courseId = req.params.courseId;
+            const count = await StudentCourse.find({ courseId: courseId }).count();
+            return res.status(200).json({
+                message: 'Total number of students registered in a specific course fetched successfully',
+                count
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+// student update only the picture of his profile 
+
+exports.studentUpdateProfilePicture = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+            if(req.file){
+                const picture = req.file.picture;        
+            const userUpdate = await User.findOneAndUpdate({ userId: userStatus._id }, {
+                $set: {
+                    picture: picture,
+                }
+            }, {
+                new: true
+            });
+        }
+            return res.status(200).json({
+                message: 'Profile picture updated successfully',
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to update your profile picture'
+        });
+    }
+    }catch(error) {
+        return res.status(400).json({
+            message: 'Error while updating profile picture',
+            error: error.message
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+// course skill level (beginner, immediate, pro ) 
+
+exports.courseSkillLevel = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+            const courseId = req.params.courseId;
+            const skillLevel = await CourseSkillLevel.find({ courseId: courseId }).count();
+            return res.status(200).json({
+                message: 'Total number of students paid for his registered course fetched successfully',
+                skillLevel
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};

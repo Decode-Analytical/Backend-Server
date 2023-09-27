@@ -8,9 +8,9 @@ const storage = new CloudinaryStorage({
         return {
             folder: 'profile',
             resource_type: 'auto',
-            allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp', 'mp3', 'mp4'],
+            allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp', 'mp3', 'mp4', 'ogg', 'wav', 'webm'],
             transformation: [
-                { width: 5000, height: 5000, crop: 'fill' },
+                { width: 500, height: 500, crop: 'fit' },
             ],
             path: file.path,
         };
