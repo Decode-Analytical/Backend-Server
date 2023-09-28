@@ -38,6 +38,9 @@ const subjectSchema = new mongoose.Schema({
   video: {
     type: Array,
   },
+  videoLength: {
+    type: Number
+  },
   audio: {
       type: Array,
     },

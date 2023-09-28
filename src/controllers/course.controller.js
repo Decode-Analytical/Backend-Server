@@ -2,11 +2,9 @@ const Course = require("../models/course.model");
 const User = require("../models/user.model");
 const Subject = require("../models/subject.model");
 const Question = require("../models/question.model");
+const {getVideoLengthInMinutes} = require('../utils/getVideoLength')
 
-
-
-
-// create a course 
+// create a course //WHERE TO WORK AND MODEL
 exports.createCourse = async (req, res) => {
     try {
         const id= req.user;
@@ -171,7 +169,7 @@ exports.getAllCourses = async (req, res) => {
 
 
 
-// create subject 
+// create subject //WHERE TO WORK AND SUBJECT MODEL
 exports.addSubject = async (req, res) => {
     try {
         const id= req.user;
@@ -185,6 +183,7 @@ exports.addSubject = async (req, res) => {
                 images = req.files.images,
                 video = req.files.video,
                 audio = req.files.audio
+                videoLength = await getVideoLengthInMinutes(video)
             const newSubject = await Subject.create({
                 userId: userStatus._id,
                 modules,
@@ -223,7 +222,7 @@ exports.addSubject = async (req, res) => {
 }
 
 
-// update the courses
+// update the courses //WHERE TO WORK
 exports.updateSubject = async (req, res) => {
     try {
         const id= req.user;

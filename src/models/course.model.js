@@ -29,6 +29,9 @@ const courseSchema = new mongoose.Schema({
   price:{
     type: Number,
   },
+  videosLength:{
+    type: Number,
+  },
  comments:[
     {
       type: mongoose.Schema.Types.ObjectId,
