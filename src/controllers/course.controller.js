@@ -169,7 +169,7 @@ exports.getAllCourses = async (req, res) => {
 
 
 
-// create subject //WHERE TO WORK AND SUBJECT MODEL
+// create subject //
 exports.addSubject = async (req, res) => {
     try {
         const id= req.user;
@@ -185,24 +185,31 @@ exports.addSubject = async (req, res) => {
                 audio = req.files.audio
                 videoLength = await getVideoLengthInMinutes(video)
             const newSubject = await Subject.create({
-                userId: userStatus._id,
-                modules,
-                videoLength,
-                description,
-                summary,
-                category,
-                language,
-                requirement,
-                audio: audio,
-                video: video,
-                images: images
-            })
-            const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
+              userId: userStatus._id,
+              modules,
+              videoLength,
+              description,
+              summary,
+              category,
+              language,
+              requirement,
+              audio: audio,
+              video: video,
+              images: images,
+            });
+            const addSubjectToCourse = await Course.findByIdAndUpdate(
+              { _id: courseId._id },
+              {
+                $push: { modules: newSubject },
+                $inc: { videosLength: videoLength },
+              },
+              { new: true }
+            );
             return res.status(201).json({
-                message: "Subject registered successfully",
-                addSubjectToCourse,
-                newSubject
-            })
+              message: "Subject registered successfully",
+              addSubjectToCourse,
+              newSubject,
+            });
         }
         }else{
             return res.status(403).json({
@@ -238,9 +245,12 @@ exports.updateSubject = async (req, res) => {
                 images = req.files.images,
                 video = req.files.video,
                 audio = req.files.audio        
-            const subject = await Subject.findByIdAndUpdate(req.params.subjectId, {
-                nameOfSubject, 
-                description, 
+                videoLength = await getVideoLengthInMinutes(video)
+            const subject = await Subject.findByIdAndUpdate(
+              req.params.subjectId,
+              {
+                nameOfSubject,
+                description,
                 price,
                 summary,
                 category,
@@ -249,12 +259,22 @@ exports.updateSubject = async (req, res) => {
                 requirement,
                 audio: audio,
                 video: video,
-                images: images
-            }, { new: true });
-            await Course.findByIdAndUpdate(req.params.courseId, { $set: { nameOfSubject: subject }}, {new: true })
+                videoLength,
+                images: images,
+              },
+              { new: true }
+            );
+            await Course.findByIdAndUpdate(
+              req.params.courseId,
+              {
+                $set: { nameOfSubject: subject },
+                $inc: { videosLength: -videoLength },
+              },
+              { new: true }
+            );
             return res.status(200).json({
-                message: "Subject successfully updated",
-                subject
+              message: "Subject successfully updated",
+              subject,
             });
             } else {
                 return res.status(400).json({ Error: "You are not the owner of this course" });
