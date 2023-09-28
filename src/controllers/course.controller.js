@@ -184,7 +184,6 @@ exports.addSubject = async (req, res) => {
                 video = req.files.video,
                 audio = req.files.audio
                 videoLength = await getVideoLengthInMinutes(video)
-                console.log({videoLength})
             const newSubject = await Subject.create({
                 userId: userStatus._id,
                 modules,
@@ -201,7 +200,7 @@ exports.addSubject = async (req, res) => {
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Subject registered successfully",
-                // addSubjectToCourse,
+                addSubjectToCourse,
                 newSubject
             })
         }

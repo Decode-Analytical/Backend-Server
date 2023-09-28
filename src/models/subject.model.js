@@ -39,7 +39,7 @@ const subjectSchema = new mongoose.Schema({
     type: Array,
   },
   videoLength: {
-    type: Number
+    type: String,
   },
   audio: {
       type: Array,
