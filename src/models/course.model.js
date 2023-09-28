@@ -29,6 +29,11 @@ const courseSchema = new mongoose.Schema({
   price:{
     type: Number,
   },
+  skillLevel:{
+    type: String,
+    enum: ['beginner', 'intermediate', 'pro'],
+    default:'beginner'
+  },
   videosLength:{
     type: Number,
   },

@@ -11,12 +11,13 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { title, price, paid, description} = req.body;
+            const { title, price, paid, description, skillLevel} = req.body;
             const existingTitle = await Course.findOne({ title });
             if(!existingTitle){
             const newCourse = await Course.create({
                 userId: userStatus._id,
                 title,
+                skillLevel,
                 price,
                 description,
                 paid
@@ -54,9 +55,10 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { title, paid, description} = req.body;
+                    const { title, paid, description, skillLevel} = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         title,
+                        skillLevel,
                         description,
                         paid
                     },
