@@ -36,6 +36,7 @@ const courseSchema = new mongoose.Schema({
   },
   videosLength:{
     type: Number,
+    default: 0
   },
  comments:[
     {
