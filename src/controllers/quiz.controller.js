@@ -1,4 +1,4 @@
-const Question = require('../models/question.model');
+const Question = require('../models/course.model');
 const User = require('../models/user.model');
 
 
@@ -9,12 +9,14 @@ exports.createQuizQuestions = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const { question, choices, correctAnswer } = req.body;
+            const { question, options, question_duration, question_description, correct_answer } = req.body;
             const quizQuestions = await Question.create({
                 userId: userStatus._id,
-                question,
-                choices,
-                correctAnswer,
+                question_description,
+                question_duration,
+                question,                
+                options,
+                correct_answer,
             })
             return res.status(200).json({
                 message: 'Quiz questions saved to the database.',
@@ -66,8 +68,8 @@ exports.updateQuizQuestions = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const { question, choices, correctAnswer } = req.body;
-            const quizQuestions = await Question.findOneAndUpdate({ _id: req.params.id }, { question, choices, correctAnswer });
+            const { question, options, question_description, question_duration, correct_answer } = req.body;
+            const quizQuestions = await Question.findOneAndUpdate({ _id: req.params.id }, { question, options, question_description, question_duration, correct_answer });
             return res.status(200).json({
                 message: 'Quiz questions updated.',
                 quizQuestions

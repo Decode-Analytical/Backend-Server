@@ -1,6 +1,6 @@
-const Answer = require('../models/answer.model');
+const { Answer } = require('../models/course.model');
 const User = require('../models/user.model');
-const Questions = require('../models/question.model');
+const { Question } = require('../models/course.model');
 
 
 exports.studentViewAnswers = async(req, res) => {
@@ -26,23 +26,23 @@ exports.studentViewAnswers = async(req, res) => {
 
 
 
-// student answer the questions
+// student answer the question
 
 exports.studentAnswerQuestions = async(req, res) => {
     try {
         const id = req.user;
         const userStatus = await User.findById(id);
-        if (userStatus.roles === 'student' || userStatus.roles === 'IT') {
+        if (userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const questionId = req.params.questionId;
-            const questions = await Questions.findById(questionId);
+            const question = await Question.findById(questionId);
             const { answer } = req.body;
             const rightAnswer = await Answer.create({
                  userId: userStatus._id, 
-                 questionId: questions._id,
-                 question: questions.question,
+                 questionId: question._id,
+                 question: question.question,
                  answer
                 });
-                if (rightAnswer.answer === questions.correctAnswer) {
+                if (rightAnswer.answer === question.correct_answer) {
                     await User.findByIdAndUpdate(userStatus._id, {
                         $inc: { score: 1 }
                     },
@@ -59,7 +59,7 @@ exports.studentAnswerQuestions = async(req, res) => {
                 }            
         } else {
             return res.status(400).json({
-                error: 'You must login to this examination'
+                error: 'You must login as Student to take this examination'
             });
         }
     } catch (error) {

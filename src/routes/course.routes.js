@@ -25,13 +25,13 @@ router.put("/updateCourse/:courseId", updateCourse )
 router.get("/viewCourse", getCourses);
 router.delete("deleteCourse/:courseId", deleteCourse);
 router.put("/editSubject/:courseId/:subjectId", upload.fields([
-    { name: "images", maxCount: 1 },
+    { name: "image", maxCount: 1 },
     { name: "video", maxCount: 1 },
     { name: "audio", maxCount: 1 },
 ]), updateSubject);
 
 router.post("/createSubject/:courseId", upload.fields([
-    { name: "images", maxCount: 1 },
+    { name: "image", maxCount: 1 },
     { name: "video", maxCount: 1 },
     { name: "audio", maxCount: 1 },
 ]), addSubject);

@@ -1,7 +1,5 @@
-const Course = require("../models/course.model");
+const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
-const Subject = require("../models/subject.model");
-const Question = require("../models/question.model");
 
 
 
@@ -13,15 +11,14 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { title, price, paid, description} = req.body;
-            const existingTitle = await Course.findOne({ title });
+            const { course_title, course_description, course_language } = req.body;
+            const existingTitle = await Course.findOne({ course_title });
             if(!existingTitle){
             const newCourse = await Course.create({
                 userId: userStatus._id,
-                title,
-                price,
-                description,
-                paid
+                course_title,
+                course_description,
+                course_language
             })
             return res.status(201).json({
                 message: "Course registered successfully",
@@ -29,7 +26,7 @@ exports.createCourse = async (req, res) => {
             })
         } else{
             return res.status(301).json({
-                message: "The title of the course is existing, kindly choose topic/subject under it"
+                message: "The title of the course is already existing, kindly proceed to register your module under it."
             })
         }
         }else {
@@ -56,11 +53,11 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { title, paid, description} = req.body;
+                    const { course_title, course_description, course_language} = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
-                        title,
-                        description,
-                        paid
+                        course_title,
+                        course_description,
+                        course_language
                     },
                     {
                         new: true
@@ -152,7 +149,7 @@ exports.getAllCourses = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin" || "student"){
+        if(userStatus.roles === "admin"){
             const courses = await Course.find();
             return res.status(200).json({
                 message: "Courses fetched successfully",
@@ -180,22 +177,22 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { modules, description, summary, category, language, requirement } = req.body;
+            const { module_title, module_description, module_duration, paid, price  } = req.body;
             if(req.files){
-                images = req.files.images,
+                image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
-            const newSubject = await Subject.create({
+            const newSubject = await Module.create({
                 userId: userStatus._id,
-                modules,
-                description,
-                summary,
-                category,
-                language,
-                requirement,
+                courseId: courseId._id,
+                module_title,
+                module_description,
+                module_duration,
+                paid,
+                price,
                 audio: audio,
                 video: video,
-                images: images
+                image: image
             })
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
@@ -230,26 +227,23 @@ exports.updateSubject = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {            
-            const subjectId = await Subject.findById(req.params.subjectId);
+            const subjectId = await Module.findById(req.params.subjectId);
             if(subjectId){
                 if(`${subjectId.userId}` === `${userStatus._id}`){
-            const { nameOfSubject, description, price, summary, category, language, objectives, requirement  } = req.body;
+            const { title, description, price, duration, paid } = req.body;
             if(req.files){
-                images = req.files.images,
+                image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio        
-            const subject = await Subject.findByIdAndUpdate(req.params.subjectId, {
-                nameOfSubject, 
+            const subject = await Module.findByIdAndUpdate(req.params.subjectId, {
+                title, 
                 description, 
                 price,
-                summary,
-                category,
-                language,
-                objectives,
-                requirement,
+                duration,
+                paid,
                 audio: audio,
                 video: video,
-                images: images
+                image: image
             }, { new: true });
             await Course.findByIdAndUpdate(req.params.courseId, { $set: { nameOfSubject: subject }}, {new: true })
             return res.status(200).json({
@@ -283,7 +277,7 @@ exports.viewSubjects = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const subjects = await Subject.find();
+            const subjects = await Module.find();
             return res.status(200).json({
                 message: "Subjects fetched successfully",
                 subjects
@@ -308,10 +302,10 @@ exports.deleteSubject = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const subject = await Subject.findById(req.params.subjectId);
+            const subject = await Module.findById(req.params.subjectId);
             if(subject){
                 if(`${subject.userId}` === `${userStatus._id}`){
-            const subjects = await Subject.findByIdAndDelete(req.params.subjectId);
+            const subjects = await Module.findByIdAndDelete(req.params.subjectId);
             return res.status(200).json({
                 message: "Subject successfully deleted",
                 subjects
@@ -396,15 +390,15 @@ exports.addQuestion = async (req, res) => {
             const { courseId, subjectId } = req.params;
             const courses = await Course.findById(courseId);
             if(courses){
-                const subject = await Subject.findById(subjectId);
+                const subject = await Module.findById(subjectId);
                 if(subject){
-            const { question, choices, correctAnswer } = req.body;
+            const { question, options, correct_answer } = req.body;
             const newQuestion = await Question.create({
                 question,
-                choices,
-                correctAnswer
+                options,
+                correct_answer
             })
-            const newSubject = await Subject.findByIdAndUpdate({ _id: subjectId}, {$push: {questions: newQuestion}}, { new: true})
+            const newSubject = await Module.findByIdAndUpdate({ _id: subjectId}, {$push: {questions: newQuestion}}, { new: true})
             const courseleve = await Course.findByIdAndUpdate({ _id: courseId}, {$push: {subject: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Question registered successfully",
@@ -414,7 +408,7 @@ exports.addQuestion = async (req, res) => {
             })
             }else{
                 return res.status(403).json({
-                    message: "The subject not found"
+                    message: "The module not found"
                 })
             }
         }else{
@@ -447,13 +441,13 @@ exports.updateQuestion = async (req, res) => {
             const { courseId, subjectId } = req.params;
             const courses = await Course.findById(courseId);
             if(courses){
-                const subject = await Subject.findById(subjectId);
+                const subject = await Module.findById(subjectId);
                 if(`${subject.userId}` === `${userStatus._id}`){
-            const { question, choices, correctAnswer } = req.body;            
+            const { question, options, correct_answer } = req.body;            
             const questionUpdate = await Question.findByIdAndUpdate(req.params.questionId, {
                 question,
-                choices,
-                correctAnswer
+                options,
+                correct_answer
             }, { new: true });
             return res.status(200).json({
                 message: "Question successfully updated",
@@ -493,7 +487,7 @@ exports.deleteQuestion = async (req, res) => {
             const { courseId, subjectId, questionId } = req.params;
             const courses = await Course.findById(courseId);
             if(courses){
-                const subject = await Subject.findById(subjectId);
+                const subject = await Module.findById(subjectId);
                 if(`${subject.userId}` === `${userStatus._id}`){
                     const questionDelete = await Question.findByIdAndDelete(questionId);
                     return res.status(200).json({
