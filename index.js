@@ -27,42 +27,6 @@ app.use(cors());
 app.use(mongoSanitize());
 
 
-const server = require("http").Server(app);
-const { v4: uuidv4 } = require("uuid");
-app.set("view engine", "ejs");
-const io = require("socket.io")(server, {
-  cors: {
-    origin: '*'
-  }
-});
-const { ExpressPeerServer } = require("peer");
-const opinions = {
-  debug: true,
-}
-
-app.use("/peerjs", ExpressPeerServer(server, opinions));
-app.use(express.static("public"));
-
-app.get("/video_chat", (req, res) => {
-  res.redirect(`/${uuidv4()}`);
-});
-
-app.get("/:room", (req, res) => {
-  res.render("room", { roomId: req.params.room });
-});
-
-io.on("connection", (socket) => {
-  
-  socket.on("join-room", (roomId, userId, userName) => {
-    socket.join(roomId);
-    setTimeout(()=>{
-      socket.to(roomId).emit("user-connected", userId);
-    }, 1000)
-    socket.on("message", (message) => {
-      io.to(roomId).emit("createMessage", message, userName);
-    });
-  });
-});
 
 
 
@@ -85,5 +49,5 @@ app.use("/api/answer", answerRoutes);
 app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`)});
