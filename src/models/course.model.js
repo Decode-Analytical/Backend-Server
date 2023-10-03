@@ -16,6 +16,11 @@ const courseSchema = new mongoose.Schema({
   course_language: {
     type: String,
   },
+  course_level:{
+    type: String,
+    enum: ['beginner', 'intermediate', 'pro'],
+    default:'beginner'
+  },
   modules: {
     type: Array,    
   },
