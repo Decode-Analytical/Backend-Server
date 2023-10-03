@@ -1,6 +1,6 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
-
+const {getVideoLengthInMinutes} = require("../utils/getVideoLength");
 
 
 
@@ -11,14 +11,18 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { course_title, course_description, course_language } = req.body;
+            const { course_title,course_level, course_description, course_language,course_image, paid, price } = req.body;
             const existingTitle = await Course.findOne({ course_title });
             if(!existingTitle){
             const newCourse = await Course.create({
                 userId: userStatus._id,
                 course_title,
                 course_description,
-                course_language
+                course_language,
+                course_level,
+                course_image, 
+                paid, 
+                price
             })
             return res.status(201).json({
                 message: "Course registered successfully",
@@ -53,11 +57,12 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { course_title, course_description, course_language} = req.body;
+                    const { course_title, course_description, course_language, course_level} = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         course_title,
                         course_description,
-                        course_language
+                        course_language,
+                        course_level
                     },
                     {
                         new: true
@@ -185,19 +190,18 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { module_title, module_description, module_duration, paid, price  } = req.body;
+            const { module_title, module_description  } = req.body;
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
+                const module_duration = await getVideoLengthInMinutes(video)
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
                 module_title,
                 module_description,
                 module_duration,
-                paid,
-                price,
                 audio: audio,
                 video: video,
                 image: image
@@ -205,7 +209,7 @@ exports.addSubject = async (req, res) => {
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Subject registered successfully",
-                addSubjectToCourse,
+                // addSubjectToCourse,
                 newSubject
             })
         }
@@ -238,17 +242,16 @@ exports.updateSubject = async (req, res) => {
             const subjectId = await Module.findById(req.params.subjectId);
             if(subjectId){
                 if(`${subjectId.userId}` === `${userStatus._id}`){
-            const { title, description, price, duration, paid } = req.body;
+            const { module_title, module_description,   } = req.body;
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
-                audio = req.files.audio        
+                audio = req.files.audio
+                const module_duration = await getVideoLengthInMinutes(video)
             const subject = await Module.findByIdAndUpdate(req.params.subjectId, {
-                title, 
-                description, 
-                price,
-                duration,
-                paid,
+                module_title, 
+                module_description, 
+                module_duration,
                 audio: audio,
                 video: video,
                 image: image
