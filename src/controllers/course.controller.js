@@ -149,11 +149,18 @@ exports.getAllCourses = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin"){
-            const courses = await Course.find();
+        if(userStatus.roles === "student" || userStatus.roles === "IT" || userStatus.roles === "admin"){
+            const totalCourses = await Course.count();
+            const totalPages = Math.ceil(totalCourses / 10);
+            const currentPage = parseInt(req.query.page, 10) || 1;
+            const skip = (currentPage - 1) * 10;
+            const courses = await Course.find().skip(skip).limit(10);
             return res.status(200).json({
                 message: "Courses fetched successfully",
-                courses
+                courses,
+                totalPages,
+                totalCourses,
+                currentPage
             });
         } else {
             return res.status(400).json({ error: "User must login as Admin in order to view a course" });
@@ -165,6 +172,7 @@ exports.getAllCourses = async (req, res) => {
         });
     }
 }
+    
 
 
 
