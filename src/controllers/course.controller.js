@@ -11,7 +11,7 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { course_title,course_level, course_description, course_language } = req.body;
+            const { course_title,course_level, course_description, course_language,course_image, paid, price } = req.body;
             const existingTitle = await Course.findOne({ course_title });
             if(!existingTitle){
             const newCourse = await Course.create({
@@ -19,7 +19,10 @@ exports.createCourse = async (req, res) => {
                 course_title,
                 course_description,
                 course_language,
-                course_level
+                course_level,
+                course_image, 
+                paid, 
+                price
             })
             return res.status(201).json({
                 message: "Course registered successfully",
@@ -187,7 +190,7 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { module_title, module_description, paid, price  } = req.body;
+            const { module_title, module_description  } = req.body;
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
@@ -199,8 +202,6 @@ exports.addSubject = async (req, res) => {
                 module_title,
                 module_description,
                 module_duration,
-                paid,
-                price,
                 audio: audio,
                 video: video,
                 image: image
@@ -241,7 +242,7 @@ exports.updateSubject = async (req, res) => {
             const subjectId = await Module.findById(req.params.subjectId);
             if(subjectId){
                 if(`${subjectId.userId}` === `${userStatus._id}`){
-            const { module_title, module_description, paid, price  } = req.body;
+            const { module_title, module_description,   } = req.body;
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
@@ -251,8 +252,6 @@ exports.updateSubject = async (req, res) => {
                 module_title, 
                 module_description, 
                 module_duration,
-                price,
-                paid,
                 audio: audio,
                 video: video,
                 image: image

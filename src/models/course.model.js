@@ -21,6 +21,17 @@ const courseSchema = new mongoose.Schema({
     enum: ['beginner', 'intermediate', 'pro'],
     default:'beginner'
   },
+  course_image:{
+    type: Array
+  },
+  paid: {
+    type: String,
+    enum: ['paid', 'free'],
+    required: true ['choose one of these, is it Free or Paid?'],
+  },
+  price:{
+    type: Number,
+  },
   modules: {
     type: Array,    
   },
@@ -59,14 +70,7 @@ const moduleSchema = new mongoose.Schema({
   audio: {
     type: Array,
   },
-  paid: {
-    type: String,
-    enum: ['paid', 'free'],
-    required: true ['choose one of these, is it Free or Paid?'],
-  },
-  price:{
-    type: Number,
-  },
+ 
   module_duration: {
     type: String,
   },
