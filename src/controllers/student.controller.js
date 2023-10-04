@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const Course = require('../models/course.model');
+const { Course } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
 
@@ -21,27 +21,27 @@ exports.studentRegisterCourse = async(req, res, next) => {
         }
        
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
           if( userStatus.courseLimit === 3) {
             return res.status(400).json({
               message: 'You have reached your limit of 3 courses'
             });
           };
 
+          // link for href
+          const link = `https://decode-mnjh.onrender.com/api/payment/initializePayment/?courseId=${courseId}`;
            
-        if(course.paid === 'paid' ){
-            if (!userStatus.hasPaid.includes(course._id))
-            return res.status(401).json({message: '<h1>Payment URL to make payment</h>'})
+        if(course.isPaid_course === 'paid' ){
+            return res.status(401).json({message: `pls, kindly click on the ${link} to pay for this course`})
         }
        
         const newCourse = await StudentCourse.create({
             courseId: course._id,
-            title: course.title,
-            description: course.description,
-            image: course.images,
+            title: course.course_title,
+            description: course.course_description,
+            image: course.course_image,
             audio: course.audio,
-            price: course.price,
-            category: course.category,
+            price: course.isPrice_course === 'free'? course.isPaid_course : 0,
             userId: userStatus._id
         });
         // update the user courseLimit

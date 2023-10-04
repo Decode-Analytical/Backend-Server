@@ -16,20 +16,15 @@ const courseSchema = new mongoose.Schema({
   course_language: {
     type: String,
   },
-  course_level:{
-    type: String,
-    enum: ['beginner', 'intermediate', 'pro'],
-    default:'beginner'
-  },
   course_image:{
     type: Array
   },
-  paid: {
+  isPaid_course: {
     type: String,
     enum: ['paid', 'free'],
     required: true ['choose one of these, is it Free or Paid?'],
   },
-  price:{
+  isPrice_course:{
     type: Number,
   },
   modules: {
