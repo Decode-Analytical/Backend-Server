@@ -221,7 +221,8 @@ exports.getCommentById = async (req, res) => {
       }
 
       //check if the student exist and he registered for the course
-      const {courseId} = await Module.findById(parentComment.moduleId, 'courseId')
+      const module = await Module.findById(parentComment.moduleId, 'courseId')
+      const courseId = module.courseId
       const student = await Student.find({ userId , courseId });
       if (!student || student.length == 0) {
         return res.status(401).json({
