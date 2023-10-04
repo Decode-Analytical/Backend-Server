@@ -22,9 +22,9 @@ exports.studentRegisterCourse = async(req, res, next) => {
        
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
-          if( userStatus.courseLimit === 3) {
+          if( userStatus.courseLimit === 10) {
             return res.status(400).json({
-              message: 'You have reached your limit of 3 courses'
+              message: 'You have reached your limit of 10 courses'
             });
           };
 

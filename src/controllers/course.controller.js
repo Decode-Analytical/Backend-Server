@@ -13,12 +13,14 @@ exports.createCourse = async (req, res) => {
             const { course_title, course_description, course_language,course_image, isPaid_course, isPrice_course } = req.body;
             const existingTitle = await Course.findOne({ course_title });
             if(!existingTitle){
+                if(req.files){
+                    const course_image = req.files.course_image
             const newCourse = await Course.create({
                 userId: userStatus._id,
                 course_title,
                 course_description,
                 course_language,
-                course_image, 
+                course_image: course_image, 
                 isPaid_course, 
                 isPrice_course,
             })
@@ -26,6 +28,11 @@ exports.createCourse = async (req, res) => {
                 message: "Course registered successfully",
                 newCourse
             })
+        }else{
+            return res.status(400).json({
+                message: "Please upload an image"
+            })
+        }
         } else{
             return res.status(301).json({
                 message: "The title of the course is already existing, kindly proceed to register your module under it."
@@ -56,12 +63,14 @@ exports.updateCourse = async (req, res) => {
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
                     const { course_title, course_description, course_language, course_level, course_image, isPaid_course, isPrice_course } = req.body;
+                    if(req.files){
+                    const course_image = req.files.course_image
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         course_title,
                         course_description,
                         course_language,
                         course_level,
-                        course_image, 
+                        course_image: course_image,
                         isPaid_course, 
                         isPrice_course
                     },
@@ -72,6 +81,11 @@ exports.updateCourse = async (req, res) => {
                         message: "Course registered successfully",
                         newCourse
                      });
+                }else{
+                    return res.status(400).json({
+                        message: "Please upload an image"
+                    })
+                }
                 } else {
                     return res.status(401).json({
                         message: "You are not the owner of this course"
@@ -210,9 +224,10 @@ exports.addSubject = async (req, res) => {
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Subject registered successfully",
-                // addSubjectToCourse,
                 newSubject
             })
+        }else {
+            return res.status(400).json({ Message: "Upload a video or audio and image file" });
         }
         }else{
             return res.status(403).json({
@@ -262,7 +277,10 @@ exports.updateSubject = async (req, res) => {
                 message: "Subject successfully updated",
                 subject
             });
-            } else {
+            }else {
+                return res.status(400).json({ Message: "Upload a video or audio and image file" });
+            }
+            }else {
                 return res.status(400).json({ Error: "You are not the owner of this course" });
             }
             } else {
@@ -271,14 +289,14 @@ exports.updateSubject = async (req, res) => {
         } else {
             return res.status(400).json({ error: "User must login as Admin in order to update a course" });
         }
-    }
     } catch (error) {
-        return res.status(400).json({ 
+        return res.status(400).json({
             message: "Error updating course",
             error: error.message 
         });
     }
 }
+
 
 
 
