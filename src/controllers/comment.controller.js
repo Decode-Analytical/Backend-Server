@@ -170,7 +170,7 @@ exports.getCommentById = async (req, res) => {
     
 
     if(!parentCommentId){ // if the comment is not a reply, we will decrement the comment count for the comment
-      await Course.findByIdAndUpdate(comment.courseId, 
+      await Module.findByIdAndUpdate(comment.moduleId, 
         {
           $inc: { comment_count: -1 },
           $pull : { comments:   commentId} 
@@ -178,7 +178,7 @@ exports.getCommentById = async (req, res) => {
         )
     }
     else { //i.e the comment to be deleted is reply to another comment
-     console.log("comment.parentCommentId: ", )
+    //  console.log("comment.parentCommentId: ", )
 
       await Comment.findByIdAndUpdate(parentCommentId, 
         {
@@ -212,7 +212,7 @@ exports.getCommentById = async (req, res) => {
       const userId = req.user._id;
 
       const parentComment = await Comment.findById(parentCommentId, 
-       "_id reply_count like_count dislike_count commentReplies courseId parentCommentId"
+       "_id reply_count like_count dislike_count commentReplies courseId parentCommentId moduleId"
         );
       if (!parentComment) {
         return res
@@ -221,17 +221,18 @@ exports.getCommentById = async (req, res) => {
       }
 
       //check if the student exist and he registered for the course
-      const student = await Student.find({ userId , courseId: parentComment.courseId });
+      const {courseId} = await Module.findById(moduleId, 'courseId')
+      const student = await Student.find({ userId , courseId });
       if (!student || student.length == 0) {
         return res.status(401).json({
-          error: `please register so you can comment the course`,
+          error: `please register for the course so you can comment on the module`,
         });
       }
 
       const commentBy = userId;
       const reply = {
         commentBody,
-        courseId: parentComment.courseId,
+        moduleId: parentComment.moduleId,
         commentBy,
         parentCommentId: parentComment.parentCommentId ? parentComment.parentCommentId : parentCommentId,
       };
