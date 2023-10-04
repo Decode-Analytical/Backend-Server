@@ -2,7 +2,7 @@ const express = require("express");
 const { auth } = require("../middleware/auth");
 const {
   addComment,
-  getCourseComments,
+  getModuleComments,
   getCommentById,
   deleteComment,
   updateComment,
@@ -18,13 +18,13 @@ router.use(auth);
 router.post("/replies/:commentId",replyComment) //reply to comment
 router.get("/replies/:commentId",getCommentReplies) //get to comment replies
 
-router.get("/course/:courseId/",getCourseComments) //get comments for a course
+router.get("/module/:moduleId/",getModuleComments) //get comments for a course
 router.put("/:commentId", updateComment) //edit a comment
 router.delete("/:commentId", deleteComment); //delete a comment
 router.get("/:commentId",getCommentById) //get comment by id
 
 
-router.post("/course/:courseId/",addComment) //add a comment
+router.post("/module/:moduleId/",addComment) //add a comment
 
 
 module.exports = router;
