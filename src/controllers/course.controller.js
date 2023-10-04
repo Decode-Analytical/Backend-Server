@@ -1,6 +1,5 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
-const {getVideoLengthInMinutes} = require("../utils/getVideoLength");
 
 
 
@@ -56,12 +55,15 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { course_title, course_description, course_language, course_level} = req.body;
+                    const { course_title, course_description, course_language, course_level, course_image, isPaid_course, isPrice_course } = req.body;
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
                         course_title,
                         course_description,
                         course_language,
-                        course_level
+                        course_level,
+                        course_image, 
+                        isPaid_course, 
+                        isPrice_course
                     },
                     {
                         new: true
@@ -194,7 +196,7 @@ exports.addSubject = async (req, res) => {
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
-                const module_duration = await getVideoLengthInMinutes(video)
+                // const module_duration = await getVideoLengthInMinutes(video)
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
@@ -246,7 +248,7 @@ exports.updateSubject = async (req, res) => {
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
-                const module_duration = await getVideoLengthInMinutes(video)
+                // const module_duration = await getVideoLengthInMinutes(video)
             const subject = await Module.findByIdAndUpdate(req.params.subjectId, {
                 module_title, 
                 module_description, 

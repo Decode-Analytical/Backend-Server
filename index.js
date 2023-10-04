@@ -17,7 +17,7 @@ const commentRoutes = require('./src/routes/comment.routes');
 const likeRoutes = require('./src/routes/like.routes');
 
 const app = express();
-//connect to DB
+
 connectDB();
 const port = process.env.PORT || 3000;
 

@@ -1,7 +1,7 @@
 const Comment = require("../models/comment.model");
 const User = require("../models/user.model");
-const Student = require('../models/student.model'); //needed to be able to authorize the the student to like the course
-const Course = require('../models/course.model');
+const { Student } = require('../models/student.model'); //needed to be able to authorize the the student to like the course
+const { Course } = require('../models/course.model');
 const jwt = require("jsonwebtoken");
 const {validatedCommentSchema} = require('../utils/joiSchema')
 
