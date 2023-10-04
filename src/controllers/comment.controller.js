@@ -19,12 +19,12 @@ exports.addComment = async (req, res) => {
     const { commentBody } = validation.value;
     const module = await Module.findById(
       moduleId,
-      "id title comments comment_count likeAndDislikeUsers like_count dislike_count"
+      "id title comments comment_count likeAndDislikeUsers like_count dislike_count courseId"
     );
  if (!module) {
    return res.status(404).json({ message: "module not found" });
  }
-
+  const courseId = module.courseId
     //check if the student exist and he registered for the module
     const student = await Student.find({ userId, courseId });
     if (!student || student.length == 0) {
