@@ -46,7 +46,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         });
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {
-            $inc: {courseLimit: + 1},
+            $inc: {courseLimit: +1}
         },
         {
             new: true
