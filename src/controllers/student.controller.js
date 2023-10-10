@@ -106,11 +106,10 @@ exports.studentViewCourse = async(req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const course = await StudentCourse.find({ userId: user._id })
-            const courseTitle = await Course.findById(course._id,);
+            const course = await StudentCourse.find({ userId: userStatus._id })
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
-                courseTitle
+                studentRegisteredCourses: course
         });
     }else{
         return res.status(400).json({
