@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const { Course } = require('../models/course.model');
+const { Course, Module } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
 
@@ -18,17 +18,14 @@ exports.studentRegisterCourse = async(req, res, next) => {
             return res
             .status(409)
             .json({message: 'student already enrolled for this course'})
-        }
-       
+        }       
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
-          if( userStatus.courseLimit === 10) {
+          if( userStatus.courseLimit === 18) {
             return res.status(400).json({
               message: 'You have reached your limit of 10 courses'
             });
           };
-
-          // link for href
           const link = `https://decode-mnjh.onrender.com/api/payment/initializePayment/?courseId=${courseId}`;
            
         if(course.isPaid_course === 'paid' ){
@@ -40,10 +37,10 @@ exports.studentRegisterCourse = async(req, res, next) => {
             title: course.course_title,
             description: course.course_description,
             image: course.course_image,
-            audio: course.audio,
-            price: course.isPrice_course === 'free'? course.isPaid_course : 0,
+            price: course.isPrice_course,
             userId: userStatus._id
         });
+        console.log(newCourse.module)
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {
             $inc: {courseLimit: +1}
@@ -68,19 +65,52 @@ exports.studentRegisterCourse = async(req, res, next) => {
     }
 };
 
+// view the registered course by student to see the course details
+exports.studentViewCourseDetails = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+            const { courseId } = req.params;
+            const course = await StudentCourse.find({ userId: user._id, courseId })
+            if(!(course.length === 0)) {  
+                const courseTitle = await Course.findById(courseId);
+                return res.status(200).json({
+                    message: 'Course registered  by You fetched successfully with All the Modules',
+                    courseTitle
+            });
+            }else{
+                return res.status(404).json({
+                    message: 'Course not found, You did not registered for this course'
+                });
+        }
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
 
 // student view his registered course
-
 exports.studentViewCourse = async(req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const course = await StudentCourse.find({ userId: user._id });
+            const course = await StudentCourse.find({ userId: user._id })
+            const courseTitle = await Course.findById(course._id,);
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
-                course
+                courseTitle
         });
     }else{
         return res.status(400).json({
@@ -94,6 +124,8 @@ exports.studentViewCourse = async(req, res) => {
         });
     }
 };
+
+
 
 
 // student view all registered courses
@@ -130,14 +162,22 @@ exports.studentDeleteCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
+        console.log(userStatus);
+        const courseId = req.params.courseId;
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const ownerId = await StudentCourse.findById(req.params.courseId);
-            if(ownerId.userId === userStatus._id) {
-                const course = await StudentCourse.findOneAndDelete(req.params.courseId);
+            const ownerId = await StudentCourse.findOne({courseId});
+            console.log(ownerId);
+            if(ownerId.userId.equals(userStatus._id) ) {
+                const course = await StudentCourse.findOneAndDelete({courseId});
+                const limitUpdate = await User.findByIdAndUpdate({_id: userStatus._id}, {
+                    $inc: {courseLimit: -1}
+                }, {
+                    new: true
+                });
                 return res.status(200).json({
                     message: 'Course deleted successfully',
                     course
-                });
+                });            
             }else{
                 return res.status(400).json({
                     message: 'You are not the owner of this course'

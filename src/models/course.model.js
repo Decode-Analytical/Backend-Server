@@ -30,6 +30,9 @@ const courseSchema = new mongoose.Schema({
   modules: {
     type: Array,    
   },
+  subjects: {
+    type: Array,
+  },
 },
 {
   timestamps: true,

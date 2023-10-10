@@ -26,6 +26,9 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(mongoSanitize());
 
+app.get("/api/test", (req, res) => {
+  res.status(200).json({ message: "Hello World, Welcome to the Decode API world." });
+});
 
 
 

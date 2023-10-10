@@ -118,7 +118,7 @@ exports.deleteCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const ownerId = await Course.findById(req.params.courseId);
-            if(`${ownerId.userId}` === `${userStatus._id}`){
+            if(ownerId.userId.equals(userStatus._id)){
                 await Course.findByIdAndDelete(req.params.courseId);
                 return res.status(200).json({
                     message: "Course successfully deleted",
@@ -429,7 +429,7 @@ exports.addQuestion = async (req, res) => {
                 correct_answer
             })
             const newSubject = await Module.findByIdAndUpdate({ _id: subjectId}, {$push: {questions: newQuestion}}, { new: true})
-            const courseleve = await Course.findByIdAndUpdate({ _id: courseId}, {$push: {subject: newSubject}}, { new: true})
+            const courseleve = await Course.findByIdAndUpdate({ _id: courseId}, {$push: {subjects: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Question registered successfully",
                 newQuestion,
@@ -472,7 +472,7 @@ exports.updateQuestion = async (req, res) => {
             const courses = await Course.findById(courseId);
             if(courses){
                 const subject = await Module.findById(subjectId);
-                if(`${subject.userId}` === `${userStatus._id}`){
+                if(subject.userId.equals(userStatus._id)){
             const { question, options, correct_answer } = req.body;            
             const questionUpdate = await Question.findByIdAndUpdate(req.params.questionId, {
                 question,
@@ -518,7 +518,7 @@ exports.deleteQuestion = async (req, res) => {
             const courses = await Course.findById(courseId);
             if(courses){
                 const subject = await Module.findById(subjectId);
-                if(`${subject.userId}` === `${userStatus._id}`){
+                if(subject.userId.equals(userStatus._id)){
                     const questionDelete = await Question.findByIdAndDelete(questionId);
                     return res.status(200).json({
                         message: "Question successfully deleted",
