@@ -1,7 +1,5 @@
-const Question = require('../models/course.model');
+const { Course, Module, Question, Answer, Submission, Quiz} = require('../models/course.model');
 const User = require('../models/user.model');
-
-
 
 exports.createQuizQuestions = async (req, res) => {
     try {
@@ -34,7 +32,6 @@ exports.createQuizQuestions = async (req, res) => {
         });
     }
 }
-
 
 exports.getQuizQuestions = async (req, res) => {
     try {
@@ -146,4 +143,73 @@ exports.getQuizQuestionsById = async (req, res) => {
     }
 }
 
+/** Create a new quiz. A quiz contain series of questions with options and correct answers */
+exports.createQuiz = async (req, res) => {
+    try {
+      const id = req.user;
+      const user = await User.findById(id, "_id roles");
+      if (user.roles === "admin" || user.roles === "teacher") {
+        const newQuiz = await Quiz.create(...req.body);
+        res
+          .status(200)
+          .json({ message: "new quiz created successfully", newQuiz });
+      } else res.status(401).send("You are not authorized to do this action");
+  
+    } catch (error) {
+      return res.status(500).json({
+        message: "Error saving quiz questions.",
+        error: error.message,
+      });
+    }
+  };
 
+exports.getQuizById = async (req, res) =>{
+    try{
+        const quiz = await Quiz.findById(req.params.quizId);
+        res.status(200).json({message: "quiz is available", quiz});
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+}
+
+exports.submitQuiz = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { quizId, answers } = req.body;
+
+    const quiz = await Quiz.findById(quizId);
+    let score = 0;
+
+    for (const answer of answers) {
+      //check answer submitted for each question in the quiz
+      const question = await Question.findById(answer.questionId);
+
+      if (question.correct_answer_index === answer.selected_answer_index) {
+        score++;
+      }
+    }
+    // Create a submission record
+    const submission = new Submission({
+      userId,
+      quizId,
+      answers,
+      score,
+    });
+
+    await submission.save();
+    res.status(200).json({ message: "quiz submitted successfully", score });
+
+  } catch (err) {
+    res
+      .status(500)
+      .send({
+        message: "error occurred while submitting quiz",
+        error: err.message,
+      });
+  }
+};
+
+exports.getQuizSubmission = async (req, res) => {
+    
+}

@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose"); 
 
 const courseSchema = new mongoose.Schema({
@@ -105,6 +106,16 @@ const moduleSchema = new mongoose.Schema({
 moduleSchema.index({ title: 'text', description: 'text' });
 
 
+
+
+// const questionSchema = new mongoose.Schema({
+//   text: String,
+//   options: [String],
+//   correctOptionIndex: Number,
+// });
+
+
+
 const questionSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -168,8 +179,35 @@ const answerSchema = new mongoose.Schema({
   timestamps: true,
   versionKey: false
 });
-
 answerSchema.index({ title: 'text', description: 'text' });
+
+const quizSchema = new mongoose.Schema(
+  {
+    title: String,
+    questions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question",
+        required: [true, "quiz questions ids required"],
+      },
+    ],
+    moduleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Module",
+      required: [true, "module id required"],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const submissionSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  quizId: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' },
+  answers: [{ questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question' }, selected_answer_index: Number }],
+  score: Number,
+});
 
 courseSchema.add({ modules: [moduleSchema] });
 moduleSchema.add({ questions: [questionSchema] });
@@ -180,10 +218,14 @@ const Course = mongoose.model("Course", courseSchema);
 const Module = mongoose.model("Module", moduleSchema);
 const Question = mongoose.model("Question", questionSchema);
 const Answer = mongoose.model("Answer", answerSchema);
+const Submission = mongoose.model("Submission", submissionSchema);
+const Quiz = mongoose.model("Quiz", quizSchema);
 
 module.exports = {
   Course,
   Module,
   Question,
   Answer,
+  Submission,
+  Quiz
 };
