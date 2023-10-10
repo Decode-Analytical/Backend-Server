@@ -7,9 +7,9 @@ const commentSchema = new mongoose.Schema(
       required: [true, "only 255 characters allowed"],
       maxLength: 255,
     },
-    courseId: {
+    moduleId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
+      ref: "Module",
       required: true,
     },
     commentBy: {

@@ -7,14 +7,19 @@ const {
   createQuizQuestions,
   updateQuizQuestions,
   deleteQuizQuestions,
-} = require('../controllers/quiz.controller');
+  createQuiz,
+  getQuizById,
+  submitQuiz,
+  getQuizSubmission,
+} = require("../controllers/quiz.controller");
 
 router.use(auth);
 router.get('/getAllQuizzes', getQuizQuestions);
 router.get('/viewQuestion/:id', getQuizQuestionsById);
-router.post('/createQuiz', createQuizQuestions);
+router.post('/createQuiz/:moduleId', createQuizQuestions);
 router.put('/updateQuiz/:id', updateQuizQuestions);
 router.delete('/deleteQuiz/:id', deleteQuizQuestions);
-
+router.post('/:moduleId', createQuiz)
+router.get('/:quizId', getQuizById)
 
 module.exports = router;

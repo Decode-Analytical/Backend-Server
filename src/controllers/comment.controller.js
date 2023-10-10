@@ -1,7 +1,8 @@
 const Comment = require("../models/comment.model");
 const User = require("../models/user.model");
-const { Student } = require('../models/student.model'); //needed to be able to authorize the the student to like the course
-const { Course } = require('../models/course.model');
+const  Student  = require('../models/student.model'); //needed to be able to authorize the the student to like the course
+const { Course, Module } = require('../models/course.model');
+
 const jwt = require("jsonwebtoken");
 const {validatedCommentSchema} = require('../utils/joiSchema')
 
@@ -13,51 +14,51 @@ exports.addComment = async (req, res) => {
       res.status(422).send(validation.error.details[0].message);
       return;
     }
-    const {courseId} = req.params
+    const {moduleId} = req.params
     const userId = commentBy = req.user._id;
     const { commentBody } = validation.value;
-    const course = await Course.findById(
-      courseId,
-      "id title comments comment_count likeAndDislikeUsers like_count dislike_count"
+    const module = await Module.findById(
+      moduleId,
+      "id title comments comment_count likeAndDislikeUsers like_count dislike_count courseId"
     );
- if (!course) {
-   return res.status(404).json({ message: "course not found" });
+ if (!module) {
+   return res.status(404).json({ message: "module not found" });
  }
-
-    //check if the student exist and he registered for the course
+  const courseId = module.courseId
+    //check if the student exist and he registered for the module
     const student = await Student.find({ userId, courseId });
     if (!student || student.length == 0) {
       return res.status(401).json({
-        error: `please register so you can comment the course`,
+        error: `please register for the course so you can comment on the module`,
       });
     }
    
-    const newComment = await Comment.create({ commentBody, courseId, commentBy })//create a new comment
+    const newComment = await Comment.create({ commentBody, moduleId, commentBy })//create a new comment
    
-    //increment the comment count for the course and add the Id to the course comment list
-    await Course.findByIdAndUpdate(courseId, {
+    //increment the comment count for the module and add the Id to the module comment list
+    await Module.findByIdAndUpdate(moduleId, {
      $inc: { comment_count: 1 },
      $push: { comments: newComment._id },
    });
 
     return res
       .status(200)
-      .json({ message: "Comment added successfully", totalComment: course.comment_count + 1, newComment});
+      .json({ message: "Comment added successfully", totalComment: module.comment_count + 1, newComment});
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
   }
 };
 
-/**Get some comments of a course sorted by time created */
-exports.getCourseComments = async (req, res) => {
+/**Get some comments of a module sorted by time created */
+exports.getModuleComments = async (req, res) => {
     try {
-      const {courseId} = req.params
+      const {moduleId} = req.params
     
-      const course = await Course.findById( courseId, "comments comment_count"  )
+      const module = await Module.findById( moduleId, "comments comment_count"  )
       // .populate("comments");
-      if (!course) {
-        return res.status(404).json({ message: "course not found"});
+      if (!module) {
+        return res.status(404).json({ message: "module not found"});
       }
 
       let limit = req.query.limit  //to specify the total number of comments to return
@@ -66,19 +67,19 @@ exports.getCourseComments = async (req, res) => {
             limit = 4 //if limit is not specified then limit will be 4
         }
         
-        const latestComments = await Comment.find({courseId: course._id})
+        const latestComments = await Comment.find({moduleId: module._id})
           .sort({ createdAt: -1 })
           .limit(limit); //converted to number
         if (latestComments.length < 1) {
           return res
             .status(200)
             .json({
-              message: " no comment available for this course at the moment",
+              message: " no comment available for this module at the moment",
             });
         }  
       return res
         .status(200)
-        .json({  course, latestComments });
+        .json({  module, latestComments });
       
     } catch (error) {
       console.error(error);
@@ -169,7 +170,7 @@ exports.getCommentById = async (req, res) => {
     
 
     if(!parentCommentId){ // if the comment is not a reply, we will decrement the comment count for the comment
-      await Course.findByIdAndUpdate(comment.courseId, 
+      await Module.findByIdAndUpdate(comment.moduleId, 
         {
           $inc: { comment_count: -1 },
           $pull : { comments:   commentId} 
@@ -177,7 +178,7 @@ exports.getCommentById = async (req, res) => {
         )
     }
     else { //i.e the comment to be deleted is reply to another comment
-     console.log("comment.parentCommentId: ", )
+    //  console.log("comment.parentCommentId: ", )
 
       await Comment.findByIdAndUpdate(parentCommentId, 
         {
@@ -211,7 +212,7 @@ exports.getCommentById = async (req, res) => {
       const userId = req.user._id;
 
       const parentComment = await Comment.findById(parentCommentId, 
-       "_id reply_count like_count dislike_count commentReplies courseId parentCommentId"
+       "_id reply_count like_count dislike_count commentReplies courseId parentCommentId moduleId"
         );
       if (!parentComment) {
         return res
@@ -220,17 +221,19 @@ exports.getCommentById = async (req, res) => {
       }
 
       //check if the student exist and he registered for the course
-      const student = await Student.find({ userId , courseId: parentComment.courseId });
+      const module = await Module.findById(parentComment.moduleId, 'courseId')
+      const courseId = module.courseId
+      const student = await Student.find({ userId , courseId });
       if (!student || student.length == 0) {
         return res.status(401).json({
-          error: `please register so you can comment the course`,
+          error: `please register for the course so you can comment on the module`,
         });
       }
 
       const commentBy = userId;
       const reply = {
         commentBody,
-        courseId: parentComment.courseId,
+        moduleId: parentComment.moduleId,
         commentBy,
         parentCommentId: parentComment.parentCommentId ? parentComment.parentCommentId : parentCommentId,
       };
