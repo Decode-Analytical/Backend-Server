@@ -307,7 +307,7 @@ exports.viewSubjects = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const subjects = await Module.find();
+            const subjects = await Module.find({},"._id module_title");
             return res.status(200).json({
                 message: "Subjects fetched successfully",
                 subjects

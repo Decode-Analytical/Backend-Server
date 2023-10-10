@@ -4,10 +4,11 @@ const User = require('../models/user.model');
 exports.createQuizQuestions = async (req, res) => {
     try {
         const id = req.user;
+        const moduleId = req.params.moduleId;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const { question, options, question_duration, question_description, correct_answer } = req.body;
+            const { question, options, question_duration, question_description, correct_answer, correct_answer_index } = req.body;
             const quizQuestions = await Question.create({
                 userId: userStatus._id,
                 question_description,
@@ -15,6 +16,8 @@ exports.createQuizQuestions = async (req, res) => {
                 question,                
                 options,
                 correct_answer,
+                moduleId,
+                correct_answer_index
             })
             return res.status(200).json({
                 message: 'Quiz questions saved to the database.',
@@ -35,6 +38,8 @@ exports.createQuizQuestions = async (req, res) => {
 
 exports.getQuizQuestions = async (req, res) => {
     try {
+        // console.log({userStatus})
+
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
@@ -145,27 +150,35 @@ exports.getQuizQuestionsById = async (req, res) => {
 
 /** Create a new quiz. A quiz contain series of questions with options and correct answers */
 exports.createQuiz = async (req, res) => {
-    try {
-      const id = req.user;
-      const user = await User.findById(id, "_id roles");
-      if (user.roles === "admin" || user.roles === "teacher") {
-        const newQuiz = await Quiz.create(...req.body);
-        res
-          .status(200)
-          .json({ message: "new quiz created successfully", newQuiz });
-      } else res.status(401).send("You are not authorized to do this action");
-  
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error saving quiz questions.",
-        error: error.message,
-      });
-    }
-  };
+  try {
+    const id = req.user;
+    const moduleId = req.params.moduleId;
+    req.body.moduleId = moduleId;
 
+    const user = await User.findById(id, "_id roles");
+    if (user.roles === "admin" || user.roles === "teacher") {
+      const newQuiz = await Quiz.create({...req.body});
+      await newQuiz.populate("questions");
+      res
+        .status(200)
+        .json({ message: "new quiz created successfully", newQuiz });
+    } else res.status(401).send("You are not authorized to do this action");
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      message: "Error saving quiz questions.",
+      error: error.message,
+    });
+  }
+};
+/*** Get a quiz by id */
 exports.getQuizById = async (req, res) =>{
     try{
-        const quiz = await Quiz.findById(req.params.quizId);
+        const quiz = await Quiz.findById(req.params.quizId).populate("questions");
+        if (!quiz) {
+          return res.status(404).send({ message: "quiz not found" });
+        }
+        // await quiz.populate("questions")
         res.status(200).json({message: "quiz is available", quiz});
     }
     catch(err){
@@ -211,5 +224,5 @@ exports.submitQuiz = async (req, res) => {
 };
 
 exports.getQuizSubmission = async (req, res) => {
-    
+
 }
