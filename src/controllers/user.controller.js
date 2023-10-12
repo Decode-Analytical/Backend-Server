@@ -229,7 +229,7 @@ exports.forgotPassword = async(req, res) => {
                 <p> You have requested to reset your password. Below are your details</p>
                 <p>  ${existingUser.firstName} </p>
                 <p> ${existingUser.email} </a><br><br><br>
-                <a href="${process.env.CLIENT_URL}/resetpassword/${token.token}">Reset Password</a>
+                <a href="${process.env.CLIENT_URL}/resetpassword?=${token.token}">Reset Password</a>
                 <p>Thanks,</p>
                 <p>Team ${process.env.APP_NAME}</p>`
         });
@@ -258,8 +258,11 @@ exports.resetPassword = async(req, res) => {
         const { token, password } = req.body;
         const user = await Token.findOne({ token });
         if (user) {
-        const updatedUser = await User.findByIdAndUpdate(user._id, {
-            password,
+            // hashed the password 
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+        const updatedUser = await User.findOneAndUpdate({_id: user.userId }, {
+            password: hashedPassword,
         }, { new: true });
         return res.status(200).json({
             message: 'Password reset successfully',
