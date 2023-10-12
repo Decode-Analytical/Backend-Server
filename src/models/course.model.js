@@ -109,16 +109,6 @@ const moduleSchema = new mongoose.Schema({
 moduleSchema.index({ title: 'text', description: 'text' });
 
 
-
-
-// const questionSchema = new mongoose.Schema({
-//   text: String,
-//   options: [String],
-//   correctOptionIndex: Number,
-// });
-
-
-
 const questionSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,

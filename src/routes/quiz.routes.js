@@ -10,7 +10,7 @@ const {
   createQuiz,
   getQuizById,
   submitQuiz,
-  getQuizSubmission,
+  getQuizSubmittedById,
 } = require("../controllers/quiz.controller");
 
 router.use(auth);
@@ -21,5 +21,8 @@ router.put('/updateQuiz/:id', updateQuizQuestions);
 router.delete('/deleteQuiz/:id', deleteQuizQuestions);
 router.post('/:moduleId', createQuiz)
 router.get('/:quizId', getQuizById)
+router.post('/:quizId/submit', submitQuiz)
+router.get('/submit/:submitId', getQuizSubmittedById)
+
 
 module.exports = router;

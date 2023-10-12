@@ -1,5 +1,6 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
+const {getVideoLengthInMinutes} = require("../utils/getVideoLength")
 
 
 
@@ -210,7 +211,7 @@ exports.addSubject = async (req, res) => {
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
-                // const module_duration = await getVideoLengthInMinutes(video)
+                const module_duration = await getVideoLengthInMinutes(video)
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
@@ -408,7 +409,46 @@ exports.searchCourse = async (req, res) => {
 // searching courses using query 
 
 
+exports.addQuestions = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const moduleId = req.params.moduleId;
+        if (user.roles === "admin") {
+            const module = await Module.findById(moduleId);
+            if(!module) {
+                return res
+                .status(404)
+                .send({ message: 'Module not found' });
+            }
+            // const course = await Course.findById(module.courseId);
+            const questionsData = req.body; // Array of questions
 
+          // Map the moduleId into every question
+          const questionsWithModuleId = questionsData.map((question) => ({
+            ...question,
+            moduleId // Attach moduleId to each question
+          }));
+          const createdQuestions = await Question.create(questionsWithModuleId);
+
+          //updating the module with the new questions IDs
+            const questionsIds = createdQuestions.map((question) => question._id)
+            module.questions = module.questions.concat(questionsIds)
+            await module.save();
+            return res.status(201).json({
+                message: "Questions added successfully",
+                createdQuestions
+            })
+    }
+        
+    }
+     catch (error) {
+      res.status(500).json({
+        message: "Error occurred while adding questions",
+        error: error.message,
+      });
+    }
+}
 
 // create question
 exports.addQuestion = async (req, res) => {
