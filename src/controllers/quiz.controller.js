@@ -9,6 +9,7 @@ exports.createQuizQuestions = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
             const { question, options, question_duration, question_description, correct_answer, correct_answer_index } = req.body;
+
             const quizQuestions = await Question.create({
                 userId: userStatus._id,
                 question_description,
@@ -154,16 +155,21 @@ exports.createQuiz = async (req, res) => {
     const id = req.user;
     const moduleId = req.params.moduleId;
     req.body.moduleId = moduleId;
-
+    const module = await Module.findById(moduleId)
     const user = await User.findById(id, "_id roles");
+
     if (user.roles === "admin" || user.roles === "teacher") {
       const newQuiz = await Quiz.create({...req.body});
       await newQuiz.populate("questions");
       res
         .status(200)
         .json({ message: "new quiz created successfully", newQuiz });
-    } else res.status(401).send("You are not authorized to do this action");
-  } catch (error) {
+    } 
+    else res
+    .status(401)
+    .send("You are not authorized to do this action");
+  } 
+  catch (error) {
     console.error(error)
     return res.status(500).json({
       message: "Error saving quiz questions.",
@@ -171,6 +177,7 @@ exports.createQuiz = async (req, res) => {
     });
   }
 };
+
 /*** Get a quiz by id */
 exports.getQuizById = async (req, res) =>{
     try{
@@ -178,7 +185,6 @@ exports.getQuizById = async (req, res) =>{
         if (!quiz) {
           return res.status(404).send({ message: "quiz not found" });
         }
-        // await quiz.populate("questions")
         res.status(200).json({message: "quiz is available", quiz});
     }
     catch(err){
@@ -186,17 +192,23 @@ exports.getQuizById = async (req, res) =>{
     }
 }
 
+/*** API for quiz submission. Expecting the quiz id and the answers selected for each question in the quiz */
 exports.submitQuiz = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { quizId, answers } = req.body;
-
+    const { answers } = req.body;
+    const quizId = req.params.quizId;
+//  [{questionId, selectedAnswer}, {questionId, selectedAnswer}]
     const quiz = await Quiz.findById(quizId);
+    if (!quiz) {
+        return res.status(404).send({ message: "quiz not found" });
+      }
     let score = 0;
+    // const totalScore = 100
 
     for (const answer of answers) {
-      //check answer submitted for each question in the quiz
-      const question = await Question.findById(answer.questionId);
+      //check answer selected for each question in the quiz with the correct answer in the db
+      const question = await Question.findById(answer.questionId, "correct_answer_index");
 
       if (question.correct_answer_index === answer.selected_answer_index) {
         score++;
@@ -211,7 +223,7 @@ exports.submitQuiz = async (req, res) => {
     });
 
     await submission.save();
-    res.status(200).json({ message: "quiz submitted successfully", score });
+    res.status(200).json({ message: "quiz submitted successfully", score, submission});
 
   } catch (err) {
     res
@@ -223,6 +235,15 @@ exports.submitQuiz = async (req, res) => {
   }
 };
 
-exports.getQuizSubmission = async (req, res) => {
-
+exports.getQuizSubmittedById = async (req, res) => {
+    try{
+        const submissionResult = await Submission.findById(req.params.submissionId);
+        if(!submissionResult){
+            return res.status(404).send({message: "submission not found"});
+        }
+        res.status(200).json({message:"submission available", submission})
+    }
+    catch(err){
+        res.status(500).send({message: "failed to find submission", error: err.message});
+    }
 }

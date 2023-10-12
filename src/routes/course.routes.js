@@ -8,7 +8,8 @@ const { createCourse,
     searchCourse, 
     getAllCourses,
     addSubject, 
-    addQuestion, 
+    addQuestion,
+    addQuestions, 
     updateSubject,
     deleteSubject,
     deleteQuestion,
@@ -39,6 +40,7 @@ router.get("/viewAllSubjects", viewSubjects);
 router.delete("/deleteSubject/:courseId/subjectId", deleteSubject);
 router.get("/viewAllCourses", getAllCourses);
 router.post("/addQuestion/:courseId/:subjectId", addQuestion );
+router.post("/questions/:moduleId/", addQuestions );//UPDATED
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
 router.get("/viewAllQuestions/:courseId", viewQuestions);
