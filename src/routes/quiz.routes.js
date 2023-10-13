@@ -8,6 +8,7 @@ const {
   updateQuizQuestions,
   deleteQuizQuestions,
   createQuiz,
+  createQuizWithQuestions,
   getQuizById,
   submitQuiz,
   getQuizSubmittedById,
@@ -20,6 +21,7 @@ router.post('/createQuiz/:moduleId', createQuizQuestions);
 router.put('/updateQuiz/:id', updateQuizQuestions);
 router.delete('/deleteQuiz/:id', deleteQuizQuestions);
 router.post('/:moduleId', createQuiz)
+router.post('/:moduleId/questions', createQuizWithQuestions)
 router.get('/:quizId', getQuizById)
 router.post('/:quizId/submit', submitQuiz)
 router.get('/submit/:submitId', getQuizSubmittedById)
