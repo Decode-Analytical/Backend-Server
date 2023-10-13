@@ -111,7 +111,7 @@ exports.adminViewStudents = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin') {
-            const students = await User.find({})
+            const students = await User.find({ roles: "student"})
             .sort({ createdAt: -1 })
             return res.status(200).json({
                 students
@@ -242,3 +242,55 @@ exports.adminTotalPayment = async (req, res) => {
         });
     }
 };
+
+
+// view admin profile 
+exports.adminViewProfile = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin') {
+            const { email } = req.body;
+            const admin = await User.findOne({ email });
+            return res.status(200).json({
+                instructors: admin
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Admin or Instructor profile not found'
+        });
+    }
+};
+
+// view all the instructors/ admin 
+exports.adminViewAllInstructors = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin') {
+            const instructors = await User.find({ roles: "admin"})
+           .sort({ createdAt: -1 })
+            return res.status(200).json({
+                instructors
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Instructor not found'
+        });
+    }};
+
+
+
+

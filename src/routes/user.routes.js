@@ -19,7 +19,7 @@ router.post("/signup", userValidator, signUp);
 router.post("/login", limiter, userLogin);
 router.get("/emailVerify/:token", emailVerify );
 router.post("/forgotpassword", forgotPassword );
-router.get("/resetpassword/:token",  resetPassword );
+router.get("/resetpassword",  resetPassword );
 
 router.use(auth);
 router.get("/viewprofile",  viewUserProfile );
