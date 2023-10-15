@@ -1,7 +1,6 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
-const {getVideoLengthInMinutes} = require("../utils/getVideoLength")
-
+const ffmpeg = require('fluent-ffmpeg');
 
 
 // create a course 
@@ -210,14 +209,13 @@ exports.addSubject = async (req, res) => {
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
-                audio = req.files.audio
-                const module_duration = await getVideoLengthInMinutes(video)
+                audio = req.files.audio  
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
                 module_title,
                 module_description,
-                module_duration,
+                // module_duration: module_duration ,
                 audio: audio,
                 video: video,
                 image: image
@@ -225,7 +223,7 @@ exports.addSubject = async (req, res) => {
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
                 message: "Subject registered successfully",
-                newSubject
+                newSubject,
             })
         }else {
             return res.status(400).json({ Message: "Upload a video or audio and image file" });
