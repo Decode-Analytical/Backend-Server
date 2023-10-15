@@ -16,7 +16,7 @@ const userValidator = require("../middleware/validator");
 const router = express.Router();
 
 router.post("/signup", userValidator, signUp);
-router.post("/login", limiter, userLogin);
+router.post("/login", userLogin);
 router.get("/emailVerify/:token", emailVerify );
 router.post("/forgotpassword", forgotPassword );
 router.get("/resetpassword",  resetPassword );
