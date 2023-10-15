@@ -149,6 +149,56 @@ exports.getQuizQuestionsById = async (req, res) => {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+/**Add questions and creating a quiz with the question simultaneously */
+exports.createQuizWithQuestions = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const moduleId = req.params.moduleId;
+        const title = req.body.title
+        if (user.roles === "admin") {
+            const module = await Module.findById(moduleId);
+            if(!module) {
+                return res
+                .status(404)
+                .send({ message: 'Module not found' });
+            }
+            // const course = await Course.findById(module.courseId);
+            const questionsData = req.body; // Array of questions
+
+          // Map the moduleId into every question
+          const questionsWithModuleId = questionsData.map((question) => ({
+            ...question,
+            moduleId // Attach moduleId to each question
+          }));
+          const createdQuestions = await Question.create(questionsWithModuleId);
+
+          //updating the module with the new questions IDs
+            const questionsIds = createdQuestions.map((question) => question._id)
+            module.questions = module.questions.concat(questionsIds)
+            await module.save();
+
+             //creating quiz with the questions
+          const quiz = await Quiz.create({
+            title, questions: questionsIds, moduleId
+          })
+
+            return res.status(201).json({
+                message: "New Quiz has been created with new questions",
+                quiz,
+                createdQuestions
+            })
+    }
+        
+    }
+     catch (error) {
+      res.status(500).json({
+        message: "Error occurred while adding questions",
+        error: error.message,
+      });
+    }
+}
 /** Create a new quiz. A quiz contain series of questions with options and correct answers */
 exports.createQuiz = async (req, res) => {
   try {
