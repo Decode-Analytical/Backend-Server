@@ -17,7 +17,8 @@ const {
     studentPaidCount,
     studentCourseCount,
     studentUpdateProfilePicture,
-    studentViewCourseDetails
+    studentViewCourseDetails,
+    studentTotalRegisteredCourse
 } = require('../controllers/student.controller.js')
 const { auth } = require('../middleware/auth.js');
 
@@ -37,6 +38,7 @@ router.put('/studentUpdateRole', studentUpdateRole);
 router.get('/studentPaidCount', studentPaidCount );
 router.get('/studentCourseCount/:courseId', studentCourseCount);
 router.get('/studentViewCourse/:courseId', studentViewCourseDetails  );
+router.get('/studentViewTotalCourse', studentTotalRegisteredCourse  );
 
 
 module.exports = router;

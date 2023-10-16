@@ -471,14 +471,6 @@ exports.studentUpdateProfilePicture = async(req, res) => {
 };
 
 
-
-
-
-
-
-
-
-
 // course skill level (beginner, immediate, pro ) 
 
 exports.courseSkillLevel = async(req, res) => {
@@ -490,8 +482,36 @@ exports.courseSkillLevel = async(req, res) => {
             const courseId = req.params.courseId;
             const skillLevel = await CourseSkillLevel.find({ courseId: courseId }).count();
             return res.status(200).json({
-                message: 'Total number of students paid for his registered course fetched successfully',
+                message: 'Total number of students paid for the registered course fetched successfully',
                 skillLevel
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+
+// student update his profile picture (beginner, immediate, pro )
+
+exports.studentTotalRegisteredCourse = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' ) {
+            const skillLevel = await StudentCourse.find({ userId: userStatus._id });
+            return res.status(200).json({
+                message: 'Total number of the registered course fetched successfully for the student',
+                totalNumberRegisterCourse: skillLevel.length,
+                studentRegisteredCourse: skillLevel
         });
     }else{
         return res.status(400).json({
