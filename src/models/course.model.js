@@ -34,6 +34,10 @@ const courseSchema = new mongoose.Schema({
   subjects: {
     type: Array,
   },
+  totalRegisteredByStudent: {
+    type: Number,
+    default: 0,
+  }
 },
 {
   timestamps: true,

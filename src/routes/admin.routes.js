@@ -13,7 +13,6 @@ const {
     adminViewProfile,
     adminViewAllInstructors,
     adminTotalStudentForCourse,
-    adminTotalStudentForPartCourse 
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
@@ -28,6 +27,5 @@ router.get('/viewTotalPayment', adminTotalPayment  );
 router.get('/ViewInstructorProfile', adminViewProfile  );
 router.get('/viewAllInstructors', adminViewAllInstructors)
 router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse)
-router.get('/viewTotalStudentRegisteredParCourse/:courseId', adminTotalStudentForPartCourse )
 
 module.exports = router;

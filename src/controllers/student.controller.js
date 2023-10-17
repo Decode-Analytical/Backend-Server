@@ -20,7 +20,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             .json({message: 'student already enrolled for this course'})
         }       
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
           if( userStatus.courseLimit === 10) {
             return res.status(400).json({
               message: 'You have reached your limit of 10 courses'
@@ -45,6 +45,12 @@ exports.studentRegisterCourse = async(req, res, next) => {
             $inc: {courseLimit: +1}
         },
         {
+            new: true
+        });
+        // update the course's totalRegisteredByStudent
+        const totalRegisteredByStudent = await Course.findByIdAndUpdate({_id: courseId}, {
+            $inc: {totalRegisteredByStudent: +1}
+        }, {
             new: true
         });
         return res.status(200).json({
