@@ -20,8 +20,8 @@ exports.studentRegisterCourse = async(req, res, next) => {
             .json({message: 'student already enrolled for this course'})
         }       
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
-          if( userStatus.courseLimit === 18) {
+        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
+          if( userStatus.courseLimit === 10) {
             return res.status(400).json({
               message: 'You have reached your limit of 10 courses'
             });
@@ -40,7 +40,6 @@ exports.studentRegisterCourse = async(req, res, next) => {
             price: course.isPrice_course,
             userId: userStatus._id
         });
-        console.log(newCourse.module)
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {
             $inc: {courseLimit: +1}
@@ -71,7 +70,7 @@ exports.studentViewCourseDetails = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles ==='student' || userStatus.roles === 'IT') {
+        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const course = await StudentCourse.find({ userId: user._id, courseId })
             if(!(course.length === 0)) {  
