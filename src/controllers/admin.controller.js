@@ -294,3 +294,54 @@ exports.adminViewAllInstructors = async (req, res) => {
 
 
 
+// to know the total student registered for a course!!!
+exports.adminTotalStudentForCourse = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin' || userStatus.roles === 'student'  ||  userStatus.roles === 'IT') {
+            const total = await Student.countDocuments({ Course });
+            return res.status(200).json({
+                totalCourseRegisteredByStudent: total,
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total student not found',
+            error: error.message
+        });
+    }
+};
+
+
+// Total student registered by part course 
+// TODO:
+exports.adminTotalStudentForPartCourse = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin' || userStatus.roles ==='student'  ||  userStatus.roles === 'IT') {
+            // const registeredCourse = await Course.findOne({ _id: req.body.courseId });
+            const total = await Student.countDocuments({ courseId: req.params.courseId });
+            return res.status(200).json({
+                totalStudentRegisteredForCourse: total,
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total student not found',
+            error: error.message
+        });
+    }
+};
+
