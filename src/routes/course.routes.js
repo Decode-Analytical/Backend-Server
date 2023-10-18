@@ -14,7 +14,14 @@ const { createCourse,
     deleteQuestion,
     updateQuestion,
     viewSubjects,
-    viewQuestions   } = require('../controllers/course.controller');
+    viewQuestions,
+    viewReviews,
+    reviewCourse,
+    viewReviewsByCourse,
+    deleteReview,
+    updateReview,
+
+       } = require('../controllers/course.controller');
 const router = express.Router();
 
 
@@ -43,6 +50,14 @@ router.post("/addQuestion/:courseId/:subjectId", addQuestion );
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
 router.get("/viewAllQuestions/:courseId", viewQuestions);
+
+// Review routes
+router.get("/review", viewReviews);
+router.get("/review/:courseId", viewReviewsByCourse);
+router.post("/review/:courseId", reviewCourse);
+router.delete("/review/:reviewId", deleteReview );
+router.put("/review/:reviewId", updateReview);
+
 
 
 module.exports = router;

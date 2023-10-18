@@ -17,6 +17,9 @@ const courseSchema = new mongoose.Schema({
   course_language: {
     type: String,
   },
+  reviews: {
+    type: Array,
+  },
   course_image:{
     type: Array
   },

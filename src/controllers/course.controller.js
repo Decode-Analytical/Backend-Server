@@ -1,7 +1,7 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
 const ffmpeg = require('fluent-ffmpeg');
-
+const Review = require("../models/review.model");
 
 // create a course 
 exports.createCourse = async (req, res) => {
@@ -575,6 +575,188 @@ exports.viewQuestions = async (req, res) => {
     } catch (error) {
         return res.status(400).json({
             message: "Error fetching course",
+            error: error.message 
+        });
+    }
+}
+
+
+// review a course 
+exports.reviewCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
+            const { courseId } = req.params;
+            const courses = await Course.findById(courseId);
+            if(courses){
+                const { review, rating,  } = req.body;
+                const courseReview = await Review.create({
+                    review,
+                    rating,
+                    courseId: courseId,
+                    userId: userStatus._id,
+                })
+                const newReview = await Course.findByIdAndUpdate(courseId, { $push: { reviews: courseReview } }, { new: true });
+                return res.status(201).json({
+                    message: "Course successfully reviewed",
+                    newReview
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The course not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "You must be a registered member to review"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error submitting review",
+            error: error.message 
+        });
+    }}
+
+
+// admin view all reviews
+exports.viewReviews = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            const reviews = await Review.find();
+            return res.status(200).json({
+                message: "Reviews fetched successfully",
+                reviews
+            });
+        }else{
+            return res.status(403).json({
+                message: "The course not found"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error fetching course",
+            error: error.message 
+        });
+    }
+}
+
+
+// admin view all reviews 
+exports.viewReviewsByCourse = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
+            const { courseId } = req.params;
+            const courses = await Course.findById(courseId);
+            if(courses){
+                const reviews = await Review.find({courseId: courseId});
+                return res.status(200).json({
+                    message: "Reviews fetched successfully",
+                    reviews
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The course not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "You must be student to view this review"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error fetching course",
+            error: error.message 
+        });
+    }
+}
+
+
+// update the review by reviewId
+exports.updateReview = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
+            const { reviewId } = req.params;
+            const reviews = await Review.findById(reviewId);
+            if(reviews){
+                const { review, rating } = req.body;
+                const reviewUpdate = await Review.findByIdAndUpdate(reviewId, {
+                    review,
+                    rating
+                }, { new: true });
+                const newReview = await Course.findByIdAndUpdate(reviews.courseId, { $push: { reviews: reviewUpdate } }, { new: true });
+                return res.status(200).json({
+                    message: "Review successfully updated",
+                    reviewUpdate,
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The review not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "You must be admin to view this review"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error updating review",
+            error: error.message 
+        });
+    }
+}
+
+
+// delete the review by reviewId
+
+exports.deleteReview = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
+            const { reviewId } = req.params;
+            const reviews = await Review.findById(reviewId);
+            if(reviews){
+                const reviewDelete = await Review.findByIdAndDelete(reviewId);
+                // delete review from the course reviews array
+                const courseId = reviews.courseId;
+                const course = await Course.findById(courseId);
+                const courseReviews = course.reviews;
+                const index = courseReviews.findIndex(review => review._id.equals(reviewId));
+                courseReviews.splice(index, 1);
+                const courseDelete = await Course.findByIdAndDelete(courseReviews);
+                return res.status(200).json({
+                    message: "Review successfully deleted",
+                    reviewDelete,
+                    courseDelete
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The review not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "You must be student or admin to delete this review"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error deleting review",
             error: error.message 
         });
     }
