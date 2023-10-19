@@ -381,7 +381,6 @@ exports.searchCourse = async (req, res) => {
             }])
             return res.status(200).json({
                 message: "Course fetched successfully",
-                course,
                 newCourse
             });
         } else {
