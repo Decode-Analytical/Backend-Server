@@ -366,7 +366,7 @@ exports.searchCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
             const course_title = req.query.course_title;
-            const course = await Course.findOne({ course_title: new RegExp(course_title, "i") })
+            const course = await Course.find({ course_title: new RegExp(course_title, "i") })
             const newCourse = await Course.aggregate([{
                 $project: {
                     _id: course._id,

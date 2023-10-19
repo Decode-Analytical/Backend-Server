@@ -79,12 +79,11 @@ exports.studentViewCourseDetails = async(req, res) => {
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const course = await StudentCourse.findOne({ courseId });
-            console.log(course)
-            if(!(course.length === 0)) {  
-                const module = await Module.find({ courseId: courseId })                        
+            if(!(course === null )) {  
+                const result = await Module.find({ courseId: courseId })                        
                 return res.status(200).json({
                     message: 'Course details fetched successfully',                 
-                    module
+                    result
                 });            
             }else{
                 return res.status(404).json({
