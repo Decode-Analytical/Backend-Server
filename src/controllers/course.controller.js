@@ -366,12 +366,23 @@ exports.searchCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
             const course_title = req.query.course_title;
-            const course = await Course.find({
-                course_title: { $regex: `${course_title}`, $options: 'i' }
-            });
+            const course = await Course.findOne({ course_title: new RegExp(course_title, "i") })
+            const newCourse = await Course.aggregate([{
+                $project: {
+                    _id: course._id,
+                    course_title: 1,
+                    course_description: 1,
+                    course_image: 1,
+                    isPaid_course: 1,
+                    isPrice_course: 1,
+                    reviews: 1
+                    
+                }
+            }])
             return res.status(200).json({
                 message: "Course fetched successfully",
-                course
+                course,
+                newCourse
             });
         } else {
             return res.status(400).json({ error: "User must login as student or Admin in order to search for a course" });
