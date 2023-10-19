@@ -13,7 +13,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         const user = await User.findById(id);
         const courseId  = req.params.courseId;  
         const course = await Course.findById(courseId);
-        const hasStudentRegistered = await StudentCourse.findOne({userId: user._id, courseId})
+        const hasStudentRegistered = await StudentCourse.findOne({userId: user._id, courseId: course._id})
         if (hasStudentRegistered){
             return res
             .status(409)
@@ -79,12 +79,18 @@ exports.studentViewCourseDetails = async(req, res) => {
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const course = await StudentCourse.find({ userId: user._id, courseId })
-            if(!(course.length === 0)) {  
-                const courseTitle = await Course.findById(courseId);
+            if(!(course.length === 0)) { 
+                const result = await Course.aggregate([{
+                    $project: {
+                        _id: courseId,
+                        modules: 1,
+                    }                
+                    }]);
+                        
                 return res.status(200).json({
-                    message: 'Course registered  by You fetched successfully with All the Modules',
-                    courseTitle
-            });
+                    message: 'Course details fetched successfully',
+                    result
+                });            
             }else{
                 return res.status(404).json({
                     message: 'Course not found, You did not registered for this course'

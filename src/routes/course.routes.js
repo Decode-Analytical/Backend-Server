@@ -25,11 +25,11 @@ const { createCourse,
 const router = express.Router();
 
 
-router.get("/search", searchCourse);
 router.use(auth);
 router.post("/registeredCourse", upload.fields([{ name: "course_image", maxCount: 1 }]),  createCourse );
 router.put("/updateCourse/:courseId", updateCourse )
 router.get("/viewCourse", getCourses);
+router.get("/search", searchCourse);
 router.delete("deleteCourse/:courseId", deleteCourse);
 router.put("/editSubject/:courseId/:subjectId", upload.fields([
     { name: "image", maxCount: 1 },
