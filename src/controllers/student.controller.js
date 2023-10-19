@@ -78,18 +78,13 @@ exports.studentViewCourseDetails = async(req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
-            const course = await StudentCourse.find({ userId: user._id, courseId })
-            if(!(course.length === 0)) { 
-                const result = await Course.aggregate([{
-                    $project: {
-                        _id: courseId,
-                        modules: 1,
-                    }                
-                    }]);
-                        
+            const course = await StudentCourse.findOne({ courseId });
+            console.log(course)
+            if(!(course.length === 0)) {  
+                const module = await Module.find({ courseId: courseId })                        
                 return res.status(200).json({
-                    message: 'Course details fetched successfully',
-                    result
+                    message: 'Course details fetched successfully',                 
+                    module
                 });            
             }else{
                 return res.status(404).json({
