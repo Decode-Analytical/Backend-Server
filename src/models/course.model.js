@@ -183,7 +183,9 @@ answerSchema.index({ title: 'text', description: 'text' });
 
 const quizSchema = new mongoose.Schema(
   {
-    title: String,
+    title: {
+      type: String,
+    },
     questions: [
       {
         type: mongoose.Schema.Types.ObjectId,

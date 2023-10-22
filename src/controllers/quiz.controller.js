@@ -9,7 +9,6 @@ exports.createQuizQuestions = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
             const { question, options, question_duration, question_description, correct_answer, correct_answer_index } = req.body;
-
             const quizQuestions = await Question.create({
                 userId: userStatus._id,
                 question_description,
@@ -193,7 +192,7 @@ exports.createQuizWithQuestions = async (req, res) => {
         
     }
      catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         message: "Error occurred while adding questions",
         error: error.message,
       });
@@ -211,11 +210,11 @@ exports.createQuiz = async (req, res) => {
     if (user.roles === "admin" || user.roles === "teacher") {
       const newQuiz = await Quiz.create({...req.body});
       await newQuiz.populate("questions");
-      res
+      return res
         .status(200)
         .json({ message: "new quiz created successfully", newQuiz });
     } 
-    else res
+    else return res
     .status(401)
     .send("You are not authorized to do this action");
   } 
@@ -235,10 +234,10 @@ exports.getQuizById = async (req, res) =>{
         if (!quiz) {
           return res.status(404).send({ message: "quiz not found" });
         }
-        res.status(200).json({message: "quiz is available", quiz});
+        return res.status(200).json({message: "quiz is available", quiz});
     }
     catch(err){
-        res.status(500).json({error: err.message});
+        return res.status(500).json({error: err.message});
     }
 }
 
@@ -273,10 +272,10 @@ exports.submitQuiz = async (req, res) => {
     });
 
     await submission.save();
-    res.status(200).json({ message: "quiz submitted successfully", score, submission});
+    return res.status(200).json({ message: "quiz submitted successfully", score, submission});
 
   } catch (err) {
-    res
+    return res
       .status(500)
       .send({
         message: "error occurred while submitting quiz",
@@ -294,6 +293,61 @@ exports.getQuizSubmittedById = async (req, res) => {
         res.status(200).json({message:"submission available", submission})
     }
     catch(err){
-        res.status(500).send({message: "failed to find submission", error: err.message});
+        return res.status(500).send({message: "failed to find submission", error: err.message});
+    }
+}
+
+// get and populate all the question IDs for a quiz 
+exports.getQuizQuestionId = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
+            const quiz = await Quiz.findById(req.params.quizId);
+            const questions = await Question.find({ moduleId: quiz.moduleId });
+            const questionsIds = questions.map((question) => question._id);
+            return res.status(200).json({
+                message: 'Quiz questions retrieved from the database.',
+                questions,
+                questionsIds
+            });
+        } else {
+            return res.status(401).json({
+                message: 'You are not authorized to do this action.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error retrieving quiz questions.",
+            error: error.message
+        });
+    }
+}
+
+
+// view all the quiz 
+exports.viewAllQuiz = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        console.log(userStatus)
+        if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
+            const quizzes = await Quiz.find();
+            return res.status(200).json({
+                message: 'Quizs retrieved from the database.',
+                quizzes
+            });
+        } else {
+            return res.status(401).json({
+                message: 'You are not authorized to do this action.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error retrieving quiz.',
+            error: error.message
+        });
     }
 }

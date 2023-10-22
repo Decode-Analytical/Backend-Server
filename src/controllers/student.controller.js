@@ -31,14 +31,20 @@ exports.studentRegisterCourse = async(req, res, next) => {
         if(course.isPaid_course === 'paid' ){
             return res.status(401).json({message: `pls, kindly click on the ${link} to pay for this course`})
         }
-       
+       const modules = await Module.findOne({ courseId: courseId })
         const newCourse = await StudentCourse.create({
             courseId: course._id,
             title: course.course_title,
             description: course.course_description,
             image: course.course_image,
             price: course.isPrice_course,
-            userId: userStatus._id
+            userId: userStatus._id,
+            module_duration: modules.module_duration,
+            video: modules.video,
+            module_title: modules.module_title,
+            module_description: modules.module_description,
+            module_image: modules.image,
+
         });
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {

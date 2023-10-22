@@ -12,6 +12,8 @@ const {
   getQuizById,
   submitQuiz,
   getQuizSubmittedById,
+  getQuizQuestionId,
+  viewAllQuiz
 } = require("../controllers/quiz.controller");
 
 router.use(auth);
@@ -20,11 +22,12 @@ router.get('/viewQuestion/:id', getQuizQuestionsById);
 router.post('/createQuiz/:moduleId', createQuizQuestions);
 router.put('/updateQuiz/:id', updateQuizQuestions);
 router.delete('/deleteQuiz/:id', deleteQuizQuestions);
-router.post('/:moduleId', createQuiz)
-router.post('/:moduleId/questions', createQuizWithQuestions)
-router.get('/:quizId', getQuizById)
-router.post('/:quizId/submit', submitQuiz)
+router.post('/createQuiz/:moduleId', createQuiz)
+router.post('/createQuestion/:moduleId/questions', createQuizWithQuestions)
+router.get('/getQuiz/:quizId', getQuizById)
+router.post('/submitQuiz/:quizId/submit', submitQuiz)
 router.get('/submit/:submitId', getQuizSubmittedById)
-
+router.get('/questionId/:quizId', getQuizQuestionId)
+router.get('/viewAllTheQuiz', viewAllQuiz)
 
 module.exports = router;

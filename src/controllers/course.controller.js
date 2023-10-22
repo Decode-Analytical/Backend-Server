@@ -205,21 +205,21 @@ exports.addSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-            const { module_title, module_description  } = req.body;
+            const { module_title, module_description, module_duration  } = req.body;
             if(req.files){
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
-                // const module_duration = await getVideoLengthInMinutes(video)
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
                 module_title,
                 module_description,
-                // module_duration,
                 audio: audio,
                 video: video,
-                image: image
+                image: image,
+                module_duration,
+
             })
             const addSubjectToCourse = await Course.findByIdAndUpdate({ _id: courseId._id}, {$push: { modules: newSubject}}, { new: true})
             return res.status(201).json({
@@ -382,8 +382,6 @@ exports.searchCourse = async (req, res) => {
     }
 }
       
-
-
 
 
 // create question

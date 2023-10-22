@@ -22,6 +22,21 @@ const studentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    module_duration: {
+      type: String,
+    },
+    video: {
+      type: Array,
+    },
+    module_title: {
+      type: String,
+    },
+    module_description: {
+      type: String,
+    },
+    module_image: {
+      type: Array,
+    },
   },
   {
     timestamps: true,
