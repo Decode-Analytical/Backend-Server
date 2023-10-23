@@ -30,7 +30,7 @@ router.post("/registeredCourse", upload.fields([{ name: "course_image", maxCount
 router.put("/updateCourse/:courseId", updateCourse )
 router.get("/viewCourse", getCourses);
 router.get("/search", searchCourse);
-router.delete("deleteCourse/:courseId", deleteCourse);
+router.delete("/deleteCourse/:courseId", deleteCourse);
 router.put("/editSubject/:courseId/:subjectId", upload.fields([
     { name: "image", maxCount: 1 },
     { name: "video", maxCount: 1 },
