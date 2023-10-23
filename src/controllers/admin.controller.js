@@ -3,8 +3,10 @@ const { Course } = require('../models/course.model');
 const Student = require('../models/student.model');
 // const Comment = require('../models/comment.model');
 const Payment = require('../models/transaction.model');
+const Meeting = require('../models/meeting.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 
 
@@ -319,4 +321,69 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 };
 
 
+//? admin schedule google meeting for students 
+exports.adminScheduleMeeting = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin') {
+            const { email, description, date, time, courseName } = req.body;
+            const organizerN = await User.findOne({ email });
+            const linkMeeting = await crypto.randomBytes(3).toString('hex');
+            if(organizerN) {                
+            const meeting = await Meeting.create({
+                name: organizerN.firstName +'' + organizerN.lastName,
+                description, 
+                instructorId: organizerN._id, 
+                date, 
+                time,
+                courseName, 
+                link : linkMeeting               
+            });
+            return res.status(201).json({
+                message: 'Meeting created successfully',
+                meeting
+            });
+        } else {
+            return res.status(404).json({
+                message: 'Your email is not registered on this platform as Instructor'
+        })
+        }
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Meeting not found'
+        });
+    }
+};
 
+
+// ? get user information by email
+exports.studentJoinMeeting = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin' || userStatus.roles ==='student'  ||  userStatus.roles === 'IT') {
+            const { email } = req.body;
+            const admin = await User.findOne({ email });
+            return res.status(200).json({
+                student: admin
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'User not found',
+            error: error.message
+        });
+    }
+};

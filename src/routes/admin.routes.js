@@ -13,6 +13,8 @@ const {
     adminViewProfile,
     adminViewAllInstructors,
     adminTotalStudentForCourse,
+    studentJoinMeeting,
+    adminScheduleMeeting 
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
@@ -26,6 +28,8 @@ router.get('/totalStudent', adminTotalStudent   );
 router.get('/viewTotalPayment', adminTotalPayment  );
 router.get('/ViewInstructorProfile', adminViewProfile  );
 router.get('/viewAllInstructors', adminViewAllInstructors)
-router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse)
+router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse);
+router.get('/studentJoinMeeting', studentJoinMeeting );
+router.post('/adminScheduleMeeting', adminScheduleMeeting  );
 
 module.exports = router;
