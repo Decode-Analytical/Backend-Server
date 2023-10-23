@@ -6,7 +6,10 @@ const Payment = require('../models/transaction.model');
 const Meeting = require('../models/meeting.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const referralCodeGenerator = require('referral-code-generator');
+
+
+
 
 
 
@@ -329,8 +332,8 @@ exports.adminScheduleMeeting = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin') {
             const { email, description, date, time, courseName } = req.body;
-            const organizerN = await User.findOne({ email });
-            const linkMeeting = await crypto.randomBytes(3).toString('hex');
+            const organizerN = await User.findOne({ email }); 
+            const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');     
             if(organizerN) {                
             const meeting = await Meeting.create({
                 name: organizerN.firstName +'' + organizerN.lastName,
@@ -357,7 +360,8 @@ exports.adminScheduleMeeting = async (req, res) => {
     }
     } catch (error) {
         return res.status(500).json({
-            message: 'Meeting not found'
+            message: 'Meeting not found',
+            error: error.message
         });
     }
 };
@@ -377,7 +381,7 @@ exports.studentJoinMeeting = async (req, res) => {
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
+            message: 'You are not student of this institution'
         });
     }
     } catch (error) {
