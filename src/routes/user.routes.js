@@ -11,6 +11,7 @@ const {
   viewUserProfile,
   updateStudentProfile,
   deleteUser,
+  updateStudentProfilePicture
 } = require("../controllers/user.controller");
 const userValidator = require("../middleware/validator");
 const router = express.Router();
@@ -25,6 +26,7 @@ router.use(auth);
 router.get("/viewprofile",  viewUserProfile );
 router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
 router.delete("/studentDeleteCourse", deleteUser)
+router.put("/userUpdateProfile", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfilePicture );
 
 
 

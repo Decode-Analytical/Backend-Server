@@ -67,6 +67,36 @@ const userSchema = new mongoose.Schema(
     type: mongoose.Decimal128,
     default: 0,
   },
+  facebook: {
+    type: String,
+    default: "",
+    match: /[a-zA-Z0-9_]+/,
+  },
+  twitter: {
+    type: String,
+    default: "",
+    match: /[a-zA-Z0-9_]+/,
+  },
+  linkedinUrl: {
+    type: String,
+    default: "",
+    match: /^[a-zA-Z0-9_]+$/,
+  },
+  githubUrl: {
+    type: String,
+    default: "",
+    match: /^[a-zA-Z0-9_]+$/,
+  },
+  youtubeUrl: {
+    type: String,
+    default: "",
+    match: /^[a-zA-Z0-9_]+$/,
+  },
+  instagramUrl: {
+    type: String,
+    default: "",
+    match: /^[a-zA-Z0-9_]+$/,
+  },
 },
   { timestamps: true }
 );
