@@ -256,8 +256,7 @@ exports.adminViewProfile = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'admin') {
-            const { email } = req.body;
-            const admin = await User.findOne({ email });
+            const admin = await User.findById(req.params.userId);
             if(admin) {
                 return res.status(200).json({
                     instructor: admin

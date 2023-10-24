@@ -26,7 +26,7 @@ router.get('/viewCourse', adminViewCourses  );
 router.get('/viewComment', adminViewComments  );
 router.get('/totalStudent', adminTotalStudent   );
 router.get('/viewTotalPayment', adminTotalPayment  );
-router.get('/ViewInstructorProfile', adminViewProfile  );
+router.get('/ViewInstructorProfile/:userId', adminViewProfile  );
 router.get('/viewAllInstructors', adminViewAllInstructors)
 router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse);
 router.get('/studentJoinMeeting', studentJoinMeeting );

@@ -183,9 +183,10 @@ exports.createQuizWithQuestions = async (req, res) => {
             title, questions: questionsIds, moduleId
           })
 
-          //updating the module with the new quiz IDs
-          module.questions = module.questions.concat(quiz._id)
+          //updating the module with the new quiz IDs using mapping 
+          module.quizzes = module.quizzes.concat(quiz._id)
           await module.save();
+
 
             return res.status(201).json({
                 message: "New Quiz has been created with new questions",
