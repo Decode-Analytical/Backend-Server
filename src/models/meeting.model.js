@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const meetupSchema = new mongoose.Schema({
-    name: {
+    instructor: {
         type: String,
         required: [ true, 'Name is required' ]
     },
@@ -17,6 +17,10 @@ const meetupSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Description is required' ]
     },
+    courseId: {
+        type: String,
+        required: [ true, 'Course is required' ]
+    },
     courseName: {
         type: String,
         required: [ true, 'Course is required' ]
@@ -25,7 +29,7 @@ const meetupSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Organizer is required' ]
     },
-    link: {
+    room: {
         type: String,
         required: [ true, 'Link is required' ]
     },

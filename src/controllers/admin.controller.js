@@ -258,20 +258,29 @@ exports.adminViewProfile = async (req, res) => {
         if(userStatus.roles === 'admin') {
             const { email } = req.body;
             const admin = await User.findOne({ email });
-            return res.status(200).json({
-                instructors: admin
-            });
+            if(admin) {
+                return res.status(200).json({
+                    instructor: admin
+                });
+            } else {
+                return res.status(404).json({
+                    message: 'Your email is not registered on this platform as Instructor'
+                })
+            }
         } else {
-            return res.status(200).json({
+            return res.status(401).json({
             message: 'You are not authorized to view this page'
         });
     }
     } catch (error) {
-        return res.status(500).json({
-            message: 'Admin or Instructor profile not found'
+        return res.status(501).json({
+            message: 'There is an error fetch instructor info',
+            error: error.message
         });
     }
 };
+
+
 
 // view all the instructors/ admin 
 exports.adminViewAllInstructors = async (req, res) => {
@@ -333,16 +342,19 @@ exports.adminScheduleMeeting = async (req, res) => {
         if(userStatus.roles === 'admin') {
             const { email, description, date, time, courseName } = req.body;
             const organizerN = await User.findOne({ email }); 
-            const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');     
-            if(organizerN) {                
+            const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
+            const instructorN = referralCodeGenerator.custom('lowercase', 3, 3, 'instructor');
+            const course = await Course.findOne({ course_title: courseName });
+            if(organizerN && course){                
             const meeting = await Meeting.create({
-                name: organizerN.firstName +'' + organizerN.lastName,
+                instructor: organizerN.firstName +'' + organizerN.lastName,
                 description, 
-                instructorId: organizerN._id, 
+                instructorId: instructorN,
+                courseId: courseName,
                 date, 
                 time,
-                courseName, 
-                link : linkMeeting               
+                courseName: course.course_title, 
+                room : linkMeeting               
             });
             return res.status(201).json({
                 message: 'Meeting created successfully',
@@ -350,7 +362,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             });
         } else {
             return res.status(404).json({
-                message: 'Your email is not registered on this platform as Instructor'
+                message: 'Your email or the course is not registered on this platform'
         })
         }
         } else {
