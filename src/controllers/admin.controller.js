@@ -345,7 +345,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
             const instructorN = referralCodeGenerator.custom('lowercase', 3, 3, 'instructor');
             const course = await Course.findOne({ course_title: courseName });
-            if(organizerN && course){                
+            if(organizerN || course){                
             const meeting = await Meeting.create({
                 instructor: organizerN.firstName +'' + organizerN.lastName,
                 description, 
