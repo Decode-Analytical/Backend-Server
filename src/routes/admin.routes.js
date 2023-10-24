@@ -18,6 +18,8 @@ const {
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
+router.get('/studentJoinMeeting', studentJoinMeeting );
+router.post('/adminScheduleMeeting', adminScheduleMeeting  );
 router.use(auth);
 router.put('/roles', adminUpdateUserRoles);
 router.get('/viewTransaction', adminViewTransactions );
@@ -29,7 +31,5 @@ router.get('/viewTotalPayment', adminTotalPayment  );
 router.get('/ViewInstructorProfile/:userId', adminViewProfile  );
 router.get('/viewAllInstructors', adminViewAllInstructors)
 router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse);
-router.get('/studentJoinMeeting', studentJoinMeeting );
-router.post('/adminScheduleMeeting', adminScheduleMeeting  );
 
 module.exports = router;

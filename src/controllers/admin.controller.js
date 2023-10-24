@@ -334,22 +334,18 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 
 //? admin schedule google meeting for students 
 exports.adminScheduleMeeting = async (req, res) => {
-    try {
-        const id = req.user;
-        const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+    try {        
             const { email, description, date, time, courseName } = req.body;
             const organizerN = await User.findOne({ email }); 
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
-            const instructorN = referralCodeGenerator.custom('lowercase', 3, 3, 'instructor');
+            const instructorN = referralCodeGenerator.custom('lowercase', 6, 3, 'instructor');
             const course = await Course.findOne({ course_title: courseName });
             if(organizerN || course){                
             const meeting = await Meeting.create({
                 instructor: organizerN.firstName +'' + organizerN.lastName,
                 description, 
                 instructorId: instructorN,
-                courseId: courseName,
+                courseId: course._id,
                 date, 
                 time,
                 courseName: course.course_title, 
@@ -364,11 +360,6 @@ exports.adminScheduleMeeting = async (req, res) => {
                 message: 'Your email or the course is not registered on this platform'
         })
         }
-        } else {
-            return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
     } catch (error) {
         return res.status(500).json({
             message: 'Meeting not found',
@@ -381,20 +372,11 @@ exports.adminScheduleMeeting = async (req, res) => {
 // ? get user information by email
 exports.studentJoinMeeting = async (req, res) => {
     try {
-        const id = req.user;
-        const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin' || userStatus.roles ==='student'  ||  userStatus.roles === 'IT') {
             const { email } = req.body;
             const admin = await User.findOne({ email });
             return res.status(200).json({
                 student: admin
-            });
-        } else {
-            return res.status(200).json({
-            message: 'You are not student of this institution'
-        });
-    }
+            });         
     } catch (error) {
         return res.status(500).json({
             message: 'User not found',

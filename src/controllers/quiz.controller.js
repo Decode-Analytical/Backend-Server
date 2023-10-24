@@ -310,12 +310,9 @@ exports.getQuizQuestionId = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
             const quiz = await Quiz.findById(req.params.quizId);
-            const questions = await Question.find({ moduleId: quiz.moduleId });
-            const questionsIds = questions.map((question) => question._id);
             return res.status(200).json({
                 message: 'Quiz questions retrieved from the database.',
-                questions,
-                questionsIds
+                quiz,
             });
         } else {
             return res.status(401).json({
