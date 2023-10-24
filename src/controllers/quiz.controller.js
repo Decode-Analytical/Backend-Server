@@ -173,15 +173,20 @@ exports.createQuizWithQuestions = async (req, res) => {
           }));
           const createdQuestions = await Question.create(questionsWithModuleId);
 
-          //updating the module with the new questions IDs
+          //!updating the module with the new questions IDs
             const questionsIds = createdQuestions.map((question) => question._id)
             module.questions = module.questions.concat(questionsIds)
-            await module.save();
+            // await module.save();
 
              //creating quiz with the questions
           const quiz = await Quiz.create({
             title, questions: questionsIds, moduleId
           })
+
+          //updating the module with the new quiz IDs
+            const quizIds = quiz.map((quiz) => quiz._id)
+            module.questions = module.questions.concat(quizIds)
+            await module.save();
 
             return res.status(201).json({
                 message: "New Quiz has been created with new questions",
