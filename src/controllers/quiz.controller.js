@@ -38,8 +38,6 @@ exports.createQuizQuestions = async (req, res) => {
 
 exports.getQuizQuestions = async (req, res) => {
     try {
-        // console.log({userStatus})
-
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
@@ -224,7 +222,6 @@ exports.createQuiz = async (req, res) => {
     .send("You are not authorized to do this action");
   } 
   catch (error) {
-    console.error(error)
     return res.status(500).json({
       message: "Error saving quiz questions.",
       error: error.message,
@@ -295,7 +292,7 @@ exports.getQuizSubmittedById = async (req, res) => {
         if(!submissionResult){
             return res.status(404).send({message: "submission not found"});
         }
-        res.status(200).json({message:"submission available", submission})
+        return res.status(200).json({message:"submission available", submissionResult});
     }
     catch(err){
         return res.status(500).send({message: "failed to find submission", error: err.message});
@@ -310,9 +307,11 @@ exports.getQuizQuestionId = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
             const quiz = await Quiz.findById(req.params.quizId);
+            const questions = await Quiz.findById(req.params.quizId).populate("questions");
             return res.status(200).json({
                 message: 'Quiz questions retrieved from the database.',
                 quiz,
+                questions
             });
         } else {
             return res.status(401).json({
@@ -334,7 +333,6 @@ exports.viewAllQuiz = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        console.log(userStatus)
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
             const quizzes = await Quiz.find();
             return res.status(200).json({

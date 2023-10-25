@@ -32,6 +32,34 @@ exports.addComment = async (req, res) => {
         error: `please register for the course so you can comment on the module`,
       });
     }
+    //check if the student has already liked the module
+    const isLiked = await Module.findById(moduleId).then((module) => {
+      return module.likeAndDislikeUsers.includes(userId);
+    });
+    if (isLiked) {
+      return res.status(401).json({
+        error: `you have already liked this module`,
+      });
+    }
+    //check if the student has already disliked the module
+    const isDisliked = await Module.findById(moduleId).then((module) => {
+      return module.likeAndDislikeUsers.includes(userId);
+    });
+    if (isDisliked) {
+      return res.status(401).json({
+        error: `you have already disliked this module`,
+      });
+    }
+    
+    // get the name of the student that comment
+    const studentName = await User.find({_id: userId })
+    
+    // add the name of the student to the module comment list
+    // add the student id to the module comment list
+    await Module.findByIdAndUpdate(moduleId, { $push: { comments: commentBody, studentName  }}, {new: true});
+    await Module.findByIdAndUpdate(moduleId, { $push: { likeAndDislikeUsers: userId } }, {new: true});
+
+  
    
     const newComment = await Comment.create({ commentBody, moduleId, commentBy })//create a new comment
    
@@ -173,7 +201,7 @@ exports.getCommentById = async (req, res) => {
       await Module.findByIdAndUpdate(comment.moduleId, 
         {
           $inc: { comment_count: -1 },
-          $pull : { comments:   commentId} 
+          $pull : { commentId:   commentId} 
         }
         )
     }

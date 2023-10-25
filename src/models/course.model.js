@@ -87,7 +87,7 @@ const moduleSchema = new mongoose.Schema({
     type: Array,    
   },
   comment_count: { type: Number, default: 0 },
- comments:[
+ commentId:[
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
