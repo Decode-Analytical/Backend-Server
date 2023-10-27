@@ -362,7 +362,7 @@ exports.adminScheduleMeeting = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            message: 'Meeting not found',
+            message: 'Meeting not created because the course name or your email is not registered',
             error: error.message
         });
     }
@@ -376,6 +376,11 @@ exports.studentJoinMeeting = async (req, res) => {
             const admin = await User.findOne({ email });
             const student = await Student.findOne({ userId: admin._id });
             const ifStudentCourse = await Student.findOne({ userId: student._id, title: req.params.courseName });
+            if(!ifStudentCourse) {
+                return res.status(404).json({
+                    message: 'You have not registered for this course'
+                })
+            }
             const userStatus = await User.findById(admin._id);
             if(userStatus.roles ==='student' && student) {
                 const meeting = await Meeting.findOne({ roomId: req.params.roomId });
@@ -389,7 +394,7 @@ exports.studentJoinMeeting = async (req, res) => {
             }        
     } catch (error) {
         return res.status(500).json({
-            message: 'User not found',
+            message: 'You are not a registered student',
             error: error.message
         });
     }
