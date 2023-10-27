@@ -71,7 +71,7 @@ exports.addComment = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Comment added successfully", totalComment: module.comment_count + 1, newComment});
+      .json({ message: "Comment added successfully", totalComment: module.comment_count + 1, newComment, studentName});
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: error.message });
