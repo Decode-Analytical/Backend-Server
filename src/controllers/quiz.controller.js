@@ -305,7 +305,7 @@ exports.getQuizQuestionId = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
+        if(userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
             const quiz = await Quiz.findById(req.params.quizId);
             const questions = await Quiz.findById(req.params.quizId).populate("questions");
             return res.status(200).json({
@@ -333,7 +333,7 @@ exports.viewAllQuiz = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
+        if(userStatus.roles === "admin" || userStatus.roles === "student") {
             const quizzes = await Quiz.find();
             return res.status(200).json({
                 message: 'Quizs retrieved from the database.',

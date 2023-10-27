@@ -29,7 +29,7 @@ const meetupSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Organizer is required' ]
     },
-    room: {
+    roomId: {
         type: String,
         required: [ true, 'Link is required' ]
     },

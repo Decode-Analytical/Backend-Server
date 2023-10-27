@@ -340,7 +340,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
             const instructorN = referralCodeGenerator.custom('lowercase', 6, 3, 'instructor');
             const course = await Course.findOne({ course_title: courseName });
-            if(organizerN || course){                
+            if(organizerN || course ){                
             const meeting = await Meeting.create({
                 instructor: organizerN.firstName +'' + organizerN.lastName,
                 description, 
@@ -349,7 +349,7 @@ exports.adminScheduleMeeting = async (req, res) => {
                 date, 
                 time,
                 courseName: course.course_title, 
-                room : linkMeeting               
+                roomId : linkMeeting               
             });
             return res.status(201).json({
                 message: 'Meeting created successfully',
@@ -372,11 +372,21 @@ exports.adminScheduleMeeting = async (req, res) => {
 // ? get user information by email
 exports.studentJoinMeeting = async (req, res) => {
     try {
-            const { email } = req.body;
+            const { email, } = req.body;
             const admin = await User.findOne({ email });
-            return res.status(200).json({
-                student: admin
-            });         
+            const student = await Student.findOne({ userId: admin._id });
+            const ifStudentCourse = await Student.findOne({ userId: student._id, title: req.params.courseName });
+            const userStatus = await User.findById(admin._id);
+            if(userStatus.roles ==='student' && student) {
+                const meeting = await Meeting.findOne({ roomId: req.params.roomId });
+                return res.status(200).json({
+                    meeting
+                });
+            } else {
+                return res.status(404).json({
+                    message: 'Your email is not registered on this platform as student'
+                })
+            }        
     } catch (error) {
         return res.status(500).json({
             message: 'User not found',

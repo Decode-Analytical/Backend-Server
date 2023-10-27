@@ -18,7 +18,7 @@ const {
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
-router.get('/studentJoinMeeting', studentJoinMeeting );
+router.get('/studentJoinMeeting/:courseName/:roomId', studentJoinMeeting );
 router.post('/adminScheduleMeeting', adminScheduleMeeting  );
 router.use(auth);
 router.put('/roles', adminUpdateUserRoles);
