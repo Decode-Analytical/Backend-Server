@@ -185,11 +185,30 @@ exports.createQuizWithQuestions = async (req, res) => {
           module.quizzes = module.quizzes.concat(quiz._id)
           await module.save();
 
+          // save the answers for each question
+          const answers = req.body.answers;
+          const createdQuiz = await Quiz.findById(quiz._id);
+          const createdQuestion = await Question.findById(questionsIds);
+          const quizQuestions = await Question.find({ moduleId: moduleId });
+          const createdAnswers = await Answer.create(answers);
+          const createdSubmission = await Submission.create({ quizId: quiz._id });
+
 
             return res.status(201).json({
                 message: "New Quiz has been created with new questions",
                 quiz,
-                createdQuestions
+                createdQuestions,
+                createdAnswers,
+                createdSubmission,
+                createdQuiz,
+                createdQuestion,
+                module,
+                questionsIds,
+                quizQuestions,
+                answers
+            });
+        } else {
+            return res.status(401).json({
             })
     }
         
@@ -257,24 +276,58 @@ exports.submitQuiz = async (req, res) => {
     let score = 0;
     // const totalScore = 100
 
-    for (const answer of answers) {
+    for (const answer of answers) {  
       //check answer selected for each question in the quiz with the correct answer in the db
-      const question = await Question.findById(answer.questionId, "correct_answer_index");
-
-      if (question.correct_answer_index === answer.selected_answer_index) {
+      const question = await Question.findById(answer._id, "correct_answer_index");
+      // if the answer is correct
+      if (answer.selected_answer_index === question.correct_answer_index) {
         score++;
       }
+      // if the answer is wrong
+      else if (answer.selected_answer_index!== question.correct_answer_index) {
+        score;
+      }
     }
-    // Create a submission record
-    const submission = new Submission({
-      userId,
-      quizId,
-      answers,
-      score,
-    });
+    // if the quiz has been completed
+    if (answers.length === quiz.questions.length) {
+      // if the score is 100, the quiz is completed
+      if (score === quiz.questions.length) {
+        // create a submission record
+        const submission = new Submission({
+          userId,
+          quizId,
+          answers,
+          score,
+        });
+        await submission.save();
+        return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+      }
+    } else {
+      // if the score is not 100, the quiz is not completed
+      // create a submission record
+      const submission = new Submission({
+        userId,
+        quizId,
+        answers,
+        score,
+      });
+      await submission.save();
+      return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+    //   if (question.correct_answer_index === answer.selected_answer_index) {
+    //     score++;
+    //   }
+    // }
+    // // Create a submission record
+    // const submission = new Submission({
+    //   userId,
+    //   quizId,
+    //   answers,
+    //   score,
+    // });
 
-    await submission.save();
-    return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+    // await submission.save();
+    // return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+    }
 
   } catch (err) {
     return res
@@ -351,3 +404,29 @@ exports.viewAllQuiz = async (req, res) => {
         });
     }
 }
+
+// from question id, get all the answers for that question
+exports.getQuizAnswers = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === "admin" || userStatus.roles === "student") {
+            const answers = await Question.find(req.params.questionId, "correct_answer_index" );            
+            return res.status(200).json({
+                message: 'Quiz questions retrieved from the database.',
+                answers,
+            });
+        } else {
+            return res.status(401).json({
+                message: 'You are not authorized to do this action.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error retrieving questions.',
+            error: error.message
+        });
+    }
+}
+       

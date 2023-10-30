@@ -365,12 +365,16 @@ exports.searchCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {
-            const course_title = req.query.course_title;
-            const course = await Course.find({ course_title: new RegExp(course_title, "i") })
-            return res.status(200).json({
-                message: "Course fetched successfully",
-                course
-            });
+           const { course_title } = req.params;
+           const course = await Course.find({ course_title: new RegExp(course_title, "i") })
+           if(course){
+               return res.status(200).json({
+                   message: "Courses fetched successfully",
+                   course
+               });
+           }else{
+               return res.status(404).json({ error: "This course does not exist" });
+           }
         } else {
             return res.status(400).json({ error: "User must login as student or Admin in order to search for a course" });
         }
