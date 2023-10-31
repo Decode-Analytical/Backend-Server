@@ -374,16 +374,15 @@ exports.studentJoinMeeting = async (req, res) => {
     try {
             const { email, } = req.body;
             const admin = await User.findOne({ email });
-            const student = await Student.findOne({ userId: admin._id });
-            const ifStudentCourse = await Student.findOne({ userId: student._id, title: req.params.courseName });
-            if(!ifStudentCourse) {
+            const meeting = await Meeting.findOne({ roomId: req.params.roomId });           
+            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });                      
+            if(!student) {
                 return res.status(404).json({
                     message: 'You have not registered for this course'
                 })
             }
             const userStatus = await User.findById(admin._id);
             if(userStatus.roles ==='student' && student) {
-                const meeting = await Meeting.findOne({ roomId: req.params.roomId });
                 return res.status(200).json({
                     meeting
                 });

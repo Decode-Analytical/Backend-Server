@@ -262,7 +262,6 @@ exports.submitQuiz = async (req, res) => {
     // const totalScore = 100
 
     for (const answer of answers) { 
-        console.log(answer) 
       //check answer selected for each question in the quiz with the correct answer in the db
       const question = await Question.findById(answer.questions, "options");
       // if the answer is correct
@@ -435,33 +434,27 @@ exports.getQuizScore = async (req, res) => {
 // Route to receive user submissions and calculate the score
 exports.createSubmitAnswer = async (req, res) => {
   const { userAnswers } = req.body; 
-  const questionId = req.params.questionId;
   const quizId = req.params.quizId;
   const id = req.user;
   let score = 0;
+  console.log(quizId)
 
   try {
     for (const userAnswer of userAnswers) {
-      const question = await Quiz.findById(questionId, "options");
+      const question = await Question.findById(quizId, "options");
       console.log(question);
-      if (userAnswer.isCorrect === question.answers.isCorrect) {
+      if (userAnswer.isCorrect === question.isCorrect) {
         score++;
-      } else if (userAnswer.isCorrect !== question.answers.isCorrect) {
-        score;
-      }
+      } 
     }
-    if (userAnswers.length === quiz.questions.length) {
-      if (score === quiz.questions.length) {
-        const submission = new Submission({
-          userId: req.user,
-          quizId: req.params.quizId,
-          answers: userAnswers,
-          score,
-        });
-        await submission.save();
-        return res.status(200).json({ message: "quiz submitted successfully", score, submission});
-      }
-    } else {
+    // update user's score  
+    const user = await User.findById(id);
+    await User.findByIdAndUpdate(user._id, {
+      $inc: {score: +score},
+    },
+    {
+      new: true
+    });
       const submission = new Submission({
         userId: req.user,
         quizId: req.params.quizId,
@@ -469,8 +462,7 @@ exports.createSubmitAnswer = async (req, res) => {
         score,
       });
       await submission.save();
-      return res.status(200).json({ message: "quiz submitted successfully", score, submission});
-    }
+      return res.status(200).json({ message: "quiz submitted successfully", score, submission});    
   } catch (err) {
     return res
      .status(500)
@@ -513,6 +505,32 @@ exports.getQuestionAnswers = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: 'Error retrieving quiz questions.',
+      error: error.message
+    });
+  }
+};
+
+
+// delete all the questions 
+exports.deleteAllQuestions = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+    if(userStatus.roles === "admin" || userStatus.roles === "student") {
+      const questions = await Question.find({});
+      await questions.forEach(async (question) => {
+        await question.remove();
+      });
+      return res.status(200).json({ message: "all questions deleted successfully" });
+    } else {
+      return res.status(401).json({
+        message: 'You are not authorized to do this action.'
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error deleting quiz questions.',
       error: error.message
     });
   }
