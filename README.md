@@ -1,4 +1,4 @@
-# Noom-React-PeerJS-SocketIO-Conference
+# LMS Conference | Classroom
 
 An LMS Project | A video conference application | Zoom clone
 
