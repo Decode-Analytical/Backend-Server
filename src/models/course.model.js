@@ -113,6 +113,29 @@ const moduleSchema = new mongoose.Schema({
 moduleSchema.index({ title: 'text', description: 'text' });
 
 
+
+const answerSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  questionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Question",
+  },
+  text: {
+    type: String,
+  },
+  isCorrect: {
+    type: Boolean,
+  }
+},
+{
+  timestamps: true,
+  versionKey: false
+});
+answerSchema.index({ title: 'text', description: 'text' });
+
 const questionSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -133,20 +156,7 @@ const questionSchema = new mongoose.Schema({
   question_duration: {
     type: String,
   },
-  options: {
-    type: Array,    
-  },
-  answers: {
-    type: Array,    
-  },
-  correct_answer: {
-    type: String,
-    required: true ['write the correct answer'],
-  },
-  correct_answer_index: {
-    type: Number,
-    required: true ['write the correct answer index'],
-  },
+  answers: [answerSchema],
 },
 {
   timestamps: true,
@@ -154,42 +164,24 @@ const questionSchema = new mongoose.Schema({
 });
 questionSchema.index({ title: 'text', description: 'text' });
 
-const answerSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  questionId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Question",
-  },
-  answer: {
-    type: String,
-    required: true ['write the answer'],
-  },
-  correct_answer_index: {
-    type: Number,
-    required: true ['write the correct answer index'],
-  },
-},
-{
-  timestamps: true,
-  versionKey: false
-});
-answerSchema.index({ title: 'text', description: 'text' });
+
 
 const quizSchema = new mongoose.Schema(
   {
     title: {
       type: String,
     },
-    questions: [
+    questionIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question",
         required: [true, "quiz questions ids required"],
       },
+      questionSchema,
     ],
+    questions: {
+      type: Array,
+    },
     moduleId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Module",

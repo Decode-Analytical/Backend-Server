@@ -14,7 +14,7 @@ const {
   getQuizSubmittedById,
   getQuizQuestionId,
   viewAllQuiz,
-  getQuizAnswers
+  getQuizAnswers,
 } = require("../controllers/quiz.controller");
 
 router.use(auth);
