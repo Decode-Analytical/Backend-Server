@@ -349,7 +349,8 @@ exports.adminScheduleMeeting = async (req, res) => {
                 date, 
                 time,
                 courseName: course.course_title, 
-                roomId : linkMeeting               
+                roomId : linkMeeting,
+                email             
             });
             return res.status(201).json({
                 message: 'Meeting created successfully',

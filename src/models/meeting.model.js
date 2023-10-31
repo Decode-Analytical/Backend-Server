@@ -33,6 +33,9 @@ const meetupSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Link is required' ]
     },
+    email: {
+        type: String,
+    },
 },
 {
     timestamps: true
