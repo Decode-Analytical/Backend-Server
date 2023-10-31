@@ -10,7 +10,6 @@ const studentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
       required: [ true, 'This course is required' ],
-      unique: [ true, 'This course already exists' ],
     },
     title: {
       type: String,

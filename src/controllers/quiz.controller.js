@@ -432,3 +432,88 @@ exports.getQuizScore = async (req, res) => {
 
 
 
+// Route to receive user submissions and calculate the score
+exports.createSubmitAnswer = async (req, res) => {
+  const { userAnswers } = req.body; 
+  const questionId = req.params.questionId;
+  const quizId = req.params.quizId;
+  const id = req.user;
+  let score = 0;
+
+  try {
+    for (const userAnswer of userAnswers) {
+      const question = await Quiz.findById(questionId, "options");
+      console.log(question);
+      if (userAnswer.isCorrect === question.answers.isCorrect) {
+        score++;
+      } else if (userAnswer.isCorrect !== question.answers.isCorrect) {
+        score;
+      }
+    }
+    if (userAnswers.length === quiz.questions.length) {
+      if (score === quiz.questions.length) {
+        const submission = new Submission({
+          userId: req.user,
+          quizId: req.params.quizId,
+          answers: userAnswers,
+          score,
+        });
+        await submission.save();
+        return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+      }
+    } else {
+      const submission = new Submission({
+        userId: req.user,
+        quizId: req.params.quizId,
+        answers: userAnswers,
+        score,
+      });
+      await submission.save();
+      return res.status(200).json({ message: "quiz submitted successfully", score, submission});
+    }
+  } catch (err) {
+    return res
+     .status(500)
+     .send({
+        message: "error occurred while submitting quiz",
+        error: err.message,
+      });
+  }
+};
+
+// Route to get all the questions for a quiz
+exports.getQuestionAnswers = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+    if(userStatus.roles === "admin" || userStatus.roles === "student") {
+        const questions = await Question.find({})
+        .populate("answers")
+        .exec();
+        return res.status(200).json({
+            message: 'Quiz questions retrieved from the database.',
+            questions: questions.map((question) => {
+                return {
+                   ...question.toObject(),
+                    answers: question.answers.map((answer) => {
+                        return {
+                           ...answer.toObject(),
+                            selected_answer_index: answer.isCorrect,
+                        };
+                    }), 
+                };
+            }),
+        });
+    } else {
+      return res.status(401).json({
+        message: 'You are not authorized to do this action.'
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error retrieving quiz questions.',
+      error: error.message
+    });
+  }
+};

@@ -15,6 +15,8 @@ const {
   getQuizQuestionId,
   viewAllQuiz,
   getQuizAnswers,
+  createSubmitAnswer,
+  getQuestionAnswers
 } = require("../controllers/quiz.controller");
 
 router.use(auth);
@@ -31,5 +33,7 @@ router.get('/submit/:submitId', getQuizSubmittedById)
 router.get('/questionId/:quizId', getQuizQuestionId)
 router.get('/viewAllTheQuiz', viewAllQuiz)
 router.get('/viewAllTheQuestion/:moduleId', getQuizAnswers)
+router.post('/submitAnswers', createSubmitAnswer)
+router.get('/getQuizAnswer', getQuestionAnswers)
 
 module.exports = router;
