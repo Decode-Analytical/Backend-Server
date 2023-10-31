@@ -229,6 +229,7 @@ exports.forgotPassword = async(req, res) => {
                 <p> You have requested to reset your password. Below are your details</p>
                 <p>  ${existingUser.firstName} </p>
                 <p> ${existingUser.email} </a><br><br><br>
+                <p> Your password reset token is ${tokens} </p><br><br>
                 <a href="${process.env.CLIENT_URL}/resetpassword?=${token.token}">Reset Password</a>
                 <p>Thanks,</p>
                 <p>Team ${process.env.APP_NAME}</p>`
