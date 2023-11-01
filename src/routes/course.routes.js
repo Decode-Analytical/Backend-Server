@@ -20,6 +20,9 @@ const { createCourse,
     viewReviewsByCourse,
     deleteReview,
     updateReview,
+    getCourseById,
+    viewCourseById,
+    getCoursesByUserId,
 
        } = require('../controllers/course.controller');
 const router = express.Router();
@@ -50,6 +53,9 @@ router.post("/addQuestion/:courseId/:subjectId", addQuestion );
 router.put("/updateQuestion/:courseId/:subjectId", updateQuestion);
 router.delete("/deleteQuestion/:courseId/:subjectId", deleteQuestion);
 router.get("/viewAllQuestions/:courseId", viewQuestions);
+router.get("/viewCourseById/:courseId", getCourseById);
+router.get("/getViewCourseById/:courseId", viewCourseById);
+router.get("/viewCourseByItsId/:courseId", getCoursesByUserId);
 
 // Review routes
 router.get("/review", viewReviews);
