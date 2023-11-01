@@ -216,7 +216,7 @@ exports.forgotPassword = async(req, res) => {
         const { email } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-          const tokens = crypto.randomBytes(10).toString('hex');
+          const tokens = crypto.randomBytes(3).toString('hex');
           const token = await Token.create({          
              token: tokens,
              userId: existingUser._id,

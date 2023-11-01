@@ -1,6 +1,6 @@
 const Transaction = require('../models/transaction.model');
 const User = require('../models/user.model');
-const Course = require('../models/course.model');
+const { Course } = require('../models/course.model');
 
 const crypto = require('crypto');
 const StudentCourse = require('../models/student.model');
@@ -9,21 +9,22 @@ const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
 
 
 exports.paystackPayment= async(req, res) => {
-    const { email } = req.body;
-    const existingEmail = await User.findOne({ email });
+    const id = req.user;
+    const userStatus = await User.findById(id);
+    const existingEmail = await User.findOne({ email: userStatus.email });
     if (!existingEmail) {
         return res.status(400).json({
             message: 'Invalid Email, The email does not exist'
             }); 
     }
     // 64d2553bae36cd1aca997a59
-    const id = req.params.id
-    const course = await Course.findById( id );
+    const courseId = req.params.courseId;
+    const course = await Course.findById( courseId );
     // Create a new order in the database
     const transaction = await Transaction.create({
         reference: crypto.randomBytes(9).toString('hex'),
-        amount: course.price,
-        title: course.title,
+        amount: course.isPrice_course || 5000,
+        title: course.course_title,
         email: existingEmail.email,
         userId: existingEmail._id, 
         courseId: course._id      
