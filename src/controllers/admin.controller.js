@@ -375,7 +375,17 @@ exports.studentJoinMeeting = async (req, res) => {
     try {
             const { email, } = req.body;
             const admin = await User.findOne({ email });
-            const meeting = await Meeting.findOne({ roomId: req.params.roomId });           
+            if(!admin){
+                return res.status(404).json({
+                    message: "This email does not exist in the database"
+                })
+            }
+            const meeting = await Meeting.findOne({ roomId: req.params.roomId }); 
+            if(!meeting){
+                return res.status(404).json({
+                    message: "This room meeting does not exist"
+                })
+            }          
             const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });                      
             if(!student) {
                 return res.status(404).json({
@@ -385,7 +395,11 @@ exports.studentJoinMeeting = async (req, res) => {
             const userStatus = await User.findById(admin._id);
             if(userStatus.roles ==='student' && student) {
                 return res.status(200).json({
-                    meeting
+                    meeting,
+                    name: admin.firstName +' '+ admin.lastName,
+                    userId: admin._id,
+                    image: admin.picture
+
                 });
             } else {
                 return res.status(404).json({

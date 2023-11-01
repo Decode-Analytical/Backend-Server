@@ -1,6 +1,5 @@
 const { Course, Question, Module } = require("../models/course.model");
 const User = require("../models/user.model");
-const ffmpeg = require('fluent-ffmpeg');
 const Review = require("../models/review.model");
 
 // create a course 
