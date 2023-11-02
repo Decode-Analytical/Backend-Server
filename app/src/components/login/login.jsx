@@ -7,7 +7,6 @@ import "./login.css"
 import "../animations.css"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleLogin, setMeetingAndUser } from "../../store"
-import axios from "axios"
 
 export default function Login() {
   const [emailId, setEmailId] = useState("")
@@ -15,33 +14,7 @@ export default function Login() {
   const dispatch = useDispatch()
   const loggedIn = useSelector((state) => state.value)
   const { room } = useParams()
-  const [meetingExist, setMeetingExist] = useState(false)
-  const [meetingDetails, setMeetingDetails] = useState({})
-  const [registered, setRegistered] = useState(true)
-
-  useEffect(() => {
-    /*const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "spacemars666@gmail.com",
-      }),
-    }
-    axios
-      .get(
-        `https://decode-mnjh.onrender.com/api/admin/studentJoinMeeting/${room}`,
-        options
-      )
-      .then((data) => {
-        console.log(data)
-      })
-      .catch((error) => {
-        console.log(error)
-        toast.error("Something went wrong, try again")
-      })*/
-  }, [])
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const loadRoom = () => {
     loadUser()
@@ -57,59 +30,53 @@ export default function Login() {
     if (emailId === null || emailId === "")
       return toast.error("Please enter your student id!")
 
+    //spacemars666@gmail.com
+    setIsDisabled(true)
     const options = {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "spacemars666@gmail.com",
+        email: emailId.trim(),
       }),
     }
-    /*fetch(
-      `https://decode-mnjh.onrender.com/api/admin/studentJoinMeeting/${room}`,
+    fetch(
+      `https://decode-mnjh.onrender.com/api/admin/studentJoinmeeting/${room}`,
       options
-    )*/
-    fetch(`https://jsonplaceholder.typicode.com/users/1`)
+    )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        //console.log(data)
 
         const meeting = {
-          instructor: "Joe",
-          instructorId: "2",
-          room: "mluksn",
-          course: "Geography",
-          desc: "Continents around the world",
-          date: "25-10-2023",
-          time: "08:45 am",
+          instructor: data.meeting.instructor,
+          instructorId: data.meeting.instructorId,
+          room: data.meeting.roomId,
+          course: data.meeting.courseName,
+          desc: data.meeting.description,
+          date: data.meeting.date,
+          time: data.meeting.time,
         }
 
         const user = {
-          username: "Dev",
-          userId: "2",
-          email: "dev@gmail.com",
-          img: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+          username: data.name,
+          userId: data.userId,
+          email: emailId,
+          img: data.image,
         }
 
-        //Check if the user has course registered
-        if (registered) {
-          dispatch(setMeetingAndUser(meeting, user))
-          dispatch(toggleLogin())
-          toast.success("You've joined the meeting")
-          navigate(`/lecture/${room}/live`)
-        } else {
-          toast.error("You've not registered for this course")
-        }
-
-        /*if (!meetingExist) {
-          toast.error("Oops, no scheduled meeting with that name!")
-          return
-        }*/
+        setIsDisabled(false)
+        dispatch(setMeetingAndUser(meeting, user))
+        dispatch(toggleLogin())
+        setIsDisabled(false)
+        toast.success("You've joined the meeting")
+        navigate(`/lecture/${room}/live`)
       })
       .catch((error) => {
         console.log(error)
-        toast.error("Something went wrong, try again")
+        toast.error(error.message)
+        setIsDisabled(false)
       })
   }
 
@@ -121,26 +88,6 @@ export default function Login() {
             <img src={Logo} alt="logo" />
             <label htmlFor="logo">LMS Noom</label>
           </div>
-          {meetingExist && (
-            <div className="meeting-card">
-              <label>
-                <span>Instructor: </span>
-                {meeting.instructor}
-              </label>
-              <label>
-                <span>Course: </span>
-                {meeting.course}
-              </label>
-              <label>
-                <span>Meeting Date: </span>
-                {meeting.date}
-              </label>
-              <label>
-                <span>Meeting Time: </span>
-                {meeting.time}
-              </label>
-            </div>
-          )}
         </div>
         <div className="entry">
           <img src={StudentImg} alt="student" />
@@ -157,6 +104,7 @@ export default function Login() {
                 onClick={() => {
                   loadRoom()
                 }}
+                disabled={isDisabled}
               >
                 Join Meeting
               </button>
