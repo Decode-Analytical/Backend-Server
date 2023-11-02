@@ -32,7 +32,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { toggleLogin } from "../../store"
 import "../animations.css"
 
-const ENDPOINT = "http://localhost:5000"
+const ENDPOINT = "https://noom-lms-server.onrender.com"
+//const ENDPOINT = "http://localhost:5000"
 let socket = null
 let myId
 let boardStream = null
@@ -109,6 +110,8 @@ export default function Room() {
     socket.on("connect", () => {
       myId = socket.id
       socket.emit("join-room", room, myId)
+
+      //console.log(myId)
       //console.log(meetingRecord.instructorId, userRecord.userId)
       if (meetingRecord.instructorId === userRecord.userId) setIsAdmin(true)
 
@@ -128,9 +131,10 @@ export default function Room() {
 
       const initializePeer = (localStream) => {
         const peer = new Peer(myId, {
-          host: "localhost",
-          port: 5000,
+          host: "noom-lms-server.onrender.com",
+          port: 443,
           path: "/peerjs",
+          secure: true,
         })
         loadPeerListeners(peer, localStream)
       }
