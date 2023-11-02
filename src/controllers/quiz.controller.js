@@ -456,7 +456,7 @@ exports.createSubmitAnswer = async (req, res) => {
       const submission = new Submission({
         userId: req.user,
         quizId: req.params.quizId,
-        answers: userAnswers.map( (answer) => ({...answer, isCorrect: answer.isCorrect})),
+        answers: userAnswers,
         score,
       });
       await submission.save();
