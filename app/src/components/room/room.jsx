@@ -32,8 +32,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { toggleLogin } from "../../store"
 import "../animations.css"
 
-const ENDPOINT = "https://noom-lms-server.onrender.com"
-//const ENDPOINT = "http://localhost:5000"
+const ENDPOINT = "http://localhost:5000"
 let socket = null
 let myId
 let boardStream = null
