@@ -173,12 +173,15 @@ export default function Room() {
             const call = await peer.call(userID, stream, {
               metadata: {
                 username: userRecord.username,
+                userId: userRecord.userId,
               },
             })
 
             let username = "LMS"
-            socket.on("username", (data) => {
-              username = data
+            let userId = ""
+            socket.on("userRecord", (data) => {
+              username = data.username
+              userId = data.userId
             })
 
             call.on("stream", (userVideoStream) => {
@@ -202,7 +205,16 @@ export default function Room() {
         })
 
         peer.on("call", (call) => {
-          socket.emit("username", call.peer, userRecord.username)
+          if (userRecord.userId === call.metadata.userId) {
+            leave()
+            toast.success("A User with this ID already exists!")
+            return
+          }
+          const doc = {
+            username: userRecord.username,
+            userId: userRecord.userId,
+          }
+          socket.emit("userRecord", call.peer, doc)
 
           if (instructor === myId && boardStream) call.answer(boardStream)
           else call.answer(stream)
@@ -334,15 +346,18 @@ export default function Room() {
     setParticipants(false)
   }
 
-  const leaveMeeting = () => {
+  const leave = () => {
     if (socket) {
       socket.off("connect")
       socket.disconnect()
     }
-
-    toast.success("You left the meeting!")
     dispatch(toggleLogin())
     navigate(`/lecture/${room}`)
+  }
+
+  const leaveMeeting = () => {
+    leave()
+    toast.success("You left the meeting!")
   }
 
   return (
@@ -403,7 +418,7 @@ export default function Room() {
                     </div>
                     <div className="msg-bottom">
                       <img
-                        src={obj.img.length > 0 ? obj.img[0] : UserImg}
+                        src={obj.img.length > 0 ? obj.img[0].path : UserImg}
                         alt="User"
                       />
                       <p className="msg">{obj.msg}</p>
