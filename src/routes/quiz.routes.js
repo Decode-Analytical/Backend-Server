@@ -10,7 +10,7 @@ const {
   createQuiz,
   createQuizWithQuestions,
   getQuizById,
-  submitQuiz,
+  // submitQuiz,
   getQuizSubmittedById,
   getQuizQuestionId,
   viewAllQuiz,
@@ -29,7 +29,7 @@ router.delete('/deleteQuiz/:id', deleteQuizQuestions);
 router.post('/createQuiz/:moduleId', createQuiz)
 router.post('/createQuestion/:moduleId/questions', createQuizWithQuestions)
 router.get('/getQuiz/:quizId', getQuizById)
-router.post('/submitQuiz/:quizId/submit', submitQuiz)
+// router.post('/submitQuiz/:quizId/submit', submitQuiz)
 router.get('/submit/:submitId', getQuizSubmittedById)
 router.get('/questionId/:quizId', getQuizQuestionId)
 router.get('/viewAllTheQuiz', viewAllQuiz)
