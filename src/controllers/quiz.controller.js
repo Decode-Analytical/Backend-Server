@@ -442,7 +442,6 @@ exports.createSubmitAnswer = async (req, res) => {
   try {
     for (const userAnswer of userAnswers) {
       const question = await Question.findById(quizId, "options");
-      console.log(question);
       if (userAnswer.isCorrect === question.isCorrect) {
         score++;
       } 

@@ -413,3 +413,30 @@ exports.studentJoinMeeting = async (req, res) => {
         });
     }
 };
+
+// get roomId by admin email
+exports.adminGetRoomId = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const admin = await User.findOne({ email });
+        if(!admin){
+            return res.status(404).json({
+                message: "This email does not exist in the database"
+            })
+        }
+        const meeting = await Meeting.findOne({ roomId: req.params.roomId }); 
+        if(!meeting){
+            return res.status(404).json({
+                message: "This room meeting does not exist"
+            })
+        }
+        return res.status(200).json({
+            meeting
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'You are not a registered Instructor or Admin',
+            error: error.message
+        });
+    }
+};
