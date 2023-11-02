@@ -437,7 +437,6 @@ exports.createSubmitAnswer = async (req, res) => {
   const quizId = req.params.quizId;
   const id = req.user;
   let score = 0;
-  console.log(quizId)
 
   try {
     for (const userAnswer of userAnswers) {

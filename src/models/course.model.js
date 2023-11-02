@@ -147,8 +147,6 @@ const questionSchema = new mongoose.Schema({
   },
   question_title: {
     type: String,
-    index: true,
-    required: true ['write the title of question'],
   },
   question_description: {
     type: String,
@@ -175,7 +173,6 @@ const quizSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question",
-        required: [true, "quiz questions ids required"],
       },
       questionSchema,
     ],
@@ -185,7 +182,6 @@ const quizSchema = new mongoose.Schema(
     moduleId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Module",
-      required: [true, "module id required"],
     },
   },
   {
