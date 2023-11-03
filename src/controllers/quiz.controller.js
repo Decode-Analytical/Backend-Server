@@ -173,8 +173,8 @@ exports.createQuizWithQuestions = async (req, res) => {
           //!updating the module with the new questions IDs
             const questionsIds = createdQuestions.map((question) => question._id)
             // defining the
-            module.questions = module.questions.concat(questionsIds)
-            await module.save();
+            // module.questions = module.questions.concat(questionsIds)
+            // await module.save();
 
              //creating quiz with the questions
           const quiz = await Quiz.create({
@@ -247,66 +247,7 @@ exports.getQuizById = async (req, res) =>{
 }
 
 /*** API for quiz submission. Expecting the quiz id and the answers selected for each question in the quiz */
-// exports.submitQuiz = async (req, res) => {
-//   try {
-//     const userId = req.user.id;  
-//     const {answers} = req.body;
-//     const quizId = req.params.quizId;
-// //  [{questionId, selectedAnswer}, {questionId, selectedAnswer}]
-//     const quiz = await Quiz.findById(quizId).populate("questions");
-//     // console.log(quiz);
-//     if (!quiz) {
-//         return res.status(404).send({ message: "quiz not found" });
-//       }
-//     let score = 0;
-//     // const totalScore = 100
 
-//     for (const answer of answers) { 
-//       //check answer selected for each question in the quiz with the correct answer in the db
-//       const question = await Question.findById(answer.questions, "options");
-//       // if the answer is correct
-//       if (answer.selected_answer_index === question.correct_answer_index) {
-//         score++;
-//       }
-//       // if the answer is wrong
-//       else if (answer.selected_answer_index!== question.correct_answer_index) {
-//         score;
-//       }
-//     }
-//     // if the quiz has been completed
-//     if (answers.length === quiz.questions.length) {
-//       // if the score is 100, the quiz is completed
-//       if (score === quiz.questions.length) {
-//         // create a submission record
-//         const submission = new Submission({
-//           userId,
-//           quizId,
-//           answers,
-//           score,
-//         });
-//         await submission.save();
-//         return res.status(200).json({ message: "quiz submitted successfully", score, submission});
-//       }
-//     } else {
-//       const submission = new Submission({
-//         userId,
-//         quizId,
-//         answers,
-//         score,
-//       });
-//       await submission.save();
-//       return res.status(200).json({ message: "quiz submitted successfully", score, submission});
-//     }
-
-//   } catch (err) {
-//     return res
-//       .status(500)
-//       .send({
-//         message: "error occurred while submitting quiz",
-//         error: err.message,
-//       });
-//   }
-// };
 
 exports.getQuizSubmittedById = async (req, res) => {
     try{
@@ -441,10 +382,11 @@ exports.createSubmitAnswer = async (req, res) => {
   try {
     for (const userAnswer of userAnswers) {
       const question = await Question.findById(quizId, "options");
-      if (userAnswer.isCorrect === question.isCorrect) {
-        score++;
-      } 
-    }
+      // mark the correct answer as selected and increment score
+      if (userAnswers.correctAnswerIndexes === question.correctAnswerIndexes) {
+        score += 1;
+      }
+    }           
     // update user's score  
     const user = await User.findById(id);
     await User.findByIdAndUpdate(user._id, {
@@ -460,7 +402,8 @@ exports.createSubmitAnswer = async (req, res) => {
         score,
       });
       await submission.save();
-      return res.status(200).json({ message: "quiz submitted successfully", score, submission});    
+      return res.status(200).json({ message: "quiz submitted successfully", score, submission}); 
+    
   } catch (err) {
     return res
      .status(500)

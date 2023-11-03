@@ -219,10 +219,6 @@ const submissionSchema = new mongoose.Schema({
   score: Number,
 });
 
-// courseSchema.add({ modules: [moduleSchema] });
-// moduleSchema.add({ questions: [questionSchema] });
-// questionSchema.add({ answers: [answerSchema] });
-
 
 const Course = mongoose.model("Course", courseSchema);
 const Module = mongoose.model("Module", moduleSchema);
