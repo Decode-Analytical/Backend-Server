@@ -153,7 +153,6 @@ exports.createQuizWithQuestions = async (req, res) => {
         const id= req.user;
         const user = await User.findById(id);
         const moduleId = req.params.moduleId;
-        const title = req.body.title
         if (user.roles === "admin") {
             const module = await Module.findById(moduleId);
             if(!module) {
@@ -162,7 +161,7 @@ exports.createQuizWithQuestions = async (req, res) => {
                 .send({ message: 'Module not found' });
             }
             // const course = await Course.findById(module.courseId);
-            const questionsData = req.body; // Array of questions
+                const {questionsData} = req.body; // Array of questions
 
           // Map the moduleId into every question
           const questionsWithModuleId = questionsData.map((question) => ({
@@ -173,12 +172,13 @@ exports.createQuizWithQuestions = async (req, res) => {
 
           //!updating the module with the new questions IDs
             const questionsIds = createdQuestions.map((question) => question._id)
+            // defining the
             module.questions = module.questions.concat(questionsIds)
-            // await module.save();
+            await module.save();
 
              //creating quiz with the questions
           const quiz = await Quiz.create({
-            title, questionIds: questionsIds, moduleId, questions: createdQuestions
+            title: createdQuestions.question_title, questionIds: questionsIds, moduleId, questions: createdQuestions
           })
 
           //updating the module with the new quiz IDs using mapping 

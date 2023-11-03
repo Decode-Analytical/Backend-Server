@@ -26,8 +26,9 @@ const meetupSchema = new mongoose.Schema({
         required: [ true, 'Course is required' ]
     },
     instructorId: {
-        type: String,
-        required: [ true, 'Organizer is required' ]
+        type: mongoose.Schema.Types.ObjectId,
+        required: [ true, 'Link is required' ],
+        ref: "User"
     },
     roomId: {
         type: String,

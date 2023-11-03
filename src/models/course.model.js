@@ -123,11 +123,22 @@ const answerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Question",
   },
-  text: {
+  question_description: {
     type: String,
   },
-  isCorrect: {
-    type: Boolean,
+  selected_answer_index: {
+    type: Number,
+  },
+  correct_answer_index: {
+    type: Number,
+  },
+  answers: [
+    {
+      type: String,
+    },
+  ],
+  correctAnswerIndexes: {
+    type: Number
   }
 },
 {
@@ -147,14 +158,24 @@ const questionSchema = new mongoose.Schema({
   },
   question_title: {
     type: String,
+    index: true,
+    required: true ['write the title of question'],
   },
   question_description: {
     type: String,
   },
   question_duration: {
     type: String,
-  },
-  answers: [answerSchema],
+  }, 
+  answers: [
+    {
+      type: String,
+    },
+  ],
+  correctAnswerIndexes: {
+    type: Number
+  }
+
 },
 {
   timestamps: true,
@@ -173,6 +194,7 @@ const quizSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question",
+        required: [true, "quiz questions ids required"],
       },
       questionSchema,
     ],
@@ -182,6 +204,7 @@ const quizSchema = new mongoose.Schema(
     moduleId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Module",
+      required: [true, "module id required"],
     },
   },
   {
@@ -192,13 +215,13 @@ const quizSchema = new mongoose.Schema(
 const submissionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   quizId: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' },
-  answers: { type: Array},
+  answers: [{ questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question' }, selected_answer_index: Number }],
   score: Number,
 });
 
-courseSchema.add({ modules: [moduleSchema] });
-moduleSchema.add({ questions: [questionSchema] });
-questionSchema.add({ answers: [answerSchema] });
+// courseSchema.add({ modules: [moduleSchema] });
+// moduleSchema.add({ questions: [questionSchema] });
+// questionSchema.add({ answers: [answerSchema] });
 
 
 const Course = mongoose.model("Course", courseSchema);
