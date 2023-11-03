@@ -8,7 +8,7 @@ exports.createQuizQuestions = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === "admin" || userStatus.roles === "teacher") {
-            const { question, options, question_duration, question_description, correct_answer, correct_answer_index } = req.body;
+            const { question, options, question_duration, question_description, correct_answer, correctAnswerIndexes } = req.body;
             const quizQuestions = await Question.create({
                 userId: userStatus._id,
                 question_description,
@@ -17,7 +17,7 @@ exports.createQuizQuestions = async (req, res) => {
                 options,
                 correct_answer,
                 moduleId,
-                correct_answer_index
+                correctAnswerIndexes
             })
             return res.status(200).json({
                 message: 'Quiz questions saved to the database.',
@@ -381,11 +381,11 @@ exports.createSubmitAnswer = async (req, res) => {
 
   try {
     for (const userAnswer of userAnswers) {
-      const question = await Question.findById(quizId, "options");
-      // mark the correct answer as selected and increment score
-      if (userAnswers.correctAnswerIndexes === question.correctAnswerIndexes) {
-        score += 1;
-      }
+        const question = await Question.findById(userAnswer._id);
+        if (userAnswer.correctAnswerIndexes === question.correctAnswerIndexes) {
+            score += 1;
+        }       
+
     }           
     // update user's score  
     const user = await User.findById(id);

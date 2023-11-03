@@ -172,6 +172,9 @@ const questionSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  correct_answer: {
+    type: String,
+  },
   correctAnswerIndexes: {
     type: Number
   }
