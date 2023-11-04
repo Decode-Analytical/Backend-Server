@@ -339,11 +339,11 @@ exports.adminScheduleMeeting = async (req, res) => {
             const organizerN = await User.findOne({ email }); 
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
             const course = await Course.findOne({ course_title: courseName });
-            // if(!course){
-            //     return res.status(404).json({
-            //         message: "This course does not exist in the database"
-            //     })
-            // }
+            if(!course){
+                return res.status(404).json({
+                    message: "This course does not exist in the database"
+                })
+            }
             if(organizerN){                
             const meeting = await Meeting.create({
                 instructor: organizerN.firstName +'' + organizerN.lastName,
