@@ -339,7 +339,12 @@ exports.adminScheduleMeeting = async (req, res) => {
             const organizerN = await User.findOne({ email }); 
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
             const course = await Course.findOne({ course_title: courseName });
-            if(organizerN || course ){                
+            if(!course){
+                return res.status(404).json({
+                    message: "This course does not exist in the database"
+                })
+            }
+            if(organizerN){                
             const meeting = await Meeting.create({
                 instructor: organizerN.firstName +'' + organizerN.lastName,
                 description, 
@@ -357,7 +362,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             });
         } else {
             return res.status(404).json({
-                message: 'Your email or the course is not registered on this platform'
+                message: 'Your email registered on this platform'
         })
         }
     } catch (error) {
