@@ -413,3 +413,40 @@ exports.studentJoinMeeting = async (req, res) => {
     }
 };
 
+
+// view all the meeting events
+exports.studentViewAllMeeting = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student'|| userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+            const meeting = await Meeting.find({
+                instructor: { $exists: true },
+                course: { $exists: true },
+                date: { $exists: true },
+                time: { $exists: true }
+            });
+            const total = await Meeting.countDocuments({
+                instructor: { $exists: true },
+                course: { $exists: true },
+                date: { $exists: true },
+                time: { $exists: true }
+            });
+            return res.status(200).json({
+                total,
+                meeting,  
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Meeting not found',
+            error: error.message
+        });
+    }
+};
+       
