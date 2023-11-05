@@ -76,6 +76,7 @@ const moduleSchema = new mongoose.Schema({
  
   module_duration: {
     type: String,
+    default: '4mins'
   },
   quizzes: {
     type: Array,    

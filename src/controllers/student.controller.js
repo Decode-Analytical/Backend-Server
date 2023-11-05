@@ -86,7 +86,15 @@ exports.studentViewCourseDetails = async(req, res) => {
             const { courseId } = req.params;
             const course = await StudentCourse.findOne({ courseId });
             if(!(course === null )) {  
-                const result = await Module.find({ courseId: courseId })                        
+                const result = await Module.find({ courseId: courseId }) 
+                .select('-comments') 
+                .select("-likeAndDislikeUsers")
+                .select("-comment_count")
+                .select("-commentId") 
+                .select("-createdAt") 
+               .select("-updatedAt")
+            //    .select("-__v")
+            //    .select("-_id");
                 return res.status(200).json({
                     message: 'Course details fetched successfully',                 
                     result
