@@ -32,11 +32,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { toggleLogin } from "../../store"
 import "../animations.css"
 
-const ENDPOINT = "http://localhost:5000"
+const ENDPOINT = "https://noom-lms-server.onrender.com"
+//const ENDPOINT = "http://localhost:5000"
 let socket = null
 let myId
 let boardStream = null
 let instructor = null
+const calls = {}
 
 export default function Room() {
   const [videoEnabled, setVideoEnabled] = useState(true)
@@ -58,9 +60,11 @@ export default function Room() {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState([])
   const [isPhone, setIsPhone] = useState(false)
+  const [myPeer, setMyPeer] = useState(null)
   const [peers, setPeers] = useState([])
   const videoGridRef = useRef()
   const presentationRef = useRef()
+  const ulRef = useRef()
 
   let uniqueId = uuidv4()
   const nav =
@@ -141,7 +145,7 @@ export default function Room() {
       const loadPeerListeners = (peer, stream) => {
         peer.on("open", (id) => {
           //console.log("MY ID: " + id)
-
+          setMyPeer(peer)
           socket.on("mute-all", (value) => {
             const videoElement = document.querySelector(`.${myId}`)
             if (videoElement) {
@@ -183,28 +187,53 @@ export default function Room() {
               userId = data.userId
             })
 
+            /*setPeers((prevConnections) => [
+              ...prevConnections,
+              { userID, call },
+            ])*/
+            calls[userID] = call
             call.on("stream", (userVideoStream) => {
+              //console.log(calls)
               addVideoStream(userID, userVideoStream, username)
-            })
-
-            call.on("data", (data) => {
-              console.log("Received custom data from User 2: " + data)
             })
           })
 
           socket.on("user-disconnected", (userID) => {
+            //console.log(calls)
+            if (calls[userID]) calls[userID].close()
+
+            /*const disconnectedConnection = peers.find(
+              (connection) => connection.userID === userID
+            )
+            
+            console.log(disconnectedConnection)
+            if (disconnectedConnection) {
+              const { call } = disconnectedConnection
+              call.close()
+              setPeers((prevConnections) =>
+                prevConnections.filter(
+                  (connection) => connection.userID !== userID
+                )
+              )
+            }*/
+            //console.log(calls)
             removeVideoStream(userID)
           })
 
           socket.on("message", (msg) => {
             if (msg.userId === myId) msg.username = "You"
-            else msg.username = msg.username.substring(0, 6)
+            //else msg.username = msg.username.substring(0, 6)
             setMessages((prevMessages) => [...prevMessages, msg])
+            if (ulRef.current)
+              ulRef.current.scrollTop = ulRef.current.scrollHeight
           })
         })
 
         peer.on("call", (call) => {
-          if (userRecord.userId === call.metadata.userId) {
+          if (
+            call.metadata !== undefined &&
+            userRecord.userId === call.metadata.userId
+          ) {
             leave()
             toast.success("A User with this ID already exists!")
             return
@@ -224,6 +253,13 @@ export default function Room() {
               addVideoStream(call.peer, userVideoStream, call.metadata.username)
           })
         })
+
+        peer.on("disconnect", () => {
+          peer.connections.forEach((conn) => {
+            conn.close()
+          })
+          peer.destroy()
+        })
       }
     })
 
@@ -236,7 +272,7 @@ export default function Room() {
       socket.off("connect")
       socket.disconnect()
     }
-  }, [peers])
+  }, [])
 
   const handleBeforeUnload = () => {
     if (socket) {
@@ -346,6 +382,7 @@ export default function Room() {
   }
 
   const leave = () => {
+    if (myPeer !== null) myPeer.destroy()
     if (socket) {
       socket.off("connect")
       socket.disconnect()
@@ -407,7 +444,7 @@ export default function Room() {
               </div>
               <hr />
             </div>
-            <ul className="stream-right-mid">
+            <ul ref={ulRef} className="stream-right-mid">
               {messages.map((obj, index) => (
                 <li key={index}>
                   <div className="msg-container">
@@ -448,84 +485,92 @@ export default function Room() {
         )}
       </div>
       <div className="bottom-nav">
-        <div className="nav-btn" onClick={toggleVideo}>
-          {videoEnabled ? (
-            <BsFillCameraVideoOffFill className="nav-icon" />
-          ) : (
-            <BsFillCameraVideoFill className="nav-icon" />
-          )}
-          <label>{videoEnabled ? "Hide Video" : "Show Video"}</label>
-        </div>
-        <div className="nav-btn" onClick={toggleAudio}>
-          {audioEnabled ? (
-            <BsFillMicMuteFill className="nav-icon" />
-          ) : (
-            <BsFillMicFill className="nav-icon" />
-          )}
-          <label> {audioEnabled ? "Mute" : "Unmute"}</label>
-        </div>
-        <div className="nav-btn" onClick={toggleChat}>
-          <BsFillChatTextFill className="nav-icon" />
-          <label> {isChatVisible ? "Hide Chat" : "Show Chat"}</label>
-        </div>
-        <div className="nav-btn">
-          <BiSolidCaptions className="nav-icon" />
-          <label>Caption</label>
-        </div>
-        <div className="nav-btn">
-          <PiPresentationChartFill className="nav-icon" onClick={startBoard} />
-          <label>Presentation</label>
-        </div>
-        {/* ========== Admin function =============*/}
-        {isAdmin && (
-          <div className="nav-btn">
-            <BsFillRecordCircleFill className="nav-icon" />
-            <label>Record</label>
-          </div>
-        )}
-        {isAdmin && (
-          <div className="nav-btn" onClick={toggleMuteAll}>
-            {muteAllEnabled ? (
-              <FaVolumeUp className="nav-icon" />
+        <div className="bottom-container">
+          <div className="nav-btn" onClick={toggleVideo}>
+            {videoEnabled ? (
+              <BsFillCameraVideoOffFill className="nav-icon" />
             ) : (
-              <FaVolumeMute className="nav-icon" />
+              <BsFillCameraVideoFill className="nav-icon" />
             )}
-            <label> {muteAllEnabled ? "UnMute All" : "Mute All"}</label>
+            <label>{videoEnabled ? "Hide Video" : "Show Video"}</label>
           </div>
-        )}
-        {isAdmin && (
+          <div className="nav-btn" onClick={toggleAudio}>
+            {audioEnabled ? (
+              <BsFillMicMuteFill className="nav-icon" />
+            ) : (
+              <BsFillMicFill className="nav-icon" />
+            )}
+            <label> {audioEnabled ? "Mute" : "Unmute"}</label>
+          </div>
+          <div className="nav-btn" onClick={toggleChat}>
+            <BsFillChatTextFill className="nav-icon" />
+            <label> {isChatVisible ? "Hide Chat" : "Show Chat"}</label>
+          </div>
           <div className="nav-btn">
-            <GiBootKick className="nav-icon" />
-            <label>Kick</label>
+            <BiSolidCaptions className="nav-icon" />
+            <label>Caption</label>
           </div>
-        )}
-        {/* ========== Admin function =============*/}
-        <div className="nav-btn">
-          <HiHandRaised className="nav-icon" />
-          <label>Raise Hand</label>
-        </div>
-        <div className="nav-btn">
-          <VscReactions className="nav-icon" />
-          <label>Reactions</label>
-        </div>
-        <div className="nav-btn" onClick={toggleParticipants}>
-          <div className="mem-cover">
-            <label className="mem-count">{members}</label>
-            <FaPeopleGroup className="mem-icon" />
+          <div className="nav-btn">
+            <PiPresentationChartFill
+              className="nav-icon"
+              onClick={startBoard}
+            />
+            <label>Presentation</label>
           </div>
-          <label>Participants</label>
-        </div>
-        <div className="nav-btn">
-          <FiMoreHorizontal className="nav-icon" />
-          <label>More Options</label>
-        </div>
-        <div className="meeting-details nav-btn" onClick={toggleMeetingDetails}>
-          <BsFillInfoCircleFill className="nav-icon" />
-          <label>Meeting Details</label>
-        </div>
-        <div className="leave-meeting nav-btn" onClick={leaveMeeting}>
-          <IoExit className="nav-leave-icon" />
-          <label>Leave Meeting</label>
+          {/* ========== Admin function =============*/}
+          {isAdmin && (
+            <div className="nav-btn">
+              <BsFillRecordCircleFill className="nav-icon" />
+              <label>Record</label>
+            </div>
+          )}
+          {isAdmin && (
+            <div className="nav-btn" onClick={toggleMuteAll}>
+              {muteAllEnabled ? (
+                <FaVolumeUp className="nav-icon" />
+              ) : (
+                <FaVolumeMute className="nav-icon" />
+              )}
+              <label> {muteAllEnabled ? "UnMute All" : "Mute All"}</label>
+            </div>
+          )}
+          {isAdmin && (
+            <div className="nav-btn">
+              <GiBootKick className="nav-icon" />
+              <label>Kick</label>
+            </div>
+          )}
+          {/* ========== Admin function =============*/}
+          <div className="nav-btn">
+            <HiHandRaised className="nav-icon" />
+            <label>Raise Hand</label>
+          </div>
+          <div className="nav-btn">
+            <VscReactions className="nav-icon" />
+            <label>Reactions</label>
+          </div>
+          <div className="nav-btn" onClick={toggleParticipants}>
+            <div className="mem-cover">
+              <label className="mem-count">{members}</label>
+              <FaPeopleGroup className="mem-icon" />
+            </div>
+            <label>Participants</label>
+          </div>
+          <div className="nav-btn">
+            <FiMoreHorizontal className="nav-icon" />
+            <label>More Options</label>
+          </div>
+          <div
+            className="meeting-details nav-btn"
+            onClick={toggleMeetingDetails}
+          >
+            <BsFillInfoCircleFill className="nav-icon" />
+            <label>Meeting Details</label>
+          </div>
+          <div className="leave-meeting nav-btn" onClick={leaveMeeting}>
+            <IoExit className="nav-leave-icon" />
+            <label>Leave Meeting</label>
+          </div>
         </div>
       </div>
     </div>

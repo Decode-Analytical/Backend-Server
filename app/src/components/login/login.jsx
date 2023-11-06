@@ -16,6 +16,16 @@ export default function Login() {
   const { room } = useParams()
   const [isDisabled, setIsDisabled] = useState(false)
 
+  useEffect(() => {
+    fetch(`https://noom-lms-server.onrender.com`)
+      .then((response) => {
+        console.log(response.status)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
   const loadRoom = () => {
     loadUser()
   }
@@ -75,7 +85,7 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error)
-        toast.error(error.message)
+        toast.error("You are not registered for this course!")
         setIsDisabled(false)
       })
   }
