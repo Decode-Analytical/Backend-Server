@@ -17,6 +17,7 @@ const {
     adminScheduleMeeting ,
     adminGetRoomId,
     studentViewAllMeeting,
+    studentTotalStudentForCourse
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
@@ -34,5 +35,6 @@ router.get('/ViewInstructorProfile/:userId', adminViewProfile  );
 router.get('/viewAllInstructors', adminViewAllInstructors)
 router.get('/totalStudentRegisteredForCourse', adminTotalStudentForCourse);
 router.get('/getRoomId', studentViewAllMeeting);
+router.get('/totalStudentRegiesteredForACourse/:courseId', studentTotalStudentForCourse);
 
 module.exports = router;

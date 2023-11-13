@@ -454,4 +454,30 @@ exports.studentViewAllMeeting = async (req, res) => {
         });
     }
 };
-       
+      
+
+
+// view total student enrolled for a particular course 
+exports.studentTotalStudentForCourse = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+            const courseId = req.params.courseId;
+            const total = await Student.countDocuments({ courseId });
+            return res.status(200).json({
+                totalStudentRegistered: total,
+            });
+        } else {
+            return res.status(200).json({
+            message: 'You are not authorized to view this page'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total student not found',
+            error: error.message
+        });
+    }
+};
