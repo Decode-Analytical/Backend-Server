@@ -10,7 +10,7 @@ exports.createCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const { course_title, course_description, course_language, isPaid_course, isPrice_course } = req.body;
-            const existingTitle = await Course.findOne({ course_title });
+            const existingTitle = await Course.findOne({ course_title, userId: userStatus._id });
             if(!existingTitle){
                 if(req.files){
                     const course_image = req.files.course_image
@@ -34,7 +34,7 @@ exports.createCourse = async (req, res) => {
         }
         } else{
             return res.status(301).json({
-                message: "The title of the course is already existing, kindly proceed to register your module under it."
+                message: "The title of this course is already registered under you. Kindly proceed to register your modules under it."
             })
         }
         }else {
@@ -60,8 +60,8 @@ exports.updateCourse = async (req, res) => {
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
-                if(`${courseId.userId}` === `${userStatus._id}`){
-                    const { course_title, course_description, course_language, course_level, course_image, isPaid_course, isPrice_course } = req.body;
+                if(courseId.userId.equals(userStatus._id)){
+                    const { course_title, course_description, course_language, course_level, isPaid_course, isPrice_course } = req.body;
                     if(req.files){
                     const course_image = req.files.course_image
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
@@ -168,11 +168,19 @@ exports.getCoursesByUserId = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const courses = await Course.findById(req.params.courseId);
-            return res.status(200).json({
-                message: "Courses fetched successfully",
-                courses
+            const course = await Course.findById(req.params.courseId);
+            if(!course){
+                if(userStatus._id.equals(course.userId)){
+                    return res.status(200).json({
+                        message: "Courses fetched successfully",
+                        course
             });
+            } else {
+                return res.status(400).json({ error: "You are not the owner of this course" });
+            }
+            } else {
+                return res.status(400).json({ error: "Course not found" });
+            }
         } else {
             return res.status(400).json({ error: "User must login as Admin in order to view a course" });
         }
@@ -304,7 +312,7 @@ exports.addSubject = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const courseId = await Course.findById(req.params.courseId);
-            if(courseId){
+            if(courseId.userId.equals(userStatus._id)){
             const { module_title, module_description, module_duration  } = req.body;
             if(req.files){
                 image = req.files.image,
@@ -357,7 +365,7 @@ exports.updateSubject = async (req, res) => {
         if (userStatus.roles === "admin") {            
             const subjectId = await Module.findById(req.params.subjectId);
             if(subjectId){
-                if(`${subjectId.userId}` === `${userStatus._id}`){
+                if(subjectId.userId.equals(userStatus._id)){
             const { module_title, module_description,   } = req.body;
             if(req.files){
                 image = req.files.image,
@@ -434,7 +442,7 @@ exports.deleteSubject = async (req, res) => {
         if (userStatus.roles === "admin") {
             const subject = await Module.findById(req.params.subjectId);
             if(subject){
-                if(`${subject.userId}` === `${userStatus._id}`){
+                if(subject.userId.equals(userStatus._id)){
             const subjects = await Module.findByIdAndDelete(req.params.subjectId);
             return res.status(200).json({
                 message: "Subject successfully deleted",

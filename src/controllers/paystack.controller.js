@@ -1,6 +1,6 @@
 const Transaction = require('../models/transaction.model');
 const User = require('../models/user.model');
-const { Course } = require('../models/course.model');
+const { Course, Module } = require('../models/course.model');
 
 const crypto = require('crypto');
 const StudentCourse = require('../models/student.model');
@@ -70,6 +70,34 @@ exports.decodePaystack = async (req, res) => {
                     new : true,
                 });
             }
+        const modules = await Module.findOne({ courseId: existingCourse._id })
+        const newCourse = await StudentCourse.create({
+            courseId: existingCourse._id,
+            title: existingCourse.course_title,
+            description: existingCourse.course_description,
+            image: existingCourse.course_image,
+            price: existingCourse.isPrice_course,
+            userId: transaction.userId,
+            module_duration: modules.module_duration,
+            video: modules.video,
+            module_title: modules.module_title,
+            module_description: modules.module_description,
+            module_image: modules.image,
+
+        });
+        // update the user courseLimit
+        const updatedUser = await User.findByIdAndUpdate({_id: transaction.userId}, {
+            $inc: {courseLimit: +1}
+        },
+        {
+            new: true
+        });
+        // update the course's totalRegisteredByStudent
+        const totalRegisteredByStudent = await Course.findByIdAndUpdate({_id: existingCourse._id}, {
+            $inc: {totalRegisteredByStudent: +1}
+        }, {
+            new: true
+        });
             // console.log({user})
             await sendEmail({
                 email: user.email,
