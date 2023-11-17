@@ -6,6 +6,9 @@ const { useTreblle } = require("treblle");
 const mongoSanitize = require("express-mongo-sanitize");
 const connectDB = require("./src/database/db");
 const cloudinaryConfig = require("./src/utils/cloudinary");
+const http = require('http');
+const socketIO = require('socket.io');
+const path = require('path');
 const courseRoutes = require("./src/routes/course.routes");
 const userRoutes = require("./src/routes/user.routes");
 const studentRoutes = require("./src/routes/student.routes");
@@ -15,8 +18,14 @@ const questionRoutes = require("./src/routes/quiz.routes");
 const answerRoutes = require("./src/routes/answer.routes");
 const commentRoutes = require("./src/routes/comment.routes");
 const likeRoutes = require("./src/routes/like.routes");
+const chatRoutes = require("./src/routes/chat.routes");
+
 
 const app = express();
+
+const server = http.createServer(app);
+const io = socketIO(server);
+
 
 connectDB();
 const port = process.env.PORT || 3000;
@@ -45,6 +54,7 @@ app.use("/api/answer", answerRoutes);
 app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api/quizes", questionRoutes);
+app.use("/api/chats", chatRoutes)
 
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);
