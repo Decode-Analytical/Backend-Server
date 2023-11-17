@@ -1,19 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
   {
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
-      required: [ true, 'This course is required' ],
+      ref: "Course",
+      required: [true, "This course is required"],
     },
     title: {
       type: String,
-    },    
+    },
     price: {
       type: mongoose.Decimal128,
     },
@@ -44,4 +45,4 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Student', studentSchema);
+module.exports = mongoose.model("Student", studentSchema);
