@@ -17,7 +17,8 @@ const {
   getQuizAnswers,
   createSubmitAnswer,
   getQuestionAnswers,
-  deleteAllQuestions
+  deleteAllQuestions,
+  turnModuleCompleted
 } = require("../controllers/quiz.controller");
 
 router.use(auth);
@@ -37,5 +38,6 @@ router.get('/viewAllTheQuestion/:moduleId', getQuizAnswers)
 router.post('/submitAnswers/:quizId', createSubmitAnswer)
 router.get('/getQuizAnswer', getQuestionAnswers)
 router.delete('/deleteQuiz', deleteAllQuestions)
+router.put('/isCompletedModule/:moduleId', turnModuleCompleted)
 
 module.exports = router;

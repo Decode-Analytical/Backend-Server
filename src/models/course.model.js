@@ -81,6 +81,10 @@ const moduleSchema = new mongoose.Schema({
   quizzes: {
     type: Array,    
   },
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
   comments: {
     type: Array,    
   },

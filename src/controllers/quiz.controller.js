@@ -476,3 +476,27 @@ exports.deleteAllQuestions = async (req, res) => {
     });
   }
 };
+
+// just turn the isCompleted true in the Module table
+exports.turnModuleCompleted = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+    if(userStatus.roles === "admin" || userStatus.roles === "student") {
+      const quiz = await Module.findById(req.params.moduleId);
+      quiz.isCompleted = true;
+      await quiz.save();
+      return res.status(200).json({ message: "Module completed successfully" });
+    } else {
+      return res.status(401).json({
+        message: 'You are not authorized to do this action.'
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error completing quiz.',
+      error: error.message
+    });
+  }
+};
