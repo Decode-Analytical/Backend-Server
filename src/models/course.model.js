@@ -1,7 +1,9 @@
 const { required } = require("joi");
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
 
 const courseSchema = new mongoose.Schema({
+  name: String,
+  enrolledUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -32,7 +34,7 @@ const courseSchema = new mongoose.Schema({
     type: Number,
   },
   modules: {
-    type: Array,    
+    type: Array,
   },
   totalRegisteredByStudent: {
     type: Number,
@@ -73,33 +75,33 @@ const moduleSchema = new mongoose.Schema({
   audio: {
     type: Array,
   },
- 
+
   module_duration: {
     type: String,
     default: '4mins'
   },
   quizzes: {
-    type: Array,    
+    type: Array,
   },
   comments: {
-    type: Array,    
+    type: Array,
   },
   likeAndDislikeUsers: {
-    type: Array,    
+    type: Array,
   },
   comment_count: { type: Number, default: 0 },
  commentId:[
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-      required: false, 
+      required: false,
     },
   ],
   likeAndDislikeUsers:[
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false, 
+      required: false,
     },
   ],
   comment_count: { type: Number, default: 0 },
@@ -167,7 +169,7 @@ const questionSchema = new mongoose.Schema({
   },
   question_duration: {
     type: String,
-  }, 
+  },
   answers: [
     {
       type: String,
