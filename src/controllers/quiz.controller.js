@@ -487,7 +487,7 @@ exports.turnModuleCompleted = async (req, res) => {
       const quiz = await Module.findById(req.params.moduleId);
       quiz.isCompleted = true;
       await quiz.save();
-      return res.status(200).json({ message: "Module completed successfully" });
+      return res.status(200).json({ message: "Module completed successfully" , quiz});
     } else {
       return res.status(401).json({
         message: 'You are not authorized to do this action.'
