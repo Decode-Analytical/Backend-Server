@@ -21,7 +21,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         }       
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
-          if( userStatus.courseLimit === 10) {
+          if( userStatus.courseLimit === 15) {
             return res.status(400).json({
               message: 'You have reached your limit of 10 courses'
             });
@@ -44,6 +44,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             module_title: modules.module_title,
             module_description: modules.module_description,
             module_image: modules.image,
+            moduleId: modules._id,
 
         });
         // update the user courseLimit

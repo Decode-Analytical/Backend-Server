@@ -1,5 +1,6 @@
-const { Course, Module, Question, Answer, Submission, Quiz} = require('../models/course.model');
+const { Course, Module, Question, Answer, Submission, Quiz, isCompleted } = require('../models/course.model');
 const User = require('../models/user.model');
+const StudentCourse = require('../models/student.model')
 
 exports.createQuizQuestions = async (req, res) => {
     try {
@@ -483,11 +484,15 @@ exports.turnModuleCompleted = async (req, res) => {
     const id = req.user;
     const user = await User.findById(id);
     const userStatus = await User.findById(user._id);
-    if(userStatus.roles === "admin" || userStatus.roles === "student") {
-      const quiz = await Module.findById(req.params.moduleId);
-      quiz.isCompleted = true;
-      await quiz.save();
-      return res.status(200).json({ message: "Module completed successfully" , quiz});
+    if(userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {   
+        const moduleId = req.params.moduleId 
+        const confirmStatus = await StudentCourse.findOne({ moduleId: moduleId, userId: userStatus._id });
+        if(confirmStatus.isCompleted === false) {
+            await StudentCourse.findByIdAndUpdate(confirmStatus._id, {isCompleted: true}, {new: true});
+            return res.status(200).json({ message: "Module completed successfully" });
+        } else {
+            return res.status(401).json({ message: "You have already completed this module" });
+        }
     } else {
       return res.status(401).json({
         message: 'You are not authorized to do this action.'
@@ -495,7 +500,7 @@ exports.turnModuleCompleted = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({
-      message: 'Error completing quiz.',
+      message: 'Error turning module completed.',
       error: error.message
     });
   }

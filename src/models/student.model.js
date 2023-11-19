@@ -38,6 +38,14 @@ const studentSchema = new mongoose.Schema(
     module_image: {
       type: Array,
     },
+    moduleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Module',
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
