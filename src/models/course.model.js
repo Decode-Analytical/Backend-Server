@@ -84,6 +84,10 @@ const moduleSchema = new mongoose.Schema({
   comments: {
     type: Array,    
   },
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
   likeAndDislikeUsers: {
     type: Array,    
   },

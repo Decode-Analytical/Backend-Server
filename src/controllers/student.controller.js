@@ -39,13 +39,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             image: course.course_image,
             price: course.isPrice_course,
             userId: userStatus._id,
-            module_duration: modules.module_duration,
-            video: modules.video,
-            module_title: modules.module_title,
-            module_description: modules.module_description,
-            module_image: modules.image,
-            moduleId: modules._id,
-
+            modules: course.modules,
         });
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {
@@ -85,19 +79,11 @@ exports.studentViewCourseDetails = async(req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
-            const course = await StudentCourse.findOne({ courseId });
-            if(!(course === null )) {  
-                const result = await Module.find({ courseId: courseId }) 
-                .select('-comments') 
-                .select("-likeAndDislikeUsers")
-                .select("-comment_count")
-                .select("-commentId") 
-                .select("-createdAt") 
-               .select("-updatedAt")
-            //    .select("-__v")
-            //    .select("-_id");
+            const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
+            .select('-__v')
+            if(!(result === null )) {  
                 return res.status(200).json({
-                    message: 'Course details fetched successfully',                 
+                    message: `Student's registered Course details fetched successfully`,                 
                     result
                 });            
             }else{
@@ -181,12 +167,10 @@ exports.studentDeleteCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        console.log(userStatus);
         const courseId = req.params.courseId;
-        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const ownerId = await StudentCourse.findOne({courseId});
-            console.log(ownerId);
-            if(ownerId.userId.equals(userStatus._id) ) {
+        if(userStatus.roles === 'student' || userStatus.roles === 'admin') {
+            const ownerId = await StudentCourse.find({courseId: courseId, userId: userStatus._id});
+            if(ownerId ) {
                 const course = await StudentCourse.findOneAndDelete({courseId});
                 const limitUpdate = await User.findByIdAndUpdate({_id: userStatus._id}, {
                     $inc: {courseLimit: -1}

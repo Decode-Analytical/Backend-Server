@@ -23,29 +23,12 @@ const studentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    module_duration: {
-      type: String,
-    },
-    video: {
+    modules: {
       type: Array,
     },
-    module_title: {
-      type: String,
-    },
-    module_description: {
-      type: String,
-    },
-    module_image: {
-      type: Array,
-    },
-    moduleId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Module',
-    },
-    isCompleted: {
-      type: Boolean,
-      default: false,
-    },
+  },
+  {
+    collection:'students',
   },
   {
     timestamps: true,
