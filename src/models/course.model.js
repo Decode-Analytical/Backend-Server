@@ -78,9 +78,7 @@ const moduleSchema = new mongoose.Schema({
     type: String,
     default: '4mins'
   },
-  quizzes: [{
-       type: Array,
-  }],
+  quizzes: [],
   comments: {
     type: Array,    
   },

@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const { Course, Module } = require('../models/course.model');
+const { Course, Module, Quiz } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
 
@@ -40,9 +40,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             price: course.isPrice_course,
             userId: userStatus._id,
             moduleId: modules._id,
-            video: modules.video,
-            audio: modules.audio,
-            quiz: modules.quizzes,           
+            module: modules          
 
         });
         // update the user courseLimit
@@ -85,15 +83,15 @@ exports.studentViewCourseDetails = async(req, res) => {
             const { courseId } = req.params;
             const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
             .select('-__v')
-            if(!(result === null )) {  
+            if(Array.isArray(result)&& result.length === 0) {  
+                return res.status(404).json({
+                    message: 'Course not found, You did not registered for this course'
+                });
+            }else{
                 return res.status(200).json({
                     message: `Student's registered Course details fetched successfully`,                 
                     result
                 });            
-            }else{
-                return res.status(404).json({
-                    message: 'Course not found, You did not registered for this course'
-                });
         }
     }else{
         return res.status(400).json({
@@ -174,7 +172,7 @@ exports.studentDeleteCourse = async(req, res) => {
         const courseId = req.params.courseId;
         if(userStatus.roles === 'student' || userStatus.roles === 'admin') {
             const ownerId = await StudentCourse.find({courseId: courseId, userId: userStatus._id});
-            if(ownerId ) {
+            if(Array.isArray(ownerId) && ownerId.length > 0) {
                 const course = await StudentCourse.findOneAndDelete({courseId});
                 const limitUpdate = await User.findByIdAndUpdate({_id: userStatus._id}, {
                     $inc: {courseLimit: -1}
@@ -187,7 +185,7 @@ exports.studentDeleteCourse = async(req, res) => {
                 });            
             }else{
                 return res.status(400).json({
-                    message: 'You are not the owner of this course'
+                    message: 'No Course found for delete'
                 });
             }
         }else{

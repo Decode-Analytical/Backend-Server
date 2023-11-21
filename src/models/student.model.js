@@ -27,14 +27,8 @@ const studentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Module',
     },
-    video: {
-      type: Array,
-    },
-    audio: {
-      type: Array,
-    },
-    quiz: {
-      type: Array,
+    module: {
+      type: Array
     },
     isCompleted: {
       type: Boolean,
