@@ -16,7 +16,7 @@ const peerServer = ExpressPeerServer(server, {
   debug: true,
   allow_discovery: true,
 })
-const PORT = process.env.PORT || 443
+const PORT = process.env.PORT || 5000 //|| 443
 
 app.use(cors(corsHeader))
 app.use("/peerjs", peerServer)
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 let roomPresentations = {}
 
 io.on("connection", (socket) => {
-  console.log("New User: " + socket.id)
+  //console.log("New User: " + socket.id)
 
   socket.on("join-room", (roomId, userId) => {
     socket.join(roomId)
@@ -41,12 +41,29 @@ io.on("connection", (socket) => {
     socket.broadcast.to(roomId).emit("user-connected", userId)
     io.to(roomId).emit("nom", numberOfMembers)
 
+    socket.on("check-presentation", () => {
+      if (
+        roomPresentations[roomId] !== null &&
+        roomPresentations[roomId] !== undefined
+      ) {
+        socket.emit("room-board-on", roomPresentations[roomId])
+      }
+    })
+
+    socket.on("kick", (id) => {
+      socket.broadcast.to(roomId).emit("kick", id)
+    })
+
     socket.on("mute-all", (value) => {
       socket.broadcast.to(roomId).emit("mute-all", value)
     })
 
-    socket.on("userRecord", (id, data) => {
-      socket.to(id).emit("userRecord", data)
+    socket.on("mute-me", (value) => {
+      socket.broadcast.to(roomId).emit("mute-me", value)
+    })
+
+    socket.on("user-record", (id, data) => {
+      io.to(id).emit("user-record", data)
     })
 
     socket.on("room-board-on", (roomId, userId) => {
@@ -56,9 +73,15 @@ io.on("connection", (socket) => {
         .emit("room-board-on", roomPresentations[roomId])
     })
 
+    const closeBoard = (roomId, userId) => {
+      if (roomPresentations[roomId] === userId) {
+        roomPresentations[roomId] = null
+        socket.broadcast.to(roomId).emit("room-board-off", userId)
+      }
+    }
+
     socket.on("room-board-off", (roomId, userId) => {
-      if (roomPresentations[roomId] === userId) roomPresentations[roomId] = null
-      socket.broadcast.to(roomId).emit("room-board-off", userId)
+      closeBoard(roomId, userId)
     })
 
     socket.on("message", (data) => {
@@ -83,6 +106,7 @@ io.on("connection", (socket) => {
       const num = numberOfMembers > 1 ? numberOfMembers - 1 : numberOfMembers
       socket.broadcast.to(roomId).emit("nom", num)
       socket.broadcast.to(roomId).emit("user-disconnected", userId)
+      closeBoard(roomId, userId)
     })
 
     socket.on("share", () => {

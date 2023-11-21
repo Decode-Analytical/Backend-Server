@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import StudentImg from "../../assets/student.png"
 import Logo from "../../assets/video.png"
 import "./login.css"
 import "../animations.css"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { toggleLogin, setMeetingAndUser } from "../../store"
 
 export default function Login() {
   const [emailId, setEmailId] = useState("")
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const loggedIn = useSelector((state) => state.value)
   const { room } = useParams()
   const [isDisabled, setIsDisabled] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     fetch(`https://noom-lms-server.onrender.com`)
+      //fetch(`http://localhost:5000`)
       .then((response) => {
         console.log(response.status)
       })
@@ -38,10 +39,15 @@ export default function Login() {
 
   function loadUser() {
     if (emailId === null || emailId === "")
-      return toast.error("Please enter your student id!")
+      return toast.error("Please enter your email id!")
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(emailId)) return toast.error("Enter a valid email!")
 
     //spacemars666@gmail.com
     //decodeanalytical@gmail.com
+    //ebisedi@yahoo.com || lms198
+    setIsLoading(true)
     setIsDisabled(true)
     const options = {
       method: "POST",
@@ -77,6 +83,7 @@ export default function Login() {
           img: data.image,
         }
 
+        setIsLoading(false)
         setIsDisabled(false)
         dispatch(setMeetingAndUser(meeting, user))
         dispatch(toggleLogin())
@@ -86,8 +93,11 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error)
-        toast.error("You are not registered for this course!")
+        toast.error(
+          "Something went wrong: check if you are registered for this course!"
+        )
         setIsDisabled(false)
+        setIsLoading(false)
       })
   }
 
@@ -119,6 +129,9 @@ export default function Login() {
               >
                 Join Meeting
               </button>
+              <div
+                className={`loading-spinner ${isLoading ? "show" : "hide"}`}
+              ></div>
             </div>
             <hr />
           </div>
