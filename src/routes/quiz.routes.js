@@ -38,6 +38,6 @@ router.get('/viewAllTheQuestion/:moduleId', getQuizAnswers)
 router.post('/submitAnswers/:quizId', createSubmitAnswer)
 router.get('/getQuizAnswer', getQuestionAnswers)
 router.delete('/deleteQuiz', deleteAllQuestions)
-router.put('/isCompletedModule/:moduleId', turnModuleCompleted)
+router.put('/isCompletedModule/:courseId', turnModuleCompleted)
 
 module.exports = router;

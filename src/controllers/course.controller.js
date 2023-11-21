@@ -349,7 +349,7 @@ exports.addSubject = async (req, res) => {
         }
     }catch(error){
         return res.status(501).json({
-            message: "Error creating course",
+            message: "Error creating module",
             error: error.message 
         });
     }

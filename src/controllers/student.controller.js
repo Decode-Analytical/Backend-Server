@@ -17,7 +17,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         if (hasStudentRegistered){
             return res
             .status(409)
-            .json({message: 'student already enrolled for this course'})
+            .json({message: 'You had already enrolled for this course'})
         }       
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
@@ -39,7 +39,11 @@ exports.studentRegisterCourse = async(req, res, next) => {
             image: course.course_image,
             price: course.isPrice_course,
             userId: userStatus._id,
-            modules: course.modules,
+            moduleId: modules._id,
+            video: modules.video,
+            audio: modules.audio,
+            quiz: modules.quizzes,           
+
         });
         // update the user courseLimit
         const updatedUser = await User.findByIdAndUpdate({_id: userStatus._id}, {

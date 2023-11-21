@@ -183,14 +183,13 @@ exports.createQuizWithQuestions = async (req, res) => {
           })
 
           //updating the module with the new quiz IDs using mapping 
-          module.quizzes = module.quizzes.concat(quiz._id)
-          await module.save();
+         const moduleQuestions = await Module.findByIdAndUpdate({ _id: moduleId }, { $push: { quizzes: quiz } }, { new: true });
 
           // save the answers for each question
 
             return res.status(201).json({
                 message: "New Quiz has been created with new questions",
-                quiz,
+                moduleQuestions
             });
         } else {
             return res.status(401).json({
@@ -485,15 +484,16 @@ exports.turnModuleCompleted = async (req, res) => {
     const user = await User.findById(id);
     const userStatus = await User.findById(user._id);
     if(userStatus.roles === "admin" || userStatus.roles === "student" || userStatus.roles === "IT") {   
-        const moduleId = req.params.moduleId 
-        const confirmStatus = await StudentCourse.findOne({ moduleId: moduleId, userId: userStatus._id });
-        if(confirmStatus.isCompleted === false) {
-            await StudentCourse.findByIdAndUpdate(confirmStatus._id, {isCompleted: true}, {new: true});
-            return res.status(200).json({ message: "Module completed successfully" });
+        const courseId = req.params.courseId;
+        const confirmStatus = await StudentCourse.find({ userId: userStatus._id, courseId: courseId });
+        if(confirmStatus[0].isCompleted === false) {
+          confirmStatus[0].isCompleted = true;
+          await confirmStatus[0].save();
+          return res.status(200).json({ message: "module completed" });
         } else {
-            return res.status(401).json({ message: "You have already completed this module" });
+          return res.status(401).json({ message: "You have already completed this module" });
         }
-    } else {
+    }else {
       return res.status(401).json({
         message: 'You are not authorized to do this action.'
       });

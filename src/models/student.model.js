@@ -23,8 +23,22 @@ const studentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    modules: {
+    moduleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Module',
+    },
+    video: {
       type: Array,
+    },
+    audio: {
+      type: Array,
+    },
+    quiz: {
+      type: Array,
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
