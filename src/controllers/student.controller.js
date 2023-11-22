@@ -84,17 +84,13 @@ exports.studentViewCourseDetails = async(req, res) => {
             .select("-description")
             .select("-__v")
             const modules = await Module.find({ courseId: courseId })
-            .select("-userId")
-            .select("-image")
-            .select("-quizzes")
+            .select("-quizId")
             .select("-comments")
             .select("-likeAndDislikeUsers")
             .select("-commentId")
             .select("-createdAt")
             .select("-updatedAt")
-            .select("-_id")
             .select("-comment_count")
-            .select("-isCompleted")
             if(Array.isArray(result)&& result.length === 0) {  
                 return res.status(404).json({
                     message: 'Course not found, You did not registered for this course'

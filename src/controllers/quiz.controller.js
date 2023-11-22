@@ -178,7 +178,7 @@ exports.createQuizWithQuestions = async (req, res) => {
           })
 
           //updating the module with the new quiz IDs using mapping 
-         const moduleQuestions = await Module.findByIdAndUpdate({ _id: moduleId }, { quizId: questionsIds }, { new: true });
+         const moduleQuestions = await Module.findByIdAndUpdate({ _id: moduleId }, { quizzes: quiz._id }, { new: true });
 
           // save the answers for each question
 
