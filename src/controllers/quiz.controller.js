@@ -172,18 +172,13 @@ exports.createQuizWithQuestions = async (req, res) => {
           const createdQuestions = await Question.create(questionsWithModuleId);
 
           //!updating the module with the new questions IDs
-            const questionsIds = createdQuestions.map((question) => question._id)
-            // defining the
-            // module.questions = module.questions.concat(questionsIds)
-            // await module.save();
-
-             //creating quiz with the questions
-          const quiz = await Quiz.create({
+        const questionsIds = createdQuestions.map((question) => question._id);
+        const quiz = await Quiz.create({
             title: createdQuestions.question_title, questionIds: questionsIds, moduleId, questions: createdQuestions
           })
 
           //updating the module with the new quiz IDs using mapping 
-         const moduleQuestions = await Module.findByIdAndUpdate({ _id: moduleId }, { $push: { quizzes: quiz } }, { new: true });
+         const moduleQuestions = await Module.findByIdAndUpdate({ _id: moduleId }, { quizId: questionsIds }, { new: true });
 
           // save the answers for each question
 

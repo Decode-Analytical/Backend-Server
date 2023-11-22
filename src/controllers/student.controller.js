@@ -38,9 +38,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             description: course.course_description,
             image: course.course_image,
             price: course.isPrice_course,
-            userId: userStatus._id,
-            moduleId: modules._id,
-            module: modules          
+            userId: userStatus._id,         
 
         });
         // update the user courseLimit
@@ -82,7 +80,26 @@ exports.studentViewCourseDetails = async(req, res) => {
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
-            .select('-__v')
+            .select("-image")
+            .select("-description")
+           .select("-__v")
+            const modules = await Module.find({ courseId: courseId })
+            .select("-userId")
+            .select("-module_title")
+            .select("-courseId")
+            .select("-module_description")
+            .select("-image")
+            .select("-quizzes")
+            .select("-comments")
+            .select("-likeAndDislikeUsers")
+            .select("-commentId")
+            .select("-like_count")
+            .select("-dislike_count")
+            .select("-createdAt")
+            .select("-updatedAt")
+            .select("-_id")
+            .select("-comment_count")
+            .select("-isCompleted")
             if(Array.isArray(result)&& result.length === 0) {  
                 return res.status(404).json({
                     message: 'Course not found, You did not registered for this course'
@@ -90,7 +107,8 @@ exports.studentViewCourseDetails = async(req, res) => {
             }else{
                 return res.status(200).json({
                     message: `Student's registered Course details fetched successfully`,                 
-                    result
+                    result,
+                    modules,
                 });            
         }
     }else{

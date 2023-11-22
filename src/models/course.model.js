@@ -78,14 +78,16 @@ const moduleSchema = new mongoose.Schema({
     type: String,
     default: '4mins'
   },
-  quizzes: [],
+  quizId: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Quiz",
+        required: [true, "quiz ids required"],
+      },    
+    ],
   comments: {
     type: Array,    
-  },
-  isCompleted: {
-    type: Boolean,
-    default: false,
-  },
+  },  
   likeAndDislikeUsers: {
     type: Array,    
   },

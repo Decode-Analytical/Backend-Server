@@ -23,13 +23,6 @@ const studentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    moduleId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Module',
-    },
-    module: {
-      type: Array
-    },
     isCompleted: {
       type: Boolean,
       default: false,
