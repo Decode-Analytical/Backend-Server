@@ -34,11 +34,12 @@ exports.studentRegisterCourse = async(req, res, next) => {
        const modules = await Module.findOne({ courseId: courseId })
         const newCourse = await StudentCourse.create({
             courseId: course._id,
-            title: course.course_title,
-            description: course.course_description,
-            image: course.course_image,
-            price: course.isPrice_course,
-            userId: userStatus._id,         
+        //     title: course.course_title,
+        //     description: course.course_description,
+        //     image: course.course_image,
+        //     price: course.isPrice_course,
+            userId: userStatus._id,  
+            module: modules       
 
         });
         // update the user courseLimit
@@ -83,14 +84,17 @@ exports.studentViewCourseDetails = async(req, res) => {
             .select("-image")
             .select("-description")
             .select("-__v")
-            const modules = await Module.find({ courseId: courseId })
-            .select("-quizId")
-            .select("-comments")
-            .select("-likeAndDislikeUsers")
-            .select("-commentId")
-            .select("-createdAt")
-            .select("-updatedAt")
-            .select("-comment_count")
+            .select("-_id")
+            .select("-module.quizId")
+            .select("-module.comments")
+            .select("-module.likeAndDislikeUsers")
+            .select("-module.commentId")
+            .select("-module.createdAt")
+            .select("-module.updatedAt")
+            .select("-module.comment_count")
+            .select("-module.userId")
+            .select("-module.courseId")
+            .select("-module.isCompleted")
             if(Array.isArray(result)&& result.length === 0) {  
                 return res.status(404).json({
                     message: 'Course not found, You did not registered for this course'
@@ -98,7 +102,7 @@ exports.studentViewCourseDetails = async(req, res) => {
             }else{
                 return res.status(200).json({
                     message: `Student's registered Course details fetched successfully`,                 
-                    result: modules,                    
+                    result,
                 });            
         }
     }else{

@@ -17,11 +17,14 @@ const studentSchema = new mongoose.Schema(
     price: {
       type: mongoose.Decimal128,
     },
-    image: {
-      type: Array,
-    },
+    // image: {
+    //   type: Array,
+    // },
     description: {
       type: String,
+    },
+    module: {
+      type: Array,
     },
     isCompleted: {
       type: Boolean,
