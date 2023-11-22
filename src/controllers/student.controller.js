@@ -82,10 +82,9 @@ exports.studentViewCourseDetails = async(req, res) => {
             const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
             .select("-image")
             .select("-description")
-           .select("-__v")
+            .select("-__v")
             const modules = await Module.find({ courseId: courseId })
             .select("-userId")
-            .select("-courseId")
             .select("-image")
             .select("-quizzes")
             .select("-comments")
@@ -103,8 +102,7 @@ exports.studentViewCourseDetails = async(req, res) => {
             }else{
                 return res.status(200).json({
                     message: `Student's registered Course details fetched successfully`,                 
-                    result,
-                    modules,
+                    result: modules,                    
                 });            
         }
     }else{
