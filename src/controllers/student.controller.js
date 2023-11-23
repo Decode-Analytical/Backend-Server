@@ -34,10 +34,10 @@ exports.studentRegisterCourse = async(req, res, next) => {
        const modules = await Module.findOne({ courseId: courseId })
         const newCourse = await StudentCourse.create({
             courseId: course._id,
-        //     title: course.course_title,
-        //     description: course.course_description,
-        //     image: course.course_image,
-        //     price: course.isPrice_course,
+            title: course.course_title,
+            description: course.course_description,
+            image: course.course_image,
+            price: course.isPrice_course,
             userId: userStatus._id,  
             module: modules       
 
@@ -81,6 +81,7 @@ exports.studentViewCourseDetails = async(req, res) => {
         if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
+            .select("-title")
             .select("-image")
             .select("-description")
             .select("-__v")
@@ -127,13 +128,17 @@ exports.studentViewCourse = async(req, res) => {
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const course = await StudentCourse.find({ userId: userStatus._id })
+            .select("-module")
+            .select("-__v")
+            .select("-userId")
+            .select("-courseId")
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
                 studentRegisteredCourses: course
         });
     }else{
         return res.status(400).json({
-            message: 'You must be registered student to view your course'
+            message: 'You must be a registered student to view your course'
         });
     }
     } catch (error) {
