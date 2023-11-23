@@ -130,8 +130,7 @@ exports.studentViewCourse = async(req, res) => {
             const course = await StudentCourse.find({ userId: userStatus._id })
             .select("-module")
             .select("-__v")
-            .select("-userId")
-            .select("-courseId")
+            .select("-isCompleted")
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
                 studentRegisteredCourses: course
