@@ -31,7 +31,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         if(course.isPaid_course === 'paid' ){
             return res.status(401).json({message: `pls, kindly click on the ${link} to pay for this course`})
         }
-       const modules = await Module.findOne({ courseId: courseId })
+       const modules = await Module.find({ courseId: courseId })
         const newCourse = await StudentCourse.create({
             courseId: course._id,
             title: course.course_title,

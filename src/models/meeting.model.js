@@ -37,6 +37,19 @@ const meetupSchema = new mongoose.Schema({
     email: {
         type: String,
     },
+    isPaid: {
+        type: String,
+        enum: ['paid', 'free'],
+        default: 'free'
+    },
+    amount: {
+        type: Number,
+        defualt: 0
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 },
 {
     timestamps: true
