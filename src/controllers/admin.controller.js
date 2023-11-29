@@ -7,6 +7,9 @@ const Meeting = require('../models/meeting.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const referralCodeGenerator = require('referral-code-generator');
+const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
+const MeetingTransaction = require('../models/meetingTransact.model');
+const crypto = require("crypto");
 
 
 
@@ -383,7 +386,7 @@ exports.studentJoinMeeting = async (req, res) => {
             const admin = await User.findOne({ email });
             if(!admin){
                 return res.status(404).json({
-                    message: "This email does not exist in the database"
+                    message: 'Your email is not registered on this platform as student'
                 })
             }
             const meeting = await Meeting.findOne({ roomId: req.params.roomId }); 
@@ -391,13 +394,22 @@ exports.studentJoinMeeting = async (req, res) => {
                 return res.status(404).json({
                     message: "This room meeting does not exist"
                 })
-            }          
-            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });                     
-            if(!student && !meeting) {
-                return res.status(404).json({
-                    message: 'You have not registered for this course or not part of the meeting'
-                })
+            }    
+             const link = `<a href="https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}"</a>`;   
+            if(meeting.isPaid === paid ){
+                const student = await Student.findOne({ userId: admin._id, title: meeting.courseName }); 
+                if(!student && !meeting) {
+                    return res.status(404).json({
+                        message: 'You have not registered for this course or not part of the meeting'
+                    })
+             }
+             const hasPaid = await MeetingTransaction.find({meetingId: meeting._id, userId: admin._id});
+             if(hasPaid.transactionType === "refunded" ) {
+                 return res.status(200).json({ 
+                    message: `This meeting is paid. Please proceed to payment here: ${link}.`,
+                });
             }
+
             const userStatus = await User.findById(admin._id);
             if(userStatus.roles ==='student' && student || userStatus.roles ==='IT' || userStatus.roles === "admin") {
                 return res.status(200).json({
@@ -407,11 +419,8 @@ exports.studentJoinMeeting = async (req, res) => {
                     image: admin.picture
 
                 });
-            } else {
-                return res.status(404).json({
-                    message: 'Your email is not registered on this platform as student'
-                })
-            }        
+            }               
+            }       
     } catch (error) {
         return res.status(500).json({
             message: 'You are not a registered student',
@@ -483,3 +492,113 @@ exports.studentTotalStudentForCourse = async (req, res) => {
         });
     }
 };
+
+
+
+// Meeting Payment 
+
+exports.studentPayForMeeting = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        const roomId = req.params.roomId;
+        const meeting = await Meeting.findOne({ roomId });
+        if(userStatus.roles ==='student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+            // Payment logic
+            const payments = await MeetingTransaction.create({
+                reference: crypto.randomBytes(8).toString('hex'),
+                amount: meeting.amount,
+                userId: userStatus._id,
+                meetingId: meeting._id
+            })
+            const paystackPayment = paystack.transaction.initialize({
+                amount: payments.amount * 100, 
+                email: payments.email,
+                reference: payments.reference,
+                }, 
+                (error, response) => {
+                    if (error) {
+                    console.error(error);
+                     return res.status(500).json({ error: 'An error occurred while initializing payment.' });
+                } else {
+                    return res.json(response.data.authorization_url); 
+                }
+            }
+        )} else {
+            return res.status(200).json({
+            message: 'You are not authorized to pay for this meeting'
+        });
+        }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Payment failed",
+      error: error.message
+    });
+  }
+}
+
+
+exports.studentPaid = async (req, res) => {
+      try {
+        const { event, data } = req.body; 
+        if(event === 'charge.success'){
+            const { reference } = data;
+            const transaction = await MeetingTransaction.findOne({ reference });
+            if (!transaction) {
+                return res.status(404).json({ message: 'Transaction not found' });
+            } 
+            const existingCourse =   await Meeting.findById(transaction.meetingId);
+            // console.log({existingCourse})    
+            if (existingCourse) {
+                await MeetingTransaction.findOneAndUpdate(
+                {
+                    _id: transaction._id
+                },
+                {
+                  $set: {transactionType: "paid" }
+                },
+                {
+                    new : true,
+                });
+            }
+        // send email notification to user
+        const user = await User.findById(transaction.userId);
+            await sendEmail({
+                email: transaction.email,
+                subject: `Payment Successful`,
+                message: `            
+  <head></head>
+
+  <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
+    <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+      <tr style="width:100%">
+        <td><img alt="DECODE" src="/public/decodelogo.jpeg" width="170" height="50" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />        
+          <p style="font-size:16px;line-height:26px;margin:16px 0">Hello, ${user.firstName} ${user.lastName}, <br>
+                        You have successfully made the payment of the one time non-refundable ${transaction.amount} to be student for this online video tutor and course: ${existingCourse.courseName}. <br>                       
+                        . <br><br><br>
+                        Thanks for patronage.</p>
+          <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+            <tbody>
+              <tr>
+                <td><a href="#" target="_blank" style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;p-x:12px;p-y:12px;line-height:100%;max-width:100%;padding:12px 12px"><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="background-color:#5F51E8;border-radius:3px;color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;p-x:12px;p-y:12px;max-width:100%;line-height:120%;text-transform:none;mso-padding-alt:0px;mso-text-raise:9px">Reference: ${transaction.reference}.</span><span><!--[if mso]><i style="letter-spacing: 12px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:16px;line-height:26px;margin:16px 0">Best,<br /><br/>The Decode team</p>
+          <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0"/>
+          <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa"> Ibadan, Nigeria </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`
+});
+} 
+}catch (error) {        
+        return res.status(500).json({ 
+            error: 'An error occurred while initializing payment.',
+            message: error.message
+        });
+    }
+}

@@ -73,7 +73,10 @@ const moduleSchema = new mongoose.Schema({
   audio: {
     type: Array,
   },
- 
+  isCompleted: {
+    type: Boolean,
+    default: false
+  },
   module_duration: {
     type: String,
     default: '4mins'

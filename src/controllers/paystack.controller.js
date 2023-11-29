@@ -78,11 +78,7 @@ exports.decodePaystack = async (req, res) => {
             image: existingCourse.course_image,
             price: existingCourse.isPrice_course,
             userId: transaction.userId,
-            module_duration: modules.module_duration,
-            video: modules.video,
-            module_title: modules.module_title,
-            module_description: modules.module_description,
-            module_image: modules.image,
+            module: modules 
 
         });
         // update the user courseLimit
