@@ -1,14 +1,14 @@
 require("dotenv").config();
-const express = require("express");
 const bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const http = require("http");
 const cors = require("cors");
+const { Server } = require("socket.io");
 const { useTreblle } = require("treblle");
 const mongoSanitize = require("express-mongo-sanitize");
 const connectDB = require("./src/database/db");
 const cloudinaryConfig = require("./src/utils/cloudinary");
-const http = require('http');
-const socketIO = require('socket.io');
-const path = require('path');
 const courseRoutes = require("./src/routes/course.routes");
 const userRoutes = require("./src/routes/user.routes");
 const studentRoutes = require("./src/routes/student.routes");
@@ -18,21 +18,42 @@ const questionRoutes = require("./src/routes/quiz.routes");
 const answerRoutes = require("./src/routes/answer.routes");
 const commentRoutes = require("./src/routes/comment.routes");
 const likeRoutes = require("./src/routes/like.routes");
-const chatRoutes = require("./src/routes/chat.routes");
 
 
-const app = express();
+app.use(cors());
 
 const server = http.createServer(app);
-const io = socketIO(server);
 
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
 
 connectDB();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+
 app.use(mongoSanitize());
 
 useTreblle(app, {
@@ -54,8 +75,8 @@ app.use("/api/answer", answerRoutes);
 app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api/quizes", questionRoutes);
-app.use("/api/chats", chatRoutes)
 
-app.listen(port, () => {
+
+server.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);
 });
