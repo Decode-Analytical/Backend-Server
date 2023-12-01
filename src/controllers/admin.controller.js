@@ -338,7 +338,7 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 //? admin schedule google meeting for students 
 exports.adminScheduleMeeting = async (req, res) => {
     try {        
-            const { email, description, date, time, courseName } = req.body;
+            const { email, description, date, time, courseName, isPaid, amount } = req.body;
             const organizerN = await User.findOne({ email }); 
             const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
             const course = await Course.findOne({ course_title: courseName });
@@ -389,27 +389,28 @@ exports.studentJoinMeeting = async (req, res) => {
                     message: 'Your email is not registered on this platform as student'
                 })
             }
-            const meeting = await Meeting.findOne({ roomId: req.params.roomId }); 
+            const roomId = req.params.roomId;
+            const meeting = await Meeting.findOne({ roomId }); 
             if(!meeting){
                 return res.status(404).json({
                     message: "This room meeting does not exist"
                 })
             }    
-             const link = `<a href="https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}"</a>`;   
-            if(meeting.isPaid === paid ){
-                const student = await Student.findOne({ userId: admin._id, title: meeting.courseName }); 
-                if(!student && !meeting) {
-                    return res.status(404).json({
-                        message: 'You have not registered for this course or not part of the meeting'
-                    })
-             }
-             const hasPaid = await MeetingTransaction.find({meetingId: meeting._id, userId: admin._id});
-             if(hasPaid.transactionType === "refunded" ) {
-                 return res.status(200).json({ 
+             const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;   
+            if(meeting.isPaid === "paid" ){
+                const hasPaid = await MeetingTransaction.find({meetingId: meeting._id, userId: admin._id});
+                if(Array.isArray(hasPaid) && hasPaid.length == 0){
+                    return res.status(401).json({ 
                     message: `This meeting is paid. Please proceed to payment here: ${link}.`,
-                });
-            }
-
+                    });
+                }
+                
+                if(hasPaid.transactionType === "refunded"){
+                    return res.status(401).json({
+                        message: "Your payment is not successfully yet, kindly contact admin"
+                    })
+                }
+            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
             const userStatus = await User.findById(admin._id);
             if(userStatus.roles ==='student' && student || userStatus.roles ==='IT' || userStatus.roles === "admin") {
                 return res.status(200).json({
@@ -419,16 +420,30 @@ exports.studentJoinMeeting = async (req, res) => {
                     image: admin.picture
 
                 });
-            }               
-            }       
-    } catch (error) {
+            } else {
+                return res.status(200).json({
+                    message: 'You are not authorized to view this page'
+                });
+            }
+        } else {
+            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
+            const userStatus = await User.findById(admin._id);
+            if(userStatus.roles ==='student' && student || userStatus.roles ==='IT' || userStatus.roles === "admin") {
+                return res.status(200).json({
+                    meeting,
+                    name: admin.firstName +' '+ admin.lastName,
+                    userId: admin._id,
+                    image: admin.picture
+                });
+            }
+    } }catch (error) {
         return res.status(500).json({
             message: 'You are not a registered student',
             error: error.message
         });
     }
 };
-
+     
 
 // view all the meeting events
 exports.studentViewAllMeeting = async (req, res) => {
@@ -510,7 +525,8 @@ exports.studentPayForMeeting = async (req, res) => {
                 reference: crypto.randomBytes(8).toString('hex'),
                 amount: meeting.amount,
                 userId: userStatus._id,
-                meetingId: meeting._id
+                meetingId: meeting._id,
+                email: userStatus.email
             })
             const paystackPayment = paystack.transaction.initialize({
                 amount: payments.amount * 100, 
