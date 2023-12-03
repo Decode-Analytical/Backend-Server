@@ -403,10 +403,7 @@ exports.studentJoinMeeting = async (req, res) => {
                     return res.status(401).json({ 
                         message: `This meeting is paid. Please proceed to payment here: ${link}.`,
                     });
-                }
-                const paymentStatus = await MeetingTransaction.findOne({id: hasPaid._id, userId: admin._id});
-                console.log(paymentStatus);
-                if(paymentStatus.transactionType === "refunded"){
+                }else if(hasPaid.transactionType === "refunded"){
                     return res.status(401).json({
                         message: "Your payment is not successfully yet, kindly contact admin"
                     })
