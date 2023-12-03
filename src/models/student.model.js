@@ -26,10 +26,6 @@ const studentSchema = new mongoose.Schema(
     module: {
       type: Array,
     },
-    isCompleted: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     collection:'students',
