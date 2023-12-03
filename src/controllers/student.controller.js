@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const { Course, Module, Quiz } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
+const mongoose = require('mongoose');
 
 
 
@@ -96,10 +97,11 @@ exports.studentViewCourseDetails = async (req, res) => {
                         ...course.toObject(),
                         module: course.module.map(module => ({
                             ...module.toObject(),
-                            isCompleted: false
+                            isCompleted: module.isCompleted  // Preserve the original isCompleted value
                         }))
                     };
                 });
+                
 
                 return res.status(200).json({
                     message: `Student's registered Course details fetched successfully`,
@@ -121,8 +123,9 @@ exports.studentViewCourseDetails = async (req, res) => {
 
 
 exports.markComplete = async (req, res) => {
+
     try {
-        const userId = req.user; // Assuming user ID is stored in the request object
+        const userId = req.user;
 
         // Check if the user exists and has the required permissions
         const user = await User.findById(userId);
@@ -142,11 +145,11 @@ exports.markComplete = async (req, res) => {
             });
         }
 
-        // Find the module in the student's enrolled course and update isCompleted to true
+        // Update isCompleted to true for the specific module
         const updatedStudent = await StudentCourse.findOneAndUpdate(
-            { userId, courseId, 'module._id': moduleId },
-            { $set: { 'module.$.isCompleted': true } },
-            { new: true }
+            { userId, courseId },
+            { $set: { 'module.$[elem].isCompleted': true } },
+            { arrayFilters: [{ 'elem._id': mongoose.Types.ObjectId(moduleId) }], new: true }
         );
 
         if (!updatedStudent) {
@@ -166,6 +169,10 @@ exports.markComplete = async (req, res) => {
         });
     }
 };
+
+
+
+
 
 
 // student view his registered course

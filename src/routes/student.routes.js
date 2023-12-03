@@ -18,12 +18,15 @@ const {
     studentCourseCount,
     studentUpdateProfilePicture,
     studentViewCourseDetails,
-    studentTotalRegisteredCourse
+    studentTotalRegisteredCourse,
+    markComplete
 } = require('../controllers/student.controller.js')
 const { auth } = require('../middleware/auth.js');
 
 
+
 router.use(auth);
+router.put('/markcomplete/:courseId/:moduleId/',markComplete);
 router.post('/studentPost/:courseId', studentRegisterCourse );
 router.get('/studentGet', studentViewCourse );
 router.delete('/studentDelete/:courseId', studentDeleteCourse );

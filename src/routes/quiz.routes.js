@@ -21,10 +21,10 @@ const {
   turnModuleCompleted,
 
 } = require("../controllers/quiz.controller");
-const { markComplete } = require('../controllers/student.controller');
+
 
 router.use(auth);
-router.post('/markcomplete/:courseId/:moduleId/',markComplete);
+
 router.get('/getAllQuizzes', getQuizQuestions);
 router.get('/viewQuestion/:id', getQuizQuestionsById);
 router.post('/createQuiz/:moduleId', createQuizQuestions);
