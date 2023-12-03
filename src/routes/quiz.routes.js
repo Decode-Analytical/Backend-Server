@@ -18,10 +18,13 @@ const {
   createSubmitAnswer,
   getQuestionAnswers,
   deleteAllQuestions,
-  turnModuleCompleted
+  turnModuleCompleted,
+
 } = require("../controllers/quiz.controller");
 
+
 router.use(auth);
+
 router.get('/getAllQuizzes', getQuizQuestions);
 router.get('/viewQuestion/:id', getQuizQuestionsById);
 router.post('/createQuiz/:moduleId', createQuizQuestions);

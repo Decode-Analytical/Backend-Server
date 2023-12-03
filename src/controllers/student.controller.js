@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const { Course, Module, Quiz } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
+const mongoose = require('mongoose');
 
 
 
@@ -73,43 +74,45 @@ exports.studentRegisterCourse = async(req, res, next) => {
 };
 
 // view the registered course by student to see the course details
-exports.studentViewCourseDetails = async(req, res) => {
+
+exports.studentViewCourseDetails = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+
+        if (userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
             const { courseId } = req.params;
             const result = await StudentCourse.find({ courseId: courseId, userId: userStatus._id })
-            .select("-title")
-            .select("-image")
-            .select("-description")
-            .select("-__v")
-            .select("-_id")
-            .select("-module.quizId")
-            .select("-module.comments")
-            .select("-module.likeAndDislikeUsers")
-            .select("-module.commentId")
-            .select("-module.createdAt")
-            .select("-module.updatedAt")
-            .select("-module.comment_count")
-            .select("-module.userId")
-            .select("-module.courseId")
-            if(Array.isArray(result)&& result.length === 0) {  
+                .select("-title -image -description -__v -_id -module.quizId -module.comments -module.likeAndDislikeUsers -module.commentId -module.createdAt -module.updatedAt -module.comment_count -module.userId -module.courseId");
+
+            if (Array.isArray(result) && result.length === 0) {
                 return res.status(404).json({
-                    message: 'Course not found, You did not registered for this course'
+                    message: 'Course not found, You did not register for this course'
                 });
-            }else{
+            } else {
+                // Set isCompleted to false for each module in the result
+                const modifiedResult = result.map(course => {
+                    return {
+                        ...course.toObject(),
+                        module: course.module.map(module => ({
+                            ...module.toObject(),
+                            isCompleted: module.isCompleted  // Preserve the original isCompleted value
+                        }))
+                    };
+                });
+                
+
                 return res.status(200).json({
-                    message: `Student's registered Course details fetched successfully`,                 
-                    result,
-                });            
+                    message: `Student's registered Course details fetched successfully`,
+                    result: modifiedResult,
+                });
+            }
+        } else {
+            return res.status(400).json({
+                message: 'You must be a registered student to view your course'
+            });
         }
-    }else{
-        return res.status(400).json({
-            message: 'You must be registered student to view your course'
-        });
-    }
     } catch (error) {
         return res.status(400).json({
             message: 'Error while viewing user',
@@ -117,6 +120,59 @@ exports.studentViewCourseDetails = async(req, res) => {
         });
     }
 };
+
+
+exports.markComplete = async (req, res) => {
+
+    try {
+        const userId = req.user;
+
+        // Check if the user exists and has the required permissions
+        const user = await User.findById(userId);
+        if (!user || !(user.roles === 'student' || user.roles === 'IT' || user.roles === 'admin')) {
+            return res.status(403).json({
+                message: 'Forbidden: You do not have the necessary permissions to mark a module as watched.'
+            });
+        }
+
+        const { courseId, moduleId } = req.params;
+
+        // Check if the student is enrolled in the specified course
+        const student = await StudentCourse.findOne({ userId, courseId });
+        if (!student) {
+            return res.status(404).json({
+                message: 'Course not found, or you are not enrolled in this course.'
+            });
+        }
+
+        // Update isCompleted to true for the specific module
+        const updatedStudent = await StudentCourse.findOneAndUpdate(
+            { userId, courseId },
+            { $set: { 'module.$[elem].isCompleted': true } },
+            { arrayFilters: [{ 'elem._id': mongoose.Types.ObjectId(moduleId) }], new: true }
+        );
+
+        if (!updatedStudent) {
+            return res.status(404).json({
+                message: 'Module not found in the specified course.'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Module marked as watched successfully.',
+            updatedStudent
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+};
+
+
+
+
 
 
 // student view his registered course

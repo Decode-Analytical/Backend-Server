@@ -24,7 +24,9 @@ const {
 const { auth } = require('../middleware/auth.js');
 
 
+
 router.use(auth);
+router.put('/markcomplete/:courseId/:moduleId/',markComplete);
 router.post('/studentPost/:courseId', studentRegisterCourse );
 router.get('/studentGet', studentViewCourse );
 router.delete('/studentDelete/:courseId', studentDeleteCourse );
