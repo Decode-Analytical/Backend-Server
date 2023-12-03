@@ -401,11 +401,12 @@ exports.studentJoinMeeting = async (req, res) => {
                 const hasPaid = await MeetingTransaction.find({meetingId: meeting._id, userId: admin._id});
                 if(Array.isArray(hasPaid) && hasPaid.length == 0){
                     return res.status(401).json({ 
-                    message: `This meeting is paid. Please proceed to payment here: ${link}.`,
+                        message: `This meeting is paid. Please proceed to payment here: ${link}.`,
                     });
                 }
-                
-                if(hasPaid.transactionType === "refunded"){
+                const paymentStatus = await MeetingTransaction.findOne({id: hasPaid._id, userId: admin._id});
+                console.log(paymentStatus);
+                if(paymentStatus.transactionType === "refunded"){
                     return res.status(401).json({
                         message: "Your payment is not successfully yet, kindly contact admin"
                     })
@@ -417,8 +418,7 @@ exports.studentJoinMeeting = async (req, res) => {
                     meeting,
                     name: admin.firstName +' '+ admin.lastName,
                     userId: admin._id,
-                    image: admin.picture
-
+                    image: admin.picture                  
                 });
             } else {
                 return res.status(200).json({

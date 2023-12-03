@@ -546,3 +546,53 @@ exports.studentTotalRegisteredCourse = async(req, res) => {
         });
     }
 };
+
+
+
+exports.markComplete = async (req, res) => {
+
+    try {
+        const userId = req.user;
+
+        // Check if the user exists and has the required permissions
+        const user = await User.findById(userId);
+        if (!user || !(user.roles === 'student' || user.roles === 'IT' || user.roles === 'admin')) {
+            return res.status(403).json({
+                message: 'Forbidden: You do not have the necessary permissions to mark a module as watched.'
+            });
+        }
+
+        const { courseId, moduleId } = req.params;
+
+        // Check if the student is enrolled in the specified course
+        const student = await StudentCourse.findOne({ userId, courseId });
+        if (!student) {
+            return res.status(404).json({
+                message: 'Course not found, or you are not enrolled in this course.'
+            });
+        }
+
+        // Update isCompleted to true for the specific module
+        const updatedStudent = await StudentCourse.findOneAndUpdate(
+            { userId, courseId },
+            { $set: { 'module.$[elem].isCompleted': true } },
+            { arrayFilters: [{ 'elem._id': mongoose.Types.ObjectId(moduleId) }], new: true }
+        );
+
+        if (!updatedStudent) {
+            return res.status(404).json({
+                message: 'Module not found in the specified course.'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Module marked as watched successfully.',
+            updatedStudent
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+};
