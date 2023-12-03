@@ -85,6 +85,7 @@ exports.studentViewCourseDetails = async(req, res) => {
             .select("-image")
             .select("-description")
             .select("-__v")
+            .select("-_id")
             .select("-module.quizId")
             .select("-module.comments")
             .select("-module.likeAndDislikeUsers")
