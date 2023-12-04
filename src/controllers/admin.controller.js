@@ -399,11 +399,13 @@ exports.studentJoinMeeting = async (req, res) => {
              const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;   
             if(meeting.isPaid === "paid" ){
                 const hasPaid = await MeetingTransaction.findOne({meetingId: meeting._id, userId: admin._id});
-                if(Array.isArray(hasPaid) && hasPaid.length == 0){
+                if(hasPaid  === null){
                     return res.status(401).json({ 
                         message: `This meeting is paid. Please proceed to payment here: ${link}.`,
                     });
-                }else if(hasPaid.transactionType === "refunded"){
+                }
+                
+                if(hasPaid.transactionType === "refunded"){
                     return res.status(401).json({
                         message: "Your payment is not successfully yet, kindly contact admin"
                     })
@@ -615,3 +617,59 @@ exports.studentPaid = async (req, res) => {
         });
     }
 }
+
+
+
+// tutor view his own his online meetings call created 
+exports.tutorViewHisMeeting = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);        
+        if(userStatus.roles === 'admin'){
+            const meeting = await Meeting.find({
+                instructorId: userStatus._id
+            });
+            return res.status(200).json({
+                message: 'Meetings fetched successfully',
+                data: meeting
+            });
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to view meetings'
+            });
+        } 
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to get tutor's meetings",
+      error: error.message
+    });
+  }
+}
+
+
+// superAdmin view all meetings/courses created by all tutors
+exports.adminViewAllMeetings = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin'){
+            const meetings = await Meeting.find({}).populate('instructorId');
+            return res.status(200).json({
+                message: 'All meetings fetched successfully',
+              data: meetings
+            });
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to view meetings'
+            });
+        }
+  } catch (error) {
+    return res.status(500).json({
+        message: "Failed to get all meetings",
+      error: error.message
+    });
+  }
+}
+ 
