@@ -398,7 +398,7 @@ exports.studentJoinMeeting = async (req, res) => {
             }    
              const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;   
             if(meeting.isPaid === "paid" ){
-                const hasPaid = await MeetingTransaction.find({meetingId: meeting._id, userId: admin._id});
+                const hasPaid = await MeetingTransaction.findOne({meetingId: meeting._id, userId: admin._id});
                 if(Array.isArray(hasPaid) && hasPaid.length == 0){
                     return res.status(401).json({ 
                         message: `This meeting is paid. Please proceed to payment here: ${link}.`,
