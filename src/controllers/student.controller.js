@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const { Course, Module, Quiz } = require('../models/course.model');
 const StudentCourse = require('../models/student.model')
 const Transaction = require('../models/transaction.model');
+const mongoose = require("mongoose");
 
 
 
