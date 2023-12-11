@@ -10,6 +10,12 @@ exports.createCourse = async (req, res) => {
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
             const { course_title, course_description, course_language, isPaid_course, isPrice_course } = req.body;
+            // validate 
+            if(!course_title || !course_description || !course_language || !isPaid_course || !isPrice_course){
+                return res.status(400).json({
+                    message: "All fields are required"
+                })
+            }
             const existingTitle = await Course.findOne({ course_title, userId: userStatus._id });
             if(!existingTitle){
                 if(req.files){
@@ -314,10 +320,20 @@ exports.addSubject = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId.userId.equals(userStatus._id)){
             const { module_title, module_description, module_duration  } = req.body;
-            if(req.files){
+            if(!module_title || !module_description || !module_duration){
+                return res.status(400).json({
+                    error: "All fields are required"
+                });
+            }
+            if(req.files){                
                 image = req.files.image,
                 video = req.files.video,
                 audio = req.files.audio
+                if(!audio || !video || !image){
+                    return res.status(400).json({
+                        error: "Please upload audio, video and image files"
+                    });
+                }
             const newSubject = await Module.create({
                 userId: userStatus._id,
                 courseId: courseId._id,
