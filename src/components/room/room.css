@@ -74,7 +74,7 @@
 }
 
 .show {
-  display: block;
+  display: flex;
 }
 
 .hide-board {
@@ -109,20 +109,29 @@
   height: 300px;
   box-shadow: 0 2px 30px var(--box);
   border-radius: 8px;
-  display: block;
+  background-color: var(--dark-grey);
+  display: flex;
   position: relative;
   justify-self: center;
+  justify-content: center;
+}
+
+.video-hide-img {
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+  align-self: center;
 }
 
 .video-stream-container video {
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  background-color: black;
   object-fit: cover;
+  position: absolute;
 }
 
-.video-stream-container img {
+.video-stream-container .video-mute-icon {
   position: absolute;
   width: 28px;
   height: 28px;
@@ -461,12 +470,15 @@
   }
 
   .stream-grid {
-    gap: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 200px;
   }
 
   .video-stream-container {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
+    justify-self: center;
+    align-self: center;
   }
 
   .video-stream-container label {
