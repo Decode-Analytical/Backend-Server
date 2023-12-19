@@ -17,7 +17,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    fetch(`https://noom-lms-server.onrender.com`)
+    fetch(`https://peerserver-two.vercel.app`)
       //fetch(`http://localhost:5000`)
       .then((response) => {
         console.log(response.status)
