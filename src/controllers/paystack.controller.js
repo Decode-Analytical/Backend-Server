@@ -31,7 +31,7 @@ exports.paystackPayment= async(req, res) => {
       });     
   // Use Paystack library to initiate payment
     const paystackPayment = paystack.transaction.initialize({
-        amount: transaction.amount * 100, // Paystack accepts amount in kobo (multiply by 100 to convert to kobo)
+        amount: transaction.amount * 100, 
         email: transaction.email,
         reference: transaction.reference,
         }, 
@@ -40,7 +40,7 @@ exports.paystackPayment= async(req, res) => {
                 console.error(error);
                 return res.status(500).json({ error: 'An error occurred while initializing payment.' });
                 } else {
-                    return res.json(response.data.authorization_url); // Return the authorization URL to frontend
+                    return res.json(response.data.authorization_url); 
                 }
             }
         )};

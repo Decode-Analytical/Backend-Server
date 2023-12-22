@@ -19,7 +19,12 @@ exports.createCourse = async (req, res) => {
             const existingTitle = await Course.findOne({ course_title, userId: userStatus._id });
             if(!existingTitle){
                 if(req.files){
-                    const course_image = req.files.course_image
+                    const course_image = req.files.course_image;
+                    if(!course_image ) {
+                        return res.status(400).json({
+                            message: "Please upload an course image file"
+                        })
+                    }
             const newCourse = await Course.create({
                 userId: userStatus._id,
                 course_title,
