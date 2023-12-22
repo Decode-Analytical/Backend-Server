@@ -11,6 +11,12 @@ const Course = require("../models/course.model");
 exports.signUp = async (req, res) => {
   try {
     const { firstName, lastName, phoneNumber, email, password } = req.body;
+    // validate the password to include all characters
+    if (!password.match(/\d/) || !password.match(/[a-zA-Z]/)) {
+        return res.status(400).json({
+        message: 'Password must contain at least one capital letter and one number'
+      });
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const existingUser = await User.findOne({ email });
