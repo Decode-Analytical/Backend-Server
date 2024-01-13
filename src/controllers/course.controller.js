@@ -868,3 +868,41 @@ exports.deleteReview = async (req, res) => {
         });
     }
 }
+
+
+// If course upload is completed turn isUploadedCompleted true 
+exports.updateCourseUpload = async (req, res) => {
+    try {
+        const id= req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === "admin") {
+            const { courseId } = req.params;
+            const course = await Course.findById(courseId);
+            if(course){
+                const courseUpdate = await Course.findOneAndUpdate({ _id: courseId, userId: course.userId}, {
+                    $set: { 
+                        isUploadedCompleted: true
+                    }
+                }, { new: true });
+                return res.status(200).json({
+                    message: "Course upload status successfully updated",
+                    courseUpdate,
+                });
+            }else{
+                return res.status(403).json({
+                    message: "The course not found"
+                })
+            }
+        }else{
+            return res.status(403).json({
+                message: "You must be admin to update this course"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Error updating course upload status",
+            error: error.message
+        });
+    }
+}

@@ -37,6 +37,10 @@ const courseSchema = new mongoose.Schema({
   totalRegisteredByStudent: {
     type: Number,
     default: 0,
+  },
+  isUploadedCompleted: {
+    type: Boolean,
+    default: false,
   }
 },
 {

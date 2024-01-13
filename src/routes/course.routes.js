@@ -23,6 +23,7 @@ const { createCourse,
     getCourseById,
     viewCourseById,
     getCoursesByUserId,
+    updateCourseUpload 
 
        } = require('../controllers/course.controller');
 const router = express.Router();
@@ -55,6 +56,7 @@ router.get("/viewAllQuestions/:courseId", viewQuestions);
 router.get("/viewCourseById/:courseId", getCourseById);
 router.get("/getViewCourseById/:courseId", viewCourseById);
 router.get("/viewCourseByItsId/:courseId", getCoursesByUserId);
+router.put("/updateCourseUpload/:courseId", updateCourseUpload);
 
 // Review routes
 router.get("/review", viewReviews);
