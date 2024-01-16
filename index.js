@@ -46,7 +46,7 @@ app.use("/api/answer", answerRoutes);
 app.use("/api/comments/", commentRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api/quizes", questionRoutes);
-app.use('/api', messageRoutes);
+app.use('/api/chat', messageRoutes);
 
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);
