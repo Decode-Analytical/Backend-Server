@@ -16,7 +16,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
         const course = await Course.findById(courseId);
         if(course.isUploadedCompleted === false ){
             return res.status(400).json({
-                message: 'This course is not uploaded completed yet, please kindly wait for it'
+                message: 'This course not available now'
             })
         }
         const hasStudentRegistered = await StudentCourse.findOne({userId: user._id, courseId: course._id})
