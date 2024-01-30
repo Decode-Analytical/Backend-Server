@@ -41,6 +41,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       match: /[0-9]{10}/
     },
+    wallet: {
+      type: Number,
+      default: 0,
+      float: true,
+    },
     picture: {
       type: Array,
     },
@@ -52,7 +57,7 @@ const userSchema = new mongoose.Schema(
     },
     roles: {
       type: String,
-      enum: ["student", "IT"],
+      enum: ["student", "IT", "admin", "superadmin"],
       default: "student",
   },
   courseLimit: {

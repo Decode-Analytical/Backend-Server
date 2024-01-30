@@ -1,7 +1,6 @@
 const Transaction = require('../models/transaction.model');
 const User = require('../models/user.model');
 const { Course, Module } = require('../models/course.model');
-
 const crypto = require('crypto');
 const StudentCourse = require('../models/student.model');
 const sendEmail = require('../emails/email');
@@ -94,11 +93,26 @@ exports.decodePaystack = async (req, res) => {
         }, {
             new: true
         });
-            // console.log({user})
-            await sendEmail({
-                email: user.email,
-                subject: `Payment Successful`,
-                message: `            
+        // credit the course owner wallet 
+        const ownerCredited = await User.findOneAndUpdate({_id: totalRegisteredByStudent.userId}, {
+            $inc: { wallet: +transaction.amount * 80/100 }
+        },
+        {
+            new: true
+        })
+
+        // update the owner of the company wallet
+        const totalCredited = await User.findByIdAndUpdate({ roles: "superadmin" }, {
+            $inc: {wallet : + transaction.amount * 20/100 }
+        },
+        {
+            new: true
+        })
+         
+        await sendEmail({
+            email: user.email,
+            subject: `Payment Successful`,
+            message: `            
   <head></head>
 
   <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
@@ -106,7 +120,7 @@ exports.decodePaystack = async (req, res) => {
       <tr style="width:100%">
         <td><img alt="DECODE" src="/public/decodelogo.jpeg" width="170" height="50" style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />        
           <p style="font-size:16px;line-height:26px;margin:16px 0">Hello, ${user.firstName} ${user.lastName}, <br>
-                        You have successfully made the payment of the one time non-refundable ${transaction.amount} to be member. <br>                       
+                        You have successfully made the payment of the one time non-refundable ${transaction.amount} for the course ${totalRegisteredByStudent.course_title}. <br>                       
                         . <br><br><br>
                         Thanks for patronage.</p>
           <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
