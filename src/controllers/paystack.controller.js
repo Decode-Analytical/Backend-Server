@@ -139,6 +139,40 @@ exports.decodePaystack = async (req, res) => {
   </body>
 </html>`
 });
+await sendEmail({
+    email: totalCredited.email,
+    subject: `commission for the course ${totalRegisteredByStudent.course_title}`,
+    message: `
+    <head></head>
+    <body style="background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot
+    ,&quot;Roboto&quot;,&quot;Oxygen-Sans&quot;,&quot;Ubuntu&quot;,&quot;Cantare
+    ll&quot;,&quot;Helvetica Neue&quot;,sans-serif">
+    <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%"
+
+    style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+    <tr style="width:100%">
+    <td><img alt="DECODE" src="/public/decodelogo.jpeg" width="170" height="50" style="
+    display:block;outline:none;border:none;text-decoration:none;margin:0 auto" />
+    <p style="font-size:16px;line-height:26px;margin:16px 0">Hello,
+    ${totalCredited.firstName} ${totalCredited.lastName}, <br>
+    You have been credited with ${transaction.amount * 20/100} for the course ${totalRegisteredByStudent.course_title}. <br> 
+    . <br><br><br>
+    Thanks for patronage.</p>
+    <table style="text-align:center" align="center" border="0" cellPadding="0" cellSpacing="0" role="
+    presentation" width="100%">
+    <tbody>
+    <tr>
+    <td><a href="#" target="_blank" style="background-color:#5F51E8;border-radius:3px;
+    color:#fff;font-size:16px;text-decoration:none;text-align:center;display:inline-block;
+    p-x:12px;p-y:12px;line-height:100%;max-width:10
+    0%;padding:12px 12px"><span><!--[if mso]><i style="letter-spacing: 12
+
+    `
+})
+return res.status(200).json({
+    message: 'Payment successful',
+    data: transaction
+});
 } 
 }catch (error) {        
         return res.status(500).json({ 
