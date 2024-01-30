@@ -21,9 +21,9 @@ exports.makeTransfer = async (req, res) => {
        if (!getBanks.data.data.find(bank => bank.code === bankName)) {
         return res.status(400).json({ message: 'Invalid Bank Name' });
        }
-    // if (user.wallet < amount) {
-    //     return res.status(400).json({ message: 'Insufficient funds' });
-    // }
+    if (user.wallet < amount) {
+        return res.status(400).json({ message: 'Insufficient funds' });
+    }
 
     await User.findOneAndUpdate(
       { _id: user._id },
