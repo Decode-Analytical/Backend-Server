@@ -54,8 +54,7 @@ exports.decodePaystack = async (req, res) => {
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
             } 
-            const existingCourse =   await Course.find({title: transaction.title})
-            // console.log({existingCourse})    
+            const existingCourse =   await Course.find({title: transaction.title})             
             const user = await User.findById(transaction.userId);
             if (user) {
                 await User.findOneAndUpdate(
