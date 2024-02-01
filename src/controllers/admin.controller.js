@@ -60,7 +60,7 @@ exports.adminUpdateUserRoles = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'superAdmin') {
+        if(userStatus.roles === 'superadmin') {
             const { email } = req.body;
             const existingUser = await User.findOne({ email: email });
             const newRole = await User.findOneAndUpdate({ _id: existingUser._id }, {
