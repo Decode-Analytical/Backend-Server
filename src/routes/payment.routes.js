@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.use(auth);
 router.post('/initializedPayment/:courseId', paystackPayment);
-router.post('/recievedPayment', decodePaystack);
+router.post('/RecievedPayment', decodePaystack);
 
 
 
