@@ -3,9 +3,10 @@ const { auth } = require('../middleware/auth');
 const { paystackPayment, decodePaystack } = require('../controllers/paystack.controller');
 const router = express.Router();
 
+
+router.post('/RecievedPayment', decodePaystack);
 router.use(auth);
 router.post('/initializedPayment/:courseId', paystackPayment);
-router.post('/recievedPayment', decodePaystack);
 
 
 
