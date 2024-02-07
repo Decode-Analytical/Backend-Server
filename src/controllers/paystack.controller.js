@@ -16,7 +16,7 @@ exports.paystackPayment= async(req, res) => {
             message: 'Invalid Email, The email does not exist'
             }); 
     }
-    // 64d2553bae36cd1aca997a59
+
     const courseId = req.params.courseId;
     const course = await Course.findById( courseId );
     // Create a new order in the database
@@ -27,7 +27,7 @@ exports.paystackPayment= async(req, res) => {
         email: existingEmail.email,
         userId: existingEmail._id, 
         courseId: course._id      
-      });     
+      });   
   // Use Paystack library to initiate payment
     const paystackPayment = paystack.transaction.initialize({
         amount: transaction.amount * 100, 
@@ -54,7 +54,7 @@ exports.decodePaystack = async (req, res) => {
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
             } 
-            const existingCourse =   await Course.find({title: transaction.title})             
+            const existingCourse = await Course.findOne({title: transaction.title})            
             const user = await User.findById(transaction.userId);
             if (user) {
                 await User.findOneAndUpdate(
