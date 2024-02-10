@@ -17,13 +17,9 @@ const walletTransactionSchema = new mongoose.Schema({
     title: {
         type: String,
     },
-    payment_status: {
-        type: String,
-        default: 'pending',
-    },
     transfer_status: {
         type: String,
-        default: 'pending',
+        default: 'success',
     },
     transfer_code: {
         type: String,

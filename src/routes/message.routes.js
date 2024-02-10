@@ -6,7 +6,7 @@ const { auth } = require("../middleware/auth.js");
 router.use(auth);
 
 // Route for creating a new message
-router.post("/messages", messageController.createMessage);
+router.post("/messages/:courseId", messageController.createMessage);
 
 // Route for fetching and displaying messages
 router.get("/messages", messageController.getMessages);

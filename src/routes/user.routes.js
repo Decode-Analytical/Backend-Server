@@ -13,11 +13,10 @@ const {
   deleteUser,
   updateStudentProfilePicture
 } = require("../controllers/user.controller");
-const userValidator = require("../middleware/validator");
 const router = express.Router();
 
-router.post("/signup", userValidator, signUp);
-router.post("/login", userLogin);
+router.post("/signup", signUp);
+router.post("/login", limiter, userLogin);
 router.get("/emailVerify/:token", emailVerify );
 router.post("/forgotpassword", forgotPassword );
 router.post("/resetpassword",  resetPassword );

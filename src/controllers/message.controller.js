@@ -1,5 +1,6 @@
 const User = require("../models/user.model.js");
 const Message = require("../models/message.model.js");
+const { Course } = require("../models/course.model.js");
 
 // create message
 const createMessage = async (req, res) => {
@@ -8,25 +9,46 @@ const createMessage = async (req, res) => {
     const userId = req.user.userId;
 
         if (!user) {
-          throw new Error("User not authenticated");
+          return res.status(401).json({
+            message: 'User not found'
+          });
         }
 
-    const { message, name } = req.body;
+    const { message } = req.body;
+    const { courseId } = req.params;
+
+    // Check if course exists
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({
+        message: 'Course not found'
+      });
+    }
+
+    // Check if user is enrolled in the course
+    const isEnrolled = await Course.findOne({ _id: course._id, userId: userId })
+
+    if (!isEnrolled) {
+      return res.status(401).json({
+        message: 'You are not enrolled in this course'
+      });
+    }
 
     // Create a new chat entry
-    const newChat = new Message({ userId: user._id, message, name: user.firstName + ' ' + user.lastName });
+    const newChat = new Message({ userId: user._id, message, name: user.firstName + ' ' + user.lastName, courseId: course._id });
 
     // Save the chat entry
     await newChat.save();
 
-    res.status(200). json({
+    return res.status(200). json({
       newChat: newChat
     });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: 'Internal Server Error'
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
     });
   }
 };
@@ -38,10 +60,9 @@ async function getMessages(req, res) {
   try {
     const messages = await Message.find();
 
-    res.status(200).json({ success: true, messages });
+    return res.status(200).json({ success: true, messages });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    return res.status(500).json({ success: false, error: 'Internal Server Error', message: error.message });
   }
 }
 
@@ -51,15 +72,15 @@ async function updateMessage(req, res) {
   try {
     const user = req.user;
     const messageId = req.params.id;
-    const { updatedMessage } = req.body;
+    const { message } = req.body;
 
     if (!user) {
-      throw new Error("User not authenticated");
+      return res.status(400).json({ success: false, error: "User not authenticated" });
     }
 
-    const message = await Message.findOneAndUpdate(
+    const updatedMessage = await Message.findOneAndUpdate(
       { _id: messageId, user: user._id },
-      { $set: { message: updatedMessage } },
+      { $set: { message: message } },
       { new: true }
     );
 
@@ -67,9 +88,9 @@ async function updateMessage(req, res) {
       throw new Error("Message not found or user unauthorized");
     }
 
-    res.json({ success: true, message: "Message updated successfully", updatedMessage: message });
+    return res.json({ success: true, message: "Message updated successfully", message: updatedMessage });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ success: false, error: error.message });
   }
 }
 
@@ -91,9 +112,9 @@ async function deleteMessage(req, res) {
       throw new Error("Message not found or user unauthorized");
     }
 
-    res.json({ success: true, message: "Message deleted successfully" });
+    return res.json({ success: true, message: "Message deleted successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ success: false, error: error.message });
   }
 }
 

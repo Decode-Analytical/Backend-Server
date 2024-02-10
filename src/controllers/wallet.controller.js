@@ -67,13 +67,16 @@ exports.makeTransfer = async (req, res) => {
       title: "Transfer to bank account",
       email: user.email,
       userId: user._id,
-      payment_status: "pending",
-      transfer_status: "pending",
       transfer_code: transferCode,
       bank_name: getBanks.data.data.find((bank) => bank.code === bankName).name,
       account_number: accountNumber,
       reason: reason,
     });
+    await sendEmail({
+      email: user.email,
+      subject: "Transfer initiated",
+      message: `Transfer initiated for NGN${amount} to ${getBanks.data.data.find((bank) => bank.code === bankName).name}. Your reference number is: ${transaction.reference}`,
+    })
 
     return res
       .status(201)
@@ -95,59 +98,46 @@ exports.makeTransfer = async (req, res) => {
 };
 
 
+exports.viewTransferTransactions = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const transactions = await WalletTransaction.find({ userId: user._id });
+    return res.status(200).json({
+      message: "Transfer transactions retrieved successfully",
+      transactions,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        error: "An error occurred while retrieving transfer transactions.",
+        message: error.message,
+        error: error.response.data,
+      });
+  }
+};
 
 
-
-exports.updateTransaction = async (req, res) => {
-    try {
-        const { transfer_code } = req.body;
-        const transaction = await WalletTransaction.findOne({ transfer_code });
-        if (!transaction) {
-            return res.status(404).json({
-                message: "Transaction not found",
-            });
-        }
-        if (transaction.transfer_status === "success") {
-            return res.status(400).json({
-                message: "Transaction already successful",
-            });
-        }
-        const updateTransaction = await WalletTransaction.findOneAndUpdate(
-            { transfer_code },
-            {
-                $set: {
-                    transfer_status: "success",
-                    payment_status: "success",
-                },
-            },
-            { new: true }
-        );
-        const user = await User.findById(transaction.userId);
-        await sendEmail({
-            email: user.email,
-            subject: "Transfer successful",
-            html: `
-            <h3>Transfer successful</h3>
-            <p>Your transfer of ${transaction.amount} to ${transaction.bank_name} was successful</p>
-            <p>and Account Name: ${transaction.account_number}</p>
-            <p>Your reference number is: ${transaction.reference}</p>
-            <p>You can view your transaction history <a href="https://decodeanalytical.herokuapp.com/dashboard/transactions">here</a></p>
-            `,
-        })
-        return res.status(200).json({
-            message: "Transaction successful",
-            updateTransaction,
-        });
-    
-    } catch (error) {
-        return res.status(500).json({
-            error: "An error occurred while updating transaction.",
-            message: error.message,
-        });
-    }
-}
-
-
+// view the balance in user's wallet
+exports.viewWalletBalance = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    return res.status(200).json({
+      message: "Wallet balance retrieved successfully",
+      wallet: user.wallet,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        error: "An error occurred while retrieving wallet balance.",
+        message: error.message,
+        error: error.response.data,
+      });
+  }
+};
 
       
 
