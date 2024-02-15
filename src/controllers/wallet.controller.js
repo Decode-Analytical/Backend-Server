@@ -59,6 +59,7 @@ exports.makeTransfer = async (req, res) => {
     );
 
     const transferCode = paystackResponse.data.data.recipient_code;
+    const accountName = paystackResponse.data.data.details.account_name
     const transferData = paystackResponse.data;
 
     const transaction = await WalletTransaction.create({
@@ -68,6 +69,7 @@ exports.makeTransfer = async (req, res) => {
       email: user.email,
       userId: user._id,
       transfer_code: transferCode,
+      account_name: accountName,
       bank_name: getBanks.data.data.find((bank) => bank.code === bankName).name,
       account_number: accountNumber,
       reason: reason,

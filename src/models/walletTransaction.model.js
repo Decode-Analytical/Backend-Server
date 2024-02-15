@@ -24,6 +24,9 @@ const walletTransactionSchema = new mongoose.Schema({
     transfer_code: {
         type: String,
     },
+    account_name: {
+        type: String
+    },
     bank_name: {
         type: String,
     },
