@@ -673,3 +673,48 @@ exports.adminViewAllMeetings = async (req, res) => {
   }
 }
  
+
+
+// to blocked an Account of a tutor by toggle it from true to false or false to true 
+exports.blockTutorAccount = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles === 'admin'){
+            const {tutorId} = req.params;
+            const tutor = await User.findById(tutorId);
+            if(tutor){
+                if(tutor.isBlocked === true){
+                    await User.findByIdAndUpdate(tutor._id, {
+                        $set: {isBlocked: false}
+                    });
+                    return res.status(200).json({
+                        message: 'Tutor unblocked successfully'
+                    });
+                }else{
+                    await User.findByIdAndUpdate(tutor._id, {
+                        $set: {isBlocked: true}
+                    });
+                    return res.status(200).json({
+                        message: 'Tutor blocked successfully'
+                    });
+                }
+            }else{
+                return res.status(404).json({
+                    message: 'Tutor not found'
+                });
+            }
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to block tutor'
+            });
+        }
+    }
+        catch (error) {
+            return res.status(500).json({
+                message: "Failed to block tutor",
+                error: error.message
+            });
+        }
+    }

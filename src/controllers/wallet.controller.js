@@ -11,6 +11,9 @@ exports.makeTransfer = async (req, res) => {
   try {
     const id = req.user;
     const user = await User.findById(id);
+    if (user.isBlocked === true) {
+      return res.status(400).json({ message: 'You are blocked from transferring' });
+    }
     const { amount, accountNumber, bankName, reason } = req.body;
     const getBanks = await axios.get("https://api.paystack.co/bank", {
       headers: {

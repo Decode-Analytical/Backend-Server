@@ -21,7 +21,8 @@ const {
     studentPayForMeeting,
     studentPaid,
     tutorViewHisMeeting,
-    adminViewAllMeetings
+    adminViewAllMeetings,
+    blockTutorAccount
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
@@ -42,6 +43,7 @@ router.get('/getRoomId', studentViewAllMeeting);
 router.get('/totalStudentRegiesteredForACourse/:courseId', studentTotalStudentForCourse);
 router.get('/tutorViewOwnMeetings', tutorViewHisMeeting);
 router.get('/adminViewAllOnlineMeetings', adminViewAllMeetings);
+router.put('/blockTutorAccount/:tutorId', blockTutorAccount);
 
 
 // payment for the video tutor

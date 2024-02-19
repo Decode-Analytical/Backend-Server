@@ -51,6 +51,10 @@ const userSchema = new mongoose.Schema(
     replies: {
       type: Array,
     },
+    isBlocked: {
+      type: Boolean,
+      default: false
+    },
     comments: {
       type: Array,
     },
