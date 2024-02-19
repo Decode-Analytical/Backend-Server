@@ -16,36 +16,36 @@ const crypto = require("crypto");
 
 
 
-exports.adminLogin = async(req, res) => {
+exports.adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (user.roles === "admin") {
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({
-                message: 'Incorrect username or password'
-            });
-        };
-        const isActive = await User.findOne({ _id: user._id });
-        if (isActive.isEmailActive === false) {
-            return res.status(400).json({
-                message: 'Your account is pending. kindly check your email inbox and verify it'
-            });
-        };
-        const token = jwt.sign({
-             _id: user._id,
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(400).json({
+                    message: 'Incorrect username or password'
+                });
+            };
+            const isActive = await User.findOne({ _id: user._id });
+            if (isActive.isEmailActive === false) {
+                return res.status(400).json({
+                    message: 'Your account is pending. kindly check your email inbox and verify it'
+                });
+            };
+            const token = jwt.sign({
+                _id: user._id,
             }, process.env.JWT_SECRET, { expiresIn: '24h' });
-        return res.status(200).json({
-            message: 'User logged in successfully',
-            token,
-            user
-        });
-    }else {
-        return res.status(400).json({
-            message: 'You are not admin'
-        });
-    }
+            return res.status(200).json({
+                message: 'User logged in successfully',
+                token,
+                user
+            });
+        } else {
+            return res.status(400).json({
+                message: 'You are not admin'
+            });
+        }
     } catch (error) {
         res.status(400).json({
             message: 'Error while logging in',
@@ -60,7 +60,7 @@ exports.adminUpdateUserRoles = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'superadmin') {
+        if (userStatus.roles === 'superadmin') {
             const { email } = req.body;
             const existingUser = await User.findOne({ email: email });
             const newRole = await User.findOneAndUpdate({ _id: existingUser._id }, {
@@ -91,11 +91,11 @@ exports.adminViewTransactions = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin') {
             const transactions = await Payment.find({})
-            .sort({ createdAt: -1 })
-            .populate('student', 'name')
-            .populate('course', 'title')
+                .sort({ createdAt: -1 })
+                .populate('student', 'name')
+                .populate('course', 'title')
             return res.status(200).json({
                 transactions
             });
@@ -118,9 +118,9 @@ exports.adminViewStudents = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
-            const students = await User.find({ roles: "student"})
-            .sort({ createdAt: -1 })
+        if (userStatus.roles === 'admin') {
+            const students = await User.find({ roles: "student" })
+                .sort({ createdAt: -1 })
             return res.status(200).json({
                 students
             });
@@ -144,10 +144,10 @@ exports.adminViewCourses = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin') {
             const courses = await Course.find({})
-            .sort({ createdAt: -1 })
-            return res.status(200). json({
+                .sort({ createdAt: -1 })
+            return res.status(200).json({
                 courses
             });
         } else {
@@ -169,11 +169,11 @@ exports.adminViewComments = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin') {
             const comments = await Comment.find({})
-            .sort({ createdAt: -1 })
-            .populate('student', 'name')
-            .populate('course', 'title')
+                .sort({ createdAt: -1 })
+                .populate('student', 'name')
+                .populate('course', 'title')
             return res.status(200).json({
                 comments
             });
@@ -194,12 +194,12 @@ exports.adminTotalStudent = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);   
-        if(userStatus.roles === 'admin') {
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
             const total = await User.countDocuments({});
-            const totalStudent = await User.countDocuments({ roles: 'student'});
-            const admin = await User.countDocuments({ roles: 'admin'});
-            const it = await User.countDocuments({ roles: 'IT'});
+            const totalStudent = await User.countDocuments({ roles: 'student' });
+            const admin = await User.countDocuments({ roles: 'admin' });
+            const it = await User.countDocuments({ roles: 'IT' });
             return res.status(200).json({
                 TotalUser: total,
                 TotalStudent: totalStudent,
@@ -208,8 +208,8 @@ exports.adminTotalStudent = async (req, res) => {
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
+                message: 'You are not authorized to view this page'
+            });
         }
     } catch (error) {
         return res.status(500).json({
@@ -229,7 +229,7 @@ exports.adminTotalPayment = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin') {
             const totalPayment = await Payment.find({
                 student: { $exists: true },
                 course: { $exists: true },
@@ -241,9 +241,9 @@ exports.adminTotalPayment = async (req, res) => {
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             message: 'Total payment not found'
@@ -258,9 +258,9 @@ exports.adminViewProfile = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin') {
             const admin = await User.findById(req.params.userId);
-            if(admin) {
+            if (admin) {
                 return res.status(200).json({
                     instructor: admin
                 });
@@ -271,9 +271,9 @@ exports.adminViewProfile = async (req, res) => {
             }
         } else {
             return res.status(401).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(501).json({
             message: 'There is an error fetch instructor info',
@@ -290,22 +290,23 @@ exports.adminViewAllInstructors = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin') {
-            const instructors = await User.find({ roles: "admin"})
-           .sort({ createdAt: -1 })
+        if (userStatus.roles === 'admin') {
+            const instructors = await User.find({ roles: "admin" })
+                .sort({ createdAt: -1 })
             return res.status(200).json({
                 instructors
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             message: 'Instructor not found'
         });
-    }};
+    }
+};
 
 
 
@@ -316,16 +317,16 @@ exports.adminTotalStudentForCourse = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin' || userStatus.roles === 'student'  ||  userStatus.roles === 'IT') {
+        if (userStatus.roles === 'admin' || userStatus.roles === 'student' || userStatus.roles === 'IT') {
             const total = await Student.countDocuments({ Course });
             return res.status(200).json({
                 totalCourseRegisteredByStudent: total,
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             message: 'Total student not found',
@@ -337,29 +338,29 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 
 //? admin schedule google meeting for students 
 exports.adminScheduleMeeting = async (req, res) => {
-    try {        
-            const { email, description, date, time, courseName, isPaid, amount } = req.body;
-            const organizerN = await User.findOne({ email }); 
-            const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
-            const course = await Course.findOne({ course_title: courseName });
-            if(!course){
-                return res.status(404).json({
-                    message: "This course does not exist in the database"
-                })
-            }
-            if(organizerN){                
+    try {
+        const { email, description, date, time, courseName, isPaid, amount } = req.body;
+        const organizerN = await User.findOne({ email });
+        const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
+        const course = await Course.findOne({ course_title: courseName });
+        if (!course) {
+            return res.status(404).json({
+                message: "This course does not exist in the database"
+            })
+        }
+        if (organizerN) {
             const meeting = await Meeting.create({
-                instructor: organizerN.firstName +'' + organizerN.lastName,
-                description, 
+                instructor: organizerN.firstName + '' + organizerN.lastName,
+                description,
                 instructorId: organizerN._id,
                 courseId: course._id,
-                date, 
+                date,
                 time,
-                courseName: course.course_title, 
-                roomId : linkMeeting,
+                courseName: course.course_title,
+                roomId: linkMeeting,
                 email,
                 isPaid,
-                amount,            
+                amount,
             });
             return res.status(201).json({
                 message: 'Meeting created successfully',
@@ -368,7 +369,7 @@ exports.adminScheduleMeeting = async (req, res) => {
         } else {
             return res.status(404).json({
                 message: 'Your email registered on this platform'
-        })
+            })
         }
     } catch (error) {
         return res.status(500).json({
@@ -382,42 +383,42 @@ exports.adminScheduleMeeting = async (req, res) => {
 // ? get user information by email
 exports.studentJoinMeeting = async (req, res) => {
     try {
-            const { email, } = req.body;
-            const admin = await User.findOne({ email });
-            if(!admin){
-                return res.status(404).json({
-                    message: 'Your email is not registered on this platform as student'
+        const { email, } = req.body;
+        const admin = await User.findOne({ email });
+        if (!admin) {
+            return res.status(404).json({
+                message: 'Your email is not registered on this platform as student'
+            })
+        }
+        const roomId = req.params.roomId;
+        const meeting = await Meeting.findOne({ roomId });
+        if (!meeting) {
+            return res.status(404).json({
+                message: "This room meeting does not exist"
+            })
+        }
+        const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;
+        if (meeting.isPaid === "paid") {
+            const hasPaid = await MeetingTransaction.findOne({ meetingId: meeting._id, userId: admin._id });
+            if (hasPaid === null) {
+                return res.status(401).json({
+                    message: `This meeting is paid. Please proceed to payment here: ${link}.`,
+                });
+            }
+
+            if (hasPaid.transactionType === "refunded") {
+                return res.status(401).json({
+                    message: "Your payment is not successfully yet, kindly contact admin"
                 })
             }
-            const roomId = req.params.roomId;
-            const meeting = await Meeting.findOne({ roomId }); 
-            if(!meeting){
-                return res.status(404).json({
-                    message: "This room meeting does not exist"
-                })
-            }    
-             const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;   
-            if(meeting.isPaid === "paid" ){
-                const hasPaid = await MeetingTransaction.findOne({meetingId: meeting._id, userId: admin._id});
-                if(hasPaid  === null){
-                    return res.status(401).json({ 
-                        message: `This meeting is paid. Please proceed to payment here: ${link}.`,
-                    });
-                }
-                
-                if(hasPaid.transactionType === "refunded"){
-                    return res.status(401).json({
-                        message: "Your payment is not successfully yet, kindly contact admin"
-                    })
-                }
             const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
             const userStatus = await User.findById(admin._id);
-            if(userStatus.roles ==='student' && student || userStatus.roles ==='IT' || userStatus.roles === "admin") {
+            if (userStatus.roles === 'student' && student || userStatus.roles === 'IT' || userStatus.roles === "admin") {
                 return res.status(200).json({
                     meeting,
-                    name: admin.firstName +' '+ admin.lastName,
+                    name: admin.firstName + ' ' + admin.lastName,
                     userId: admin._id,
-                    image: admin.picture                  
+                    image: admin.picture
                 });
             } else {
                 return res.status(200).json({
@@ -427,22 +428,23 @@ exports.studentJoinMeeting = async (req, res) => {
         } else {
             const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
             const userStatus = await User.findById(admin._id);
-            if(userStatus.roles ==='student' && student || userStatus.roles ==='IT' || userStatus.roles === "admin") {
+            if (userStatus.roles === 'student' && student || userStatus.roles === 'IT' || userStatus.roles === "admin") {
                 return res.status(200).json({
                     meeting,
-                    name: admin.firstName +' '+ admin.lastName,
+                    name: admin.firstName + ' ' + admin.lastName,
                     userId: admin._id,
                     image: admin.picture
                 });
             }
-    } }catch (error) {
+        }
+    } catch (error) {
         return res.status(500).json({
             message: 'You are not a registered student',
             error: error.message
         });
     }
 };
-     
+
 
 // view all the meeting events
 exports.studentViewAllMeeting = async (req, res) => {
@@ -450,7 +452,7 @@ exports.studentViewAllMeeting = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles ==='student'|| userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+        if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
             const meeting = await Meeting.find({
                 instructor: { $exists: true },
                 course: { $exists: true },
@@ -465,13 +467,13 @@ exports.studentViewAllMeeting = async (req, res) => {
             });
             return res.status(200).json({
                 total,
-                meeting,  
+                meeting,
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             message: 'Meeting not found',
@@ -479,7 +481,7 @@ exports.studentViewAllMeeting = async (req, res) => {
         });
     }
 };
-      
+
 
 
 // view total student enrolled for a particular course 
@@ -488,7 +490,7 @@ exports.studentTotalStudentForCourse = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles ==='student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+        if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
             const courseId = req.params.courseId;
             const total = await Student.countDocuments({ courseId });
             return res.status(200).json({
@@ -496,9 +498,9 @@ exports.studentTotalStudentForCourse = async (req, res) => {
             });
         } else {
             return res.status(200).json({
-            message: 'You are not authorized to view this page'
-        });
-    }
+                message: 'You are not authorized to view this page'
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             message: 'Total student not found',
@@ -518,7 +520,7 @@ exports.studentPayForMeeting = async (req, res) => {
         const userStatus = await User.findById(user._id);
         const roomId = req.params.roomId;
         const meeting = await Meeting.findOne({ roomId });
-        if(userStatus.roles ==='student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
+        if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
             // Payment logic
             const payments = await MeetingTransaction.create({
                 reference: crypto.randomBytes(8).toString('hex'),
@@ -528,57 +530,58 @@ exports.studentPayForMeeting = async (req, res) => {
                 email: userStatus.email
             })
             const paystackPayment = paystack.transaction.initialize({
-                amount: payments.amount * 100, 
+                amount: payments.amount * 100,
                 email: payments.email,
                 reference: payments.reference,
-                }, 
+            },
                 (error, response) => {
                     if (error) {
-                    console.error(error);
-                     return res.status(500).json({ error: 'An error occurred while initializing payment.' });
-                } else {
-                    return res.json(response.data.authorization_url); 
+                        console.error(error);
+                        return res.status(500).json({ error: 'An error occurred while initializing payment.' });
+                    } else {
+                        return res.json(response.data.authorization_url);
+                    }
                 }
-            }
-        )} else {
+            )
+        } else {
             return res.status(200).json({
-            message: 'You are not authorized to pay for this meeting'
-        });
+                message: 'You are not authorized to pay for this meeting'
+            });
         }
-  } catch (error) {
-    return res.status(500).json({
-      message: "Payment failed",
-      error: error.message
-    });
-  }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Payment failed",
+            error: error.message
+        });
+    }
 }
 
 
 exports.studentPaid = async (req, res) => {
-      try {
-        const { event, data } = req.body; 
-        if(event === 'charge.success'){
+    try {
+        const { event, data } = req.body;
+        if (event === 'charge.success') {
             const { reference } = data;
             const transaction = await MeetingTransaction.findOne({ reference });
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
-            } 
-            const existingCourse =   await Meeting.findById(transaction.meetingId);
+            }
+            const existingCourse = await Meeting.findById(transaction.meetingId);
             // console.log({existingCourse})    
             if (existingCourse) {
                 await MeetingTransaction.findOneAndUpdate(
-                {
-                    _id: transaction._id
-                },
-                {
-                  $set: {transactionType: "paid" }
-                },
-                {
-                    new : true,
-                });
+                    {
+                        _id: transaction._id
+                    },
+                    {
+                        $set: { transactionType: "paid" }
+                    },
+                    {
+                        new: true,
+                    });
             }
-        // send email notification to user
-        const user = await User.findById(transaction.userId);
+            // send email notification to user
+            const user = await User.findById(transaction.userId);
             await sendEmail({
                 email: transaction.email,
                 subject: `Payment Successful`,
@@ -608,10 +611,10 @@ exports.studentPaid = async (req, res) => {
     </table>
   </body>
 </html>`
-});
-} 
-}catch (error) {        
-        return res.status(500).json({ 
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
             error: 'An error occurred while initializing payment.',
             message: error.message
         });
@@ -625,8 +628,8 @@ exports.tutorViewHisMeeting = async (req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);        
-        if(userStatus.roles === 'admin'){
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
             const meeting = await Meeting.find({
                 instructorId: userStatus._id
             });
@@ -634,17 +637,17 @@ exports.tutorViewHisMeeting = async (req, res) => {
                 message: 'Meetings fetched successfully',
                 data: meeting
             });
-        }else{
+        } else {
             return res.status(401).json({
                 message: 'You are not authorized to view meetings'
             });
-        } 
-  } catch (error) {
-    return res.status(500).json({
-      message: "Failed to get tutor's meetings",
-      error: error.message
-    });
-  }
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to get tutor's meetings",
+            error: error.message
+        });
+    }
 }
 
 
@@ -654,25 +657,25 @@ exports.adminViewAllMeetings = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin'){
+        if (userStatus.roles === 'admin') {
             const meetings = await Meeting.find({}).populate('instructorId');
             return res.status(200).json({
                 message: 'All meetings fetched successfully',
-              data: meetings
+                data: meetings
             });
-        }else{
+        } else {
             return res.status(401).json({
                 message: 'You are not authorized to view meetings'
             });
         }
-  } catch (error) {
-    return res.status(500).json({
-        message: "Failed to get all meetings",
-      error: error.message
-    });
-  }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to get all meetings",
+            error: error.message
+        });
+    }
 }
- 
+
 
 
 // to blocked an Account of a tutor by toggle it from true to false or false to true 
@@ -681,40 +684,40 @@ exports.blockTutorAccount = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'admin'){
-            const {tutorId} = req.params;
+        if (userStatus.roles === 'superadmin') {
+            const { tutorId } = req.params;
             const tutor = await User.findById(tutorId);
-            if(tutor){
-                if(tutor.isBlocked === true){
+            if (tutor) {
+                if (tutor.isBlocked === true) {
                     await User.findByIdAndUpdate(tutor._id, {
-                        $set: {isBlocked: false}
+                        $set: { isBlocked: false }
                     });
                     return res.status(200).json({
                         message: 'Tutor unblocked successfully'
                     });
-                }else{
+                } else {
                     await User.findByIdAndUpdate(tutor._id, {
-                        $set: {isBlocked: true}
+                        $set: { isBlocked: true }
                     });
                     return res.status(200).json({
                         message: 'Tutor blocked successfully'
                     });
                 }
-            }else{
+            } else {
                 return res.status(404).json({
                     message: 'Tutor not found'
                 });
             }
-        }else{
+        } else {
             return res.status(401).json({
                 message: 'You are not authorized to block tutor'
             });
         }
     }
-        catch (error) {
-            return res.status(500).json({
-                message: "Failed to block tutor",
-                error: error.message
-            });
-        }
+    catch (error) {
+        return res.status(500).json({
+            message: "Failed to block tutor",
+            error: error.message
+        });
     }
+}
