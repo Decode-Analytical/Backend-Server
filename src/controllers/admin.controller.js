@@ -763,7 +763,6 @@ exports.totalRegisteredStudents = async (req, res) => {
 }
 
 
-// super admin view aggregate total sales 
 exports.totalSales = async (req, res) => {
     try {
         const id = req.user;
@@ -849,7 +848,7 @@ exports.adminTotalSalesForLiveSession = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'admin') {
+        if (userStatus.roles === 'superadmin') {
             const course = await User.findById(userStatus._id);
             if (course) {
                 const totalRegisteredStudents = await MeetingTransaction.find({  });
