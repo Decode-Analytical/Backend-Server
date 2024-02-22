@@ -6,6 +6,10 @@ const studentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    courseOwnerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',

@@ -30,6 +30,7 @@ const courseSchema = new mongoose.Schema({
   },
   isPrice_course:{
     type: Number,
+    float: true,
   },
   modules: {
     type: Array,    

@@ -75,6 +75,7 @@ exports.decodePaystack = async (req, res) => {
             description: existingCourse.course_description,
             image: existingCourse.course_image,
             price: existingCourse.isPrice_course,
+            courseOwnerId: existingCourse.userId,
             userId: transaction.userId,
             module: modules 
 

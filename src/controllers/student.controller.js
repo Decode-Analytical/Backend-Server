@@ -44,6 +44,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
             description: course.course_description,
             image: course.course_image,
             price: course.isPrice_course,
+            courseOwnerId: course.userId,
             userId: userStatus._id,  
             module: modules       
 

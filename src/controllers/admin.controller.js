@@ -721,3 +721,40 @@ exports.blockTutorAccount = async (req, res) => {
         });
     }
 }
+
+
+exports.totalRegisteredStudents = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
+            const course = await User.findById(userStatus._id);
+            if (course) {
+                const totalRegisteredStudents = await Student.find({ courseOwnerId: course._id });
+                let totalStudents = 0;
+                for (let i = 0; i < totalRegisteredStudents.length; i++) {
+                    totalStudents += totalRegisteredStudents[i].price;                    
+                }
+                return res.status(200).json({
+                    message: 'Total registered students fetched successfully',
+                    data: totalStudents
+                })
+               
+            } else {
+                return res.status(404).json({
+                    message: 'Course not found registered by you'
+                });
+            }
+        } else {
+            return res.status(401).json({
+                message: 'You are not authorized to view registered students'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to get total registered students",
+            error: error.message
+        })
+    }
+}
