@@ -453,12 +453,7 @@ exports.studentViewAllMeeting = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
-            const meeting = await Meeting.find({
-                instructor: { $exists: true },
-                course: { $exists: true },
-                date: { $exists: true },
-                time: { $exists: true }
-            });
+            const meeting = await Meeting.find({ instructorId: userStatus._id   });
             const total = await Meeting.countDocuments({
                 instructor: { $exists: true },
                 course: { $exists: true },
@@ -658,7 +653,7 @@ exports.adminViewAllMeetings = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'admin') {
+        if (userStatus.roles === 'superadmin') {
             const meetings = await Meeting.find({}).populate('instructorId');
             return res.status(200).json({
                 message: 'All meetings fetched successfully',
