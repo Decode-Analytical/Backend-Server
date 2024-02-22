@@ -11,7 +11,6 @@ const Course = require("../models/course.model");
 exports.signUp = async (req, res) => {
   try {
     const { firstName, lastName, phoneNumber, email, password } = req.body;
-    // validate the password to include all characters
     if (!password.match(/\d/) || !password.match(/[a-zA-Z]/)) {
         return res.status(400).json({
         message: 'Password must contain at least one capital letter and one number'
@@ -265,12 +264,14 @@ exports.resetPassword = async(req, res) => {
         const { token, password } = req.body;
         const user = await Token.findOne({ token });
         if (user) {
-            // hashed the password 
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
         const updatedUser = await User.findOneAndUpdate({_id: user.userId }, {
+            $set: {
             password: hashedPassword,
+            }
         }, { new: true });
+        await Token.findOneAndDelete({ token });
         return res.status(200).json({
             message: 'Password reset successfully',
             updatedUser
