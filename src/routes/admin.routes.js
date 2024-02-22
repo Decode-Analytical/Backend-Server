@@ -23,12 +23,16 @@ const {
     tutorViewHisMeeting,
     adminViewAllMeetings,
     blockTutorAccount,
-    totalRegisteredStudents 
+    totalRegisteredStudents,
+    totalSales,
+    totalSalesForLiveSession,
+    adminTotalSalesForLiveSession
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
 router.post('/joinmeeting/:roomId', studentJoinMeeting );
 router.post('/adminScheduleMeeting', adminScheduleMeeting  );
+router.post('/receivingPayment', studentPaid);
 router.use(auth);
 router.put('/roles', adminUpdateUserRoles);
 router.get('/viewTransaction', adminViewTransactions );
@@ -46,10 +50,12 @@ router.get('/tutorViewOwnMeetings', tutorViewHisMeeting);
 router.get('/adminViewAllOnlineMeetings', adminViewAllMeetings);
 router.put('/blockTutorAccount/:tutorId', blockTutorAccount);
 router.get('/totalSales', totalRegisteredStudents );
+router.get('/superAdminViewTotalSales', totalSales);
+router.get('/tutorViewSales', totalSalesForLiveSession);
+router.get('/adminViewTotalLiveSessionSales', adminTotalSalesForLiveSession)
 
 
 // payment for the video tutor
 router.post('/paymentInitialized/:roomId', studentPayForMeeting)
-router.post('/receivingPayment', studentPaid);
 
 module.exports = router;

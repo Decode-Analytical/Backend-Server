@@ -12,6 +12,10 @@ const meetingTransactionSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  tutorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   transactionType: {
     type: String,
     enum: ['paid', 'refunded'],

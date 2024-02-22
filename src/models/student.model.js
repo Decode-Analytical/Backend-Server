@@ -19,7 +19,8 @@ const studentSchema = new mongoose.Schema(
       type: String,
     },    
     price: {
-      type: mongoose.Decimal128,
+      type: Number,
+      float: true
     },
     image: {
       type: Array,

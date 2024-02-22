@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter a valid email address"],
     },
-    hasPaid:[
+    courses:[
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

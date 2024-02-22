@@ -527,7 +527,8 @@ exports.studentPayForMeeting = async (req, res) => {
                 amount: meeting.amount,
                 userId: userStatus._id,
                 meetingId: meeting._id,
-                email: userStatus.email
+                email: userStatus.email,
+                tutorId: meeting.userId
             })
             const paystackPayment = paystack.transaction.initialize({
                 amount: payments.amount * 100,
@@ -731,14 +732,16 @@ exports.totalRegisteredStudents = async (req, res) => {
         if (userStatus.roles === 'admin') {
             const course = await User.findById(userStatus._id);
             if (course) {
-                const totalRegisteredStudents = await Student.find({ courseOwnerId: course._id });
-                let totalStudents = 0;
-                for (let i = 0; i < totalRegisteredStudents.length; i++) {
-                    totalStudents += totalRegisteredStudents[i].price;                    
-                }
+                const totalRegisteredStudents = await Student.find({ courseOwnerId: course._id }); 
+               let totalStudents = totalRegisteredStudents.map(student => student.price);
+               let total = 0;
+               for (let i = 0; i < totalStudents.length; i++) {
+                total += totalStudents[i];
+               }            
                 return res.status(200).json({
-                    message: 'Total registered students fetched successfully',
-                    data: totalStudents
+                    message: 'Your Total sales fetched successfully',
+                    sales: totalStudents,
+                    totalSales: total
                 })
                
             } else {
@@ -758,3 +761,123 @@ exports.totalRegisteredStudents = async (req, res) => {
         })
     }
 }
+
+
+// super admin view aggregate total sales 
+exports.totalSales = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'superadmin') {
+            const course = await User.findById(userStatus._id);
+            if (course) {
+                const totalRegisteredStudents = await Student.find({ });
+               let totalStudents = totalRegisteredStudents.map(student => student.price);
+               let total = 0;
+               for (let i = 0; i < totalStudents.length; i++) {
+                total += totalStudents[i];
+               }
+                return res.status(200).json({
+                    message: 'Total sales fetched successfully',
+                    sales: totalStudents,
+                    totalSales: total
+                })
+
+            } else {
+                return res.status(404).json({
+                    message: 'Course not found registered by you'
+                });
+            }
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to view total sales'
+            });
+        }
+    }catch (error) {
+            return res.status(500).json({
+                message: "Failed to get total sales",
+                error: error.message
+            })
+        }
+    }
+
+
+
+exports.totalSalesForLiveSession = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
+            const course = await User.findById(userStatus._id);
+            if (course) {
+                const totalRegisteredStudents = await MeetingTransaction.find({ tutorId: course._id });
+               let totalStudents = totalRegisteredStudents.map(student => student.amount);
+               let total = 0;
+               for (let i = 0; i < totalStudents.length; i++) {
+                total += totalStudents[i];
+               }
+                return res.status(200).json({
+                    message: 'Total sales fetched successfully',
+                    sales: totalStudents,
+                    totalSales: total
+                })
+
+            } else {
+                return res.status(404).json({
+                    message: 'Course not found registered by you'
+                });
+            }
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to view total sales'
+            });
+        }
+    }catch (error) {
+            return res.status(500).json({
+                message: "Failed to get total sales",
+                error: error.message
+            })
+        }
+    }
+
+
+
+exports.adminTotalSalesForLiveSession = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
+            const course = await User.findById(userStatus._id);
+            if (course) {
+                const totalRegisteredStudents = await MeetingTransaction.find({  });
+               let totalStudents = totalRegisteredStudents.map(student => student.amount);
+               let total = 0;
+               for (let i = 0; i < totalStudents.length; i++) {
+                total += totalStudents[i];
+               }
+                return res.status(200).json({
+                    message: 'Total sales fetched successfully',
+                    sales: totalStudents,
+                    totalSales: total
+                })
+
+            } else {
+                return res.status(404).json({
+                    message: 'Course not found registered by you'
+                });
+            }
+        }else{
+            return res.status(401).json({
+                message: 'You are not authorized to view total sales'
+            });
+        }
+    }catch (error) {
+            return res.status(500).json({
+                message: "Failed to get total sales",
+                error: error.message
+            })
+        }
+    }

@@ -51,10 +51,12 @@ exports.decodePaystack = async (req, res) => {
         if(event === 'charge.success'){
             const { reference } = data;
             const transaction = await Transaction.findOne({ reference });
+            console.log(transaction)
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
             } 
-            const existingCourse = await Course.findOne({title: transaction.title})            
+            const existingCourse = await Course.findOne({course_title: transaction.title}) 
+            console.log(existingCourse)           
             const user = await User.findById(transaction.userId);
             if (user) {
                 await User.findOneAndUpdate(
@@ -62,7 +64,9 @@ exports.decodePaystack = async (req, res) => {
                     _id: user._id
                 },
                 {
-                  $push: {hasPaid: existingCourse._id }
+                  $push: { 
+                    courses: existingCourse._id
+                  }
                 },
                 {
                     new : true,
