@@ -21,7 +21,6 @@ exports.createPin = async(req, res)=>{
         const savedPin = await newPin.save();
         return res.status(200).json({
             message: 'Pin created successfully',
-            savedPin
         });
     }
     catch (error) {
@@ -48,7 +47,6 @@ exports.updatePin = async(req, res)=>{
         const updatePin = await Pin.findOneAndUpdate({ userId: user._id }, req.body, { new: true });
         return res.status(200).json({
             message: 'Pin updated successfully',
-            updatePin
         });
     }
     catch (error) {
