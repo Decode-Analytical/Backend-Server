@@ -24,7 +24,8 @@ const meetingTransactionSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: true
+    required: true,
+    float: true
   },
   reference: {
     type: String,

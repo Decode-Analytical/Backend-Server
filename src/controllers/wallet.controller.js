@@ -1,5 +1,6 @@
 const WalletTransaction = require('../models/walletTransaction.model');
 const User = require('../models/user.model');
+const Pin = require('../models/pin.models');
 const crypto = require('crypto');
 const sendEmail = require('../emails/email');
 const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
@@ -32,6 +33,10 @@ exports.makeTransfer = async (req, res) => {
       { _id: user._id },
       { $inc: { wallet: -amount } }
     );
+    const confirmPin = await Pin.findOne({ userId: user._id, pin: req.body.pin });
+    if (!confirmPin) {
+      return res.status(400).json({ message: 'Invalid Pin' });
+    }
 
     const paystackResponse = await axios.post(
       "https://api.paystack.co/transferrecipient",

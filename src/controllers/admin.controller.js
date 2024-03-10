@@ -402,7 +402,7 @@ exports.studentJoinMeeting = async (req, res) => {
             const hasPaid = await MeetingTransaction.findOne({ meetingId: meeting._id, userId: admin._id });
             if (hasPaid === null) {
                 return res.status(401).json({
-                    message: `This meeting is paid. Please proceed to payment here: ${link}.`,
+                    message: `This meeting is paid. Please proceed to make payment here: ${link}.`,
                 });
             }
 
