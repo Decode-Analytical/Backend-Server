@@ -1,5 +1,6 @@
 const WalletTransaction = require('../models/walletTransaction.model');
 const User = require('../models/user.model');
+const Student = require('../models/student.model');
 const Pin = require('../models/pin.models');
 const crypto = require('crypto');
 const sendEmail = require('../emails/email');
@@ -149,7 +150,99 @@ exports.viewWalletBalance = async (req, res) => {
   }
 };
 
-      
+
+// calculate the total amount in WalletTransaction 
+exports.calculateWithdrawalBalance = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    if(user.roles === "admin" || user.roles === "superadmin"){
+    const transactions = await WalletTransaction.find({ userId: user._id });
+    const total = transactions.reduce((acc, curr) => {
+      return acc + curr.amount;
+    }, 0);
+    return res.status(200).json({
+      message: "Wallet balance successfully",
+      totalWithdrawal: total,
+    });
+  }else{
+    return res.status(403).json({
+      message: "You don't have permission to view withdrawal balance"
+    });
+  }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        error: "An error occurred while calculating wallet balance.",
+        message: error.message,
+        error: error.response.data,
+      });
+  }
+};
+
+exports.viewOwnerEarnings = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    if(user.roles === "admin" || user.roles === "superadmin"){ 
+    const transactions = await Student.find({ userId: user._id })
+    .sort({createdAt: -1})
+    .select('-__v')
+    .select('-module')
+    .select('-description')
+    .select('-userId')
+    .select('-courseOwnerId')
+    .select('-courseId')
+    const totalEarnings = transactions.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, 0);
+    return res.status(200).json({
+      message: "User's Earnings retrieved successfully",
+      earnings: user.wallet,
+      transactions: totalEarnings
+    });
+  }else{
+    return res.status(403).json({
+      message: "You don't have permission to view earnings"
+    });
+  }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        error: "An error occurred while retrieving user profile.",
+        message: error.message
+      });
+  }
+}
 
 
+exports.viewOwnerTotalBalance = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    if(user.roles === "admin" || user.roles === "superadmin"){ 
+    const transactions = await Student.find({ userId: user._id })
+    .sort({createdAt: -1})
+    .select('-__v')
+    .select('-module')
+    return res.status(200).json({
+      message: "User's Total Balance retrieved successfully",
+      totalBalance: user.wallet,
+    });
+  }else{
+    return res.status(403).json({
+      message: "You don't have permission to view earnings"
+    });
+  }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        error: "An error occurred while retrieving user profile.",
+        message: error.message
+      });
+  }
+}
 
