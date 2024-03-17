@@ -17,6 +17,10 @@ const courseSchema = new mongoose.Schema({
   course_language: {
     type: String,
   },
+  visitCount: {
+    type: Number,
+    default: 0
+  },
   reviews: {
     type: Array,
   },

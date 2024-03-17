@@ -102,6 +102,13 @@ exports.studentViewCourseDetails = async(req, res) => {
             .select("-module.comment_count")
             .select("-module.userId")
             .select("-module.courseId")
+             
+            const updatedCourse = await Course.findByIdAndUpdate({_id: courseId}, {
+                $inc: {visitCount: +1}
+            }, {
+                new: true
+            });
+
             if(Array.isArray(result)&& result.length === 0) {  
                 return res.status(404).json({
                     message: 'Course not found, You did not registered for this course'

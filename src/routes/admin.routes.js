@@ -26,7 +26,13 @@ const {
     totalRegisteredStudents,
     totalSales,
     totalSalesForLiveSession,
-    adminTotalSalesForLiveSession
+    adminTotalSalesForLiveSession,
+    adminViewTotalStudentRegistered,
+    adminDailyCourseVisitCount,
+    adminMonthlyCourseSalesAnalytics,
+    adminWeeklyCourseSalesAnalytics,
+    adminMonthlyAndWeeklyCourseSalesAnalytics,
+    adminDateRangeCourseSalesAnalytics
   } = require('../controllers/admin.controller');
 
 router.post('/adminSignIn', adminLogin);
@@ -52,7 +58,14 @@ router.put('/blockTutorAccount/:tutorId', blockTutorAccount);
 router.get('/totalSales', totalRegisteredStudents );
 router.get('/superAdminViewTotalSales', totalSales);
 router.get('/tutorViewSales', totalSalesForLiveSession);
-router.get('/adminViewTotalLiveSessionSales', adminTotalSalesForLiveSession)
+router.get('/adminViewTotalLiveSessionSales', adminTotalSalesForLiveSession);
+router.get('/adminViewTotalStudentRegistered', adminViewTotalStudentRegistered);
+router.get('/adminDailyCourseVisitCount', adminDailyCourseVisitCount);
+router.get('/adminMonthlyCourseSalesAnalytics', adminMonthlyCourseSalesAnalytics);
+router.get('/adminWeeklyCourseSalesAnalytics', adminWeeklyCourseSalesAnalytics);
+router.get('/adminMonthlyAndWeeklyCourseSalesAnalytics', adminMonthlyAndWeeklyCourseSalesAnalytics);
+router.get('/adminDateRangeCourseSalesAnalytics', adminDateRangeCourseSalesAnalytics);
+
 
 
 // payment for the video tutor

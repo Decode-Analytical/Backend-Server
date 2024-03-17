@@ -258,7 +258,7 @@ exports.adminViewProfile = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'admin') {
+        if (userStatus.roles === 'admin' || userStatus.roles === "superadmin") {
             const admin = await User.findById(req.params.userId);
             if (admin) {
                 return res.status(200).json({
@@ -290,7 +290,7 @@ exports.adminViewAllInstructors = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'admin') {
+        if (userStatus.roles === 'superadmin') {
             const instructors = await User.find({ roles: "admin" })
                 .sort({ createdAt: -1 })
             return res.status(200).json({
@@ -318,7 +318,7 @@ exports.adminTotalStudentForCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === 'admin' || userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const total = await Student.countDocuments({ Course });
+            const total = await Student.countDocuments({});
             return res.status(200).json({
                 totalCourseRegisteredByStudent: total,
             });
@@ -876,4 +876,286 @@ exports.adminTotalSalesForLiveSession = async (req, res) => {
         }
     }
 
-    
+// total students registered for admin all courses  
+
+exports.adminViewTotalStudentRegistered= async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
+            const total = await Student.countDocuments({ userId: userStatus._id});
+            return res.status(200).json({
+                totalStudents: total,
+            });
+        } else {
+            return res.status(200).json({
+                message: 'You are not authorized to view this page'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Total student not found',
+            error: error.message
+        });
+    }
+};
+
+
+exports.adminDailyCourseVisitCount = async (req, res) => {
+    try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+    if (userStatus.roles === 'admin') {
+      const today = new Date();
+      const lastWeek = new Date(today.getTime() - (7*24*60*60*1000));
+      const total = await Course.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: lastWeek
+            },
+            userId: userStatus._id
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: "$visitCount" }
+          }
+        }
+      ]);
+      return res.status(200).json({
+        visitCount: total[0] ? total[0].count : 0
+      });
+    } else {
+      return res.status(200).json({
+        message: 'You are not authorized to view this page'
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Daily visit count not found',
+      error: error.message
+    });
+  }
+};
+
+
+// sales analytics of the course by month by the admin 
+exports.adminMonthlyCourseSalesAnalytics = async (req, res) => {
+    try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+
+    if (userStatus.roles === 'admin') {
+
+      const months = [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+      ];
+
+      const salesAnalytics = await MeetingTransaction.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(new Date().setMonth(new Date().getMonth()-11))
+            },
+            tutorId: userStatus._id
+          }
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            total: { $sum: "$amount" }
+          }
+        }
+      ]);
+
+      return res.status(200).json({
+        salesAnalytics: salesAnalytics.map(item => ({
+          month: months[item._id - 1],
+          totalSales: item.total
+        }))
+      });
+
+    } else {
+      return res.status(401).json({
+        message: "You are not authorized to view sales analytics",
+        });
+    }
+}catch (error) {
+    return res.status(500).json({
+    message: 'Monthly sales analytics not found',
+    error: error.message
+  });
+}
+}
+
+
+// sales analytics of the course by weeks by the admin 
+exports.adminWeeklyCourseSalesAnalytics = async (req, res) => {
+  try {
+  const id = req.user;
+  const user = await User.findById(id);
+  const userStatus = await User.findById(user._id);
+
+  if (userStatus.roles === 'admin') {
+
+    const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+
+    const salesAnalytics = await MeetingTransaction.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(new Date().setDate(new Date().getDate()-28))
+          },
+          tutorId: userStatus._id
+        }
+      },
+      {
+        $group: {
+          _id: { $week: "$createdAt" },
+          total: { $sum: "$amount" }
+        }
+      }
+    ]);
+
+    return res.status(200).json({
+      salesAnalytics: salesAnalytics.map(item => ({
+        week: weeks[item._id - 1],
+        totalSales: item.total
+      }))
+    });
+
+  } else {
+    return res.status(401).json({
+      message: "You are not authorized to view sales analytics"
+    });
+  }
+}catch (error) {
+  return res.status(500).json({
+    message: 'Weekly sales analytics not found',
+    error: error.message
+  });
+}
+}
+
+
+// sales analytics of the course by weeks and month by the admin 
+exports.adminMonthlyAndWeeklyCourseSalesAnalytics = async (req, res) => {
+    try {
+    const id = req.user;
+    const user = await User.findById(id);
+    const userStatus = await User.findById(user._id);
+
+    if (userStatus.roles === 'admin'|| userStatus.roles === 'superadmin') {
+
+      const months = [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+      ];
+
+      const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+
+      const salesAnalytics = await Payment.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(new Date().setMonth(new Date().getMonth()-11))
+            },
+            // tutorId: userStatus._id
+          }
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            total: { $sum: "$amount" }
+          }
+        },
+        {
+          $group: {
+            _id: { $week: "$createdAt" },
+            total: { $sum: "$amount" }
+          }
+        }
+      ]);
+
+      return res.status(200).json({
+        monthlySales: salesAnalytics.map(item => ({
+          month: months[item._id.$month - 1],
+          totalSales: item.total
+        })),
+        weeklySales: salesAnalytics.map(item => ({
+          week: weeks[item._id.$week - 1],
+          totalSales: item.total
+        }))
+      });
+      } else {
+        return res.status(401).json({
+          message: "You are not authorized to view sales analytics"
+        });
+      }
+    }catch(error){
+        return res.status(500).json({
+        message: 'Monthly and weekly sales analytics not found',
+        error: error.message
+      });
+    }
+}
+
+      // sales analytics of the course by date range by the admin 
+      exports.adminDateRangeCourseSalesAnalytics = async (req, res) => {
+        try {
+          const id = req.user;
+          const user = await User.findById(id);
+          const userStatus = await User.findById(user._id);
+
+          if (userStatus.roles === 'admin' || userStatus.roles === "superadmin") {
+
+            const startDate = req.body.startDate;
+            const endDate = req.body.endDate;
+            const formattedStartDate = new Date(startDate).toLocaleDateString('en-GB');
+            const formattedStartDate1 = new Date(endDate).toLocaleDateString('en-GB');
+
+
+            const salesAnalytics = await MeetingTransaction.aggregate([
+              {
+                $match: {
+                  createdAt: { 
+                    $gte: formattedStartDate,
+                    $lte: formattedStartDate1
+                  },
+                //   tutorId: userStatus._id
+                }
+              },
+              {
+                $group: {
+                  _id: null,
+                  total: { $sum: "$amount" }
+                }
+              }
+            ]);
+
+            return res.status(200).json({
+              totalSales: salesAnalytics[0] ? salesAnalytics[0].total : 0
+            });
+
+          } else {
+            return res.status(401).json({
+              message: "You are not authorized to view sales analytics"
+            });
+          }
+        }catch(error){
+          return res.status(500).json({
+            message: 'Date range sales analytics not found',
+            error: error.message
+          });
+        }
+      }
