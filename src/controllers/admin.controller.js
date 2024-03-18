@@ -959,7 +959,7 @@ exports.adminMonthlyCourseSalesAnalytics = async (req, res) => {
         "October", "November", "December"
       ];
 
-      const salesAnalytics = await MeetingTransaction.aggregate([
+      const salesAnalytics = await Payment.aggregate([
         {
           $match: {
             createdAt: {
@@ -1008,7 +1008,7 @@ exports.adminWeeklyCourseSalesAnalytics = async (req, res) => {
 
     const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
 
-    const salesAnalytics = await MeetingTransaction.aggregate([
+    const salesAnalytics = await Payment.aggregate([
       {
         $match: {
           createdAt: {
@@ -1049,66 +1049,72 @@ exports.adminWeeklyCourseSalesAnalytics = async (req, res) => {
 // sales analytics of the course by weeks and month by the admin 
 exports.adminMonthlyAndWeeklyCourseSalesAnalytics = async (req, res) => {
     try {
-    const id = req.user;
-    const user = await User.findById(id);
-    const userStatus = await User.findById(user._id);
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
 
-    if (userStatus.roles === 'admin'|| userStatus.roles === 'superadmin') {
+        if (userStatus.roles === 'admin' || userStatus.roles === 'superadmin') {
+            const months = [
+                "January", "February", "March",
+                "April", "May", "June",
+                "July", "August", "September",
+                "October", "November", "December"
+            ];
 
-      const months = [
-        "January", "February", "March",
-        "April", "May", "June",
-        "July", "August", "September",
-        "October", "November", "December"
-      ];
+            const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
 
-      const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+            const salesAnalytics = await Payment.aggregate([
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: new Date(new Date().setMonth(new Date().getMonth() - 11))
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            month: { $month: "$createdAt" },
+                            week: { $week: "$createdAt" }
+                        },
+                        total: { $sum: "$amount" }
+                    }
+                }
+            ]);
 
-      const salesAnalytics = await Payment.aggregate([
-        {
-          $match: {
-            createdAt: {
-              $gte: new Date(new Date().setMonth(new Date().getMonth()-11))
-            },
-            // tutorId: userStatus._id
-          }
-        },
-        {
-          $group: {
-            _id: { $month: "$createdAt" },
-            total: { $sum: "$amount" }
-          }
-        },
-        {
-          $group: {
-            _id: { $week: "$createdAt" },
-            total: { $sum: "$amount" }
-          }
+            const monthlySales = [];
+            const weeklySales = [];
+
+            salesAnalytics.forEach(item => {
+                monthlySales.push({
+                    month: months[item._id.month - 1],
+                    totalSales: item.total
+                });
+
+                weeklySales.push({
+                    week: weeks[item._id.week - 1],
+                    totalSales: item.total
+                });
+            });
+
+            return res.status(200).json({
+                monthlySales,
+                weeklySales
+            });
+        } else {
+            return res.status(401).json({
+                message: "You are not authorized to view sales analytics"
+            });
         }
-      ]);
-
-      return res.status(200).json({
-        monthlySales: salesAnalytics.map(item => ({
-          month: months[item._id.$month - 1],
-          totalSales: item.total
-        })),
-        weeklySales: salesAnalytics.map(item => ({
-          week: weeks[item._id.$week - 1],
-          totalSales: item.total
-        }))
-      });
-      } else {
-        return res.status(401).json({
-          message: "You are not authorized to view sales analytics"
-        });
-      }
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-        message: 'Monthly and weekly sales analytics not found',
-        error: error.message
-      });
+            message: 'Monthly and weekly sales analytics not found',
+            error: error.message
+        });
     }
 }
+
+
 
       // sales analytics of the course by date range by the admin 
       exports.adminDateRangeCourseSalesAnalytics = async (req, res) => {

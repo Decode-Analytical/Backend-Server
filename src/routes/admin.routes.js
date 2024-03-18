@@ -64,7 +64,7 @@ router.get('/adminDailyCourseVisitCount', adminDailyCourseVisitCount);
 router.get('/adminMonthlyCourseSalesAnalytics', adminMonthlyCourseSalesAnalytics);
 router.get('/adminWeeklyCourseSalesAnalytics', adminWeeklyCourseSalesAnalytics);
 router.get('/adminMonthlyAndWeeklyCourseSalesAnalytics', adminMonthlyAndWeeklyCourseSalesAnalytics);
-router.get('/adminDateRangeCourseSalesAnalytics', adminDateRangeCourseSalesAnalytics);
+// router.get('/adminDateRangeCourseSalesAnalytics', adminDateRangeCourseSalesAnalytics);
 
 
 

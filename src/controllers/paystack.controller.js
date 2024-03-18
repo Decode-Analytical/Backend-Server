@@ -26,7 +26,8 @@ exports.paystackPayment= async(req, res) => {
         title: course.course_title,
         email: existingEmail.email,
         userId: existingEmail._id, 
-        courseId: course._id      
+        courseId: course._id,
+        tutorId: course.userId  
       });   
   // Use Paystack library to initiate payment
     const paystackPayment = paystack.transaction.initialize({
