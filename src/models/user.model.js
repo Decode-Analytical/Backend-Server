@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
       trim: true,
       match: [/^\w+$/, "Please enter a valid lastName"],
     },
-
     email: {
       type: String,
       required: true,
@@ -22,6 +21,12 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter a valid email address"],
+      validate: {
+        validator: function (v) {
+          return /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email address`,
+      }
     },
     courses:[
       {
@@ -40,7 +45,17 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
       required: true,
-      match: /[0-9]{10}/
+      match: /[0-9]{10}/,
+      validate: {
+        validator: function (v) {
+          return /[0-9]{10}/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid phone number`,
+      }
+    },
+    earnings: {
+      type: Number,
+      default: 0,
     },
     wallet: {
       type: Number,
@@ -70,12 +85,14 @@ const userSchema = new mongoose.Schema(
     default: 0,
   },
   points: {
-    type: mongoose.Decimal128,
+    type: Number,
     default: 0,
+    float: true
   },
   score: {
-    type: mongoose.Decimal128,
+    type: Number,
     default: 0,
+    float: true
   },
   facebook: {
     type: String,

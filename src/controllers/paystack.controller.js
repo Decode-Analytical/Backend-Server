@@ -98,7 +98,10 @@ exports.decodePaystack = async (req, res) => {
         });
         // credit the course owner wallet 
         const ownerCredited = await User.findByIdAndUpdate({_id: totalRegisteredByStudent.userId}, {
-            $inc: { wallet: +transaction.amount * 80/100 }
+            $inc: { 
+                wallet: +transaction.amount * 80/100,
+                earnings: +transaction.amount * 80/100
+             }
         },
         {
             new: true
@@ -106,7 +109,10 @@ exports.decodePaystack = async (req, res) => {
 
         // update the owner of the company wallet
         const totalCredited = await User.findOneAndUpdate({ roles: "superadmin" }, {
-            $inc: {wallet : + transaction.amount * 20/100 }
+            $inc: {
+                wallet : + transaction.amount * 20/100,
+                earnings: +transaction.amount * 20/100
+             }
         },
         {
             new: true

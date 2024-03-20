@@ -199,7 +199,7 @@ exports.viewOwnerEarnings = async (req, res) => {
     }, 0);
     return res.status(200).json({
       message: "User's Earnings retrieved successfully",
-      earnings: user.wallet,
+      earnings: user.earnings,
       transactions: totalEarnings
     });
   }else{
