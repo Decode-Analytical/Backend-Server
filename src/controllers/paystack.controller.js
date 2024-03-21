@@ -34,6 +34,8 @@ exports.paystackPayment= async(req, res) => {
         amount: transaction.amount * 100, 
         email: transaction.email,
         reference: transaction.reference,
+        first_name: userStatus.firstName,
+        last_name: userStatus.lastName,
         }, 
         (error, response) => {
             if (error) {

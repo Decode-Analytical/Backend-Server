@@ -2,12 +2,13 @@ const User = require('../models/user.model');
 const { Course } = require('../models/course.model');
 const Student = require('../models/student.model');
 // const Comment = require('../models/comment.model');
+const sendEmail = require('../emails/email');
 const Payment = require('../models/transaction.model');
 const Meeting = require('../models/meeting.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const referralCodeGenerator = require('referral-code-generator');
-const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
+const paystack = require('paystack')(process.env.DECODE_LIVE_CLASS);
 const MeetingTransaction = require('../models/meetingTransact.model');
 const crypto = require("crypto");
 
@@ -517,19 +518,26 @@ exports.studentPayForMeeting = async (req, res) => {
         const roomId = req.params.roomId;
         const meeting = await Meeting.findOne({ roomId });
         if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
-            // Payment logic
+            const paymentExist = await MeetingTransaction.findOne({ meetingId: meeting._id, userId: userStatus._id });
+            if(paymentExist){
+                return res.status(401).json({
+                    message: "You have already paid for this meeting"
+                })
+            }
             const payments = await MeetingTransaction.create({
                 reference: crypto.randomBytes(8).toString('hex'),
                 amount: meeting.amount,
                 userId: userStatus._id,
                 meetingId: meeting._id,
                 email: userStatus.email,
-                tutorId: meeting.userId
+                tutorId: meeting.userId,
             })
             const paystackPayment = paystack.transaction.initialize({
                 amount: payments.amount * 100,
                 email: payments.email,
-                reference: payments.reference,
+                reference: payments.reference,                
+                first_name: userStatus.firstName,
+                last_name: userStatus.lastName,
             },
                 (error, response) => {
                     if (error) {
@@ -563,8 +571,7 @@ exports.studentPaid = async (req, res) => {
             if (!transaction) {
                 return res.status(404).json({ message: 'Transaction not found' });
             }
-            const existingCourse = await Meeting.findById(transaction.meetingId);
-            // console.log({existingCourse})    
+            const existingCourse = await Meeting.findById(transaction.meetingId);   
             if (existingCourse) {
                 await MeetingTransaction.findOneAndUpdate(
                     {
@@ -577,10 +584,15 @@ exports.studentPaid = async (req, res) => {
                         new: true,
                     });
                 // update User's earnings and wallet 
-                const user = await User.findById(existingCourse.userId);
-                user.wallet += transaction.amount * 80/100;
-                user.earnings += transaction.amount * 80/100;
-                await user.save();
+                const user = await User.findOneAndUpdate({ _id: existingCourse.userId }, {
+                    $inc: {
+                        earnings: +transaction.amount * 80/100,
+                        wallet: +transaction.amount * 80/100
+                    }
+                },
+                {
+                    new: true
+                })
 
                 const totalCredited = await User.findOneAndUpdate({ roles: "superadmin" }, {
                     $inc: {
@@ -622,11 +634,15 @@ exports.studentPaid = async (req, res) => {
     </table>
   </body>
 </html>`
-            });
-        }
+    });
+    return res.status(200).json({
+        message: 'Payment Successful',
+                data: transaction
+        });
+    }
     } catch (error) {
         return res.status(500).json({
-            error: 'An error occurred while initializing payment.',
+            error: 'An error occurred while Receiving payment.',
             message: error.message
         });
     }
@@ -1397,6 +1413,33 @@ exports.superAdminTotalEarnings = async (req, res) => {
     }catch (error) {
         return res.status(500).json({
             message: 'Total earnings not found',
+            error: error.message
+        });
+    }
+}
+
+
+// get all the meetingTransaction and delete them all.
+exports.adminDeleteAllMeetingTransactions = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if (userStatus.roles === 'admin') {
+            const meetingTransactions = await MeetingTransaction.find({});
+            await MeetingTransaction.deleteMany({});
+            return res.status(200).json({
+                message: 'All meeting transactions deleted successfully',
+                data: meetingTransactions
+            });
+        } else {
+            return res.status(401).json({
+                message: 'You are not authorized to delete meeting transactions'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to delete all meeting transactions",
             error: error.message
         });
     }

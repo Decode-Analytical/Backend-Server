@@ -38,6 +38,7 @@ router.get('/adminWeeklyLiveSessionSalesAnalytics', adminController.adminWeeklyL
 router.get('/adminMonthlyAndWeeklyLiveSessionSalesAnalytics', adminController.adminMonthlyAndWeeklyLiveSessionSalesAnalytics);
 router.get('/superAdminTotalEarnings', adminController.superAdminTotalEarnings);
 router.get('/adminTotalEarnings', adminController.adminTotalEarnings );
+router.delete('/adminDeleteAllMeetingTransactions', adminController.adminDeleteAllMeetingTransactions);
 
 
 
