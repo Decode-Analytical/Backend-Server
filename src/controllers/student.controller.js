@@ -32,7 +32,7 @@ exports.studentRegisterCourse = async(req, res, next) => {
               message: 'You have reached your limit of 10 courses'
             });
           };
-          const link = `<a href="https://decode-mnjh.onrender.com/api/payment/initializePayment/${courseId}"</a>`;
+          const link = `<a href="https://decode-mnjh.onrender.com/api/payment/initializedPayment/${courseId}"</a>`;
            
         if(course.isPaid_course === 'paid' ){
             return res.status(401).json({message: `pls, kindly click on the ${link} to pay for this course`})
