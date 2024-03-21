@@ -8,7 +8,7 @@ const Meeting = require('../models/meeting.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const referralCodeGenerator = require('referral-code-generator');
-const paystack = require('paystack')(process.env.DECODE_LIVE_CLASS);
+const paystack_live = require('paystack')(process.env.DECODE_LIVE_CLASS);
 const MeetingTransaction = require('../models/meetingTransact.model');
 const crypto = require("crypto");
 
@@ -532,7 +532,7 @@ exports.studentPayForMeeting = async (req, res) => {
                 email: userStatus.email,
                 tutorId: meeting.userId,
             })
-            const paystackPayment = paystack.transaction.initialize({
+            const paystackPayment = paystack_live.transaction.initialize({
                 amount: payments.amount * 100,
                 email: payments.email,
                 reference: payments.reference,                
