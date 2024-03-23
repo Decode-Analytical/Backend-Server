@@ -8,12 +8,14 @@ const StudentCourse = require("../models/student.model");
 const Course = require("../models/course.model");
 
 
+
+
 exports.signUp = async (req, res) => {
   try {
     const { firstName, lastName, phoneNumber, email, password } = req.body;
-    if (!password.match(/\d/) || !password.match(/[a-zA-Z]/)) {
+    if (!password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) || !password.match(/[a-zA-Z]/)) {
         return res.status(400).json({
-        message: 'Password must contain at least one capital letter and one number'
+        message: 'Password must contain at least one capital letter and one number and special character'
       });
     }
     const salt = await bcrypt.genSalt(10);
@@ -23,6 +25,12 @@ exports.signUp = async (req, res) => {
       return res.status(400).json({
         message: 'User already exists'
       });
+    }
+    const phoneNumberExist = await User.findOne({ phoneNumber });
+    if(phoneNumberExist){
+        return res.status(400).json({
+            message: 'Phone number already exists'
+        })
     }
     const newUser = await User.create({
       firstName,

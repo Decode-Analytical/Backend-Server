@@ -57,10 +57,12 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       trim: true,
+      required: true,
     },
     phoneNumber: {
       type: Number,
       required: true,
+      unique: true,
       match: /[0-9]{10}/,
       validate: {
         validator: function (v) {
