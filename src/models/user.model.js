@@ -7,12 +7,28 @@ const userSchema = new mongoose.Schema(
       required: [true, "firstName must be Provided"],
       trim: true,
       match: [/^\w+$/, "Please enter a valid firstName"],
+      minlength: [3, "firstName must be at least 3 characters"],
+      maxlength: [20, "firstName must be less than 20 characters"],
+       validate: {
+        validator: function (v) {
+          return /^\w+$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid firstName`,
+      }
     },
     lastName: {
       type: String,
       required: [true, "lastName must be Provided"],
       trim: true,
       match: [/^\w+$/, "Please enter a valid lastName"],
+      minlength: [3, "lastName must be at least 3 characters"],
+      maxlength: [20, "lastName must be less than 20 characters"],
+      validate: {
+        validator: function (v) {
+          return /^\w+$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid lastName`,
+      }
     },
     email: {
       type: String,
