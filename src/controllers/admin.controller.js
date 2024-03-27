@@ -363,6 +363,7 @@ exports.adminScheduleMeeting = async (req, res) => {
                 email,
                 isPaid,
                 amount,
+                course_image: course.course_image,
             });
             return res.status(201).json({
                 message: 'Meeting created successfully',

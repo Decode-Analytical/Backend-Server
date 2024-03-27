@@ -46,6 +46,9 @@ const meetupSchema = new mongoose.Schema({
         type: Number,
         defualt: 0
     },
+    course_image: {
+        type: Array,
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
