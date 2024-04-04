@@ -270,6 +270,11 @@ exports.forgotPassword = async(req, res) => {
 exports.resetPassword = async(req, res) => {
     try {
         const { token, password } = req.body;
+        if (!password) {
+            return res.status(400).json({
+                message: 'Password cannot be empty'
+            });
+        };
         const user = await Token.findOne({ token });
         if (user) {
             const salt = await bcrypt.genSalt(10);
