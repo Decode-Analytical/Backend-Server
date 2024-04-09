@@ -1585,18 +1585,18 @@ exports.adminWeeklyMonthlyAndYearlyWithdrawals = async (req, res) => {
 
             const monthlyEarnings = Object.keys(monthlyEarningsMap).map(key => ({
                 monthYear: key,
-                totalMonthlyEarnings: monthlyEarningsMap[key]
+                totalMonthlyWithdrawals: monthlyEarningsMap[key]
             }));
 
             const yearlyEarnings = Object.keys(yearlyEarningsMap).map(key => ({
                 year: key,
-                totalYearlyEarnings: yearlyEarningsMap[key]
+                totalYearlyWithdrawals: yearlyEarningsMap[key]
             }));
 
             const weeklyEarnings = earningsAnalysis.map(item => ({
                 week: item._id.week,
                 year: item._id.year,
-                totalWeeklyEarnings: item.totalEarnings
+                totalWeeklyWithdrawals: item.totalEarnings
             }));
 
             return res.status(200).json({
