@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const referralCodeGenerator = require('referral-code-generator');
 const paystack_live = require('paystack')(process.env.DECODE_LIVE_CLASS);
 const MeetingTransaction = require('../models/meetingTransact.model');
+const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
 
 
@@ -1445,3 +1446,170 @@ exports.adminDeleteAllMeetingTransactions = async (req, res) => {
         });
     }
 }
+
+
+// admin weekly, monthly and yearly earnings 
+exports.adminWeeklyMonthlyAndYearlyEarnings = async (req, res) => {
+    try {
+        const id = req.user._id; 
+        const user = await User.findById(id);
+
+        if (user && user.roles.includes('admin')) { 
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            const earningsAnalysis = await User.aggregate([
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1))
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            week: { $week: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                            year: { $year: "$createdAt" }
+                        },
+                        totalEarnings: { $sum: "$earnings" }
+                    }
+                },
+                { $sort: { "_id.year": 1, "_id.week": 1 } } 
+            ]);
+
+            const monthlyEarningsMap = {};
+            const yearlyEarningsMap = {};
+
+            earningsAnalysis.forEach(entry => {
+                const { week, month, year } = entry._id;
+                const monthName = months[month - 1];
+                const monthYearKey = `${monthName}-${year}`;
+                const yearKey = `${year}`;
+
+                if (!monthlyEarningsMap[monthYearKey]) {
+                    monthlyEarningsMap[monthYearKey] = entry.totalEarnings;
+                } else {
+                    monthlyEarningsMap[monthYearKey] += entry.totalEarnings;
+                }
+
+                if (!yearlyEarningsMap[yearKey]) {
+                    yearlyEarningsMap[yearKey] = entry.totalEarnings;
+                } else {
+                    yearlyEarningsMap[yearKey] += entry.totalEarnings;
+                }
+            });
+
+            const monthlyEarnings = Object.keys(monthlyEarningsMap).map(key => ({
+                monthYear: key,
+                totalMonthlyEarnings: monthlyEarningsMap[key]
+            }));
+
+            const yearlyEarnings = Object.keys(yearlyEarningsMap).map(key => ({
+                year: key,
+                totalYearlyEarnings: yearlyEarningsMap[key]
+            }));
+
+            const weeklyEarnings = earningsAnalysis.map(item => ({
+                week: item._id.week,
+                year: item._id.year,
+                totalWeeklyEarnings: item.totalEarnings
+            }));
+
+            return res.status(200).json({
+                monthlyEarnings,
+                weeklyEarnings,
+                yearlyEarnings
+            });
+        } else {
+            return res.status(401).json({ message: "You are not authorized to view earnings analytics." });
+        }
+    } catch (error) {
+        console.error("Error fetching earnings analytics:", error);
+        return res.status(500).json({ message: 'Failed to fetch earnings analytics', error: error.message });
+    }
+};
+
+
+
+// admin weekly, monthly and yearly withdrawal
+exports.adminWeeklyMonthlyAndYearlyWithdrawals = async (req, res) => {
+      try {
+        const id = req.user._id; 
+        const user = await User.findById(id);
+
+        if (user && user.roles.includes('admin')) { 
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            const earningsAnalysis = await WalletTransaction.aggregate([
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1))
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            week: { $week: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                            year: { $year: "$createdAt" }
+                        },
+                        totalEarnings: { $sum: "$earnings" }
+                    }
+                },
+                { $sort: { "_id.year": 1, "_id.week": 1 } } 
+            ]);
+
+            const monthlyEarningsMap = {};
+            const yearlyEarningsMap = {};
+
+            earningsAnalysis.forEach(entry => {
+                const { week, month, year } = entry._id;
+                const monthName = months[month - 1];
+                const monthYearKey = `${monthName}-${year}`;
+                const yearKey = `${year}`;
+
+                if (!monthlyEarningsMap[monthYearKey]) {
+                    monthlyEarningsMap[monthYearKey] = entry.totalEarnings;
+                } else {
+                    monthlyEarningsMap[monthYearKey] += entry.totalEarnings;
+                }
+
+                if (!yearlyEarningsMap[yearKey]) {
+                    yearlyEarningsMap[yearKey] = entry.totalEarnings;
+                } else {
+                    yearlyEarningsMap[yearKey] += entry.totalEarnings;
+                }
+            });
+
+            const monthlyEarnings = Object.keys(monthlyEarningsMap).map(key => ({
+                monthYear: key,
+                totalMonthlyEarnings: monthlyEarningsMap[key]
+            }));
+
+            const yearlyEarnings = Object.keys(yearlyEarningsMap).map(key => ({
+                year: key,
+                totalYearlyEarnings: yearlyEarningsMap[key]
+            }));
+
+            const weeklyEarnings = earningsAnalysis.map(item => ({
+                week: item._id.week,
+                year: item._id.year,
+                totalWeeklyEarnings: item.totalEarnings
+            }));
+
+            return res.status(200).json({
+                monthlyWithdrawal: monthlyEarnings,
+                weeklyWithdrawal: weeklyEarnings,
+                yearlyWithdrawal: yearlyEarnings
+            });
+        } else {
+            return res.status(401).json({ message: "You are not authorized to view withdrawal analytics." });
+        }
+    } catch (error) {
+        console.error("Error fetching earnings analytics:", error);
+        return res.status(500).json({ message: 'Failed to fetch withdrawal analytics', error: error.message });
+    }
+};
