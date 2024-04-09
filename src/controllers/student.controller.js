@@ -138,12 +138,9 @@ exports.studentViewCourse = async(req, res) => {
     try {
         const id = req.user;
         const user = await User.findById(id);
-        const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'student' || userStatus.roles === 'IT') {
-            const course = await StudentCourse.find({ userId: userStatus._id })
-            .select("-module")
+        if(user && user.roles.includes('student') || user.roles.includes("IT")) {
+            const course = await StudentCourse.find({ userId: user._id })
             .select("-__v")
-            .select("-isCompleted")
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
                 studentRegisteredCourses: course
@@ -610,3 +607,6 @@ exports.markComplete = async (req, res) => {
         });
     }
 };
+
+
+// view all the registered by student 

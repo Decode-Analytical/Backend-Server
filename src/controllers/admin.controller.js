@@ -1537,7 +1537,6 @@ exports.adminWeeklyMonthlyAndYearlyWithdrawals = async (req, res) => {
       try {
         const id = req.user._id; 
         const user = await User.findById(id);
-
         if (user && user.roles.includes('admin')) { 
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
