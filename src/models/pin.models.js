@@ -8,7 +8,6 @@ const pinSchema = new mongoose.Schema({
     pin: {
         type: Number,
         required: true,
-        unique: true,
         match: /^[0-9]+$/
     }
 },
