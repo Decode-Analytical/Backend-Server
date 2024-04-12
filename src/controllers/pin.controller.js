@@ -81,11 +81,11 @@ exports.forgotPin = async(req, res)=>{
 
             await sendEmail({
                 email: user.email, 
-                subject: 'Reset Pin', 
+                subject: 'Reset Pin Request', 
                 message: `Your pin reset token is: ${confirmPin.token}`
             });
             return res.status(200).json({
-                message: 'Pin reset successfully',
+                message: 'Pin requested successfully, Otp sent to your email',
                 confirmPin
             });
         }catch (error) {
