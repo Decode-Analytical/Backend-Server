@@ -1462,7 +1462,8 @@ exports.adminWeeklyMonthlyAndYearlyEarnings = async (req, res) => {
                     $match: {
                         createdAt: {
                             $gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1))
-                        }
+                        },
+                        _id: user._id
                     }
                 },
                 {
@@ -1545,7 +1546,8 @@ exports.adminWeeklyMonthlyAndYearlyWithdrawals = async (req, res) => {
                     $match: {
                         createdAt: {
                             $gte: new Date(new Date().setFullYear(new Date().getFullYear() - 1))
-                        }
+                        },
+                        userId: user._id
                     }
                 },
                 {
