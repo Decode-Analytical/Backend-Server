@@ -23,7 +23,8 @@ exports.makeTransfer = async (req, res) => {
         "Content-Type": "application/json",
       },
     });
-       if (!getBanks.data.data.find(bank => bank.code === bankName)) {
+    const bank = getBanks.data.data.find(bank => bank.code === bankName);
+    if (!bank) {
         return res.status(400).json({ message: 'Invalid Bank Name' });
        }
     if (user.wallet < amount) {
@@ -47,7 +48,7 @@ exports.makeTransfer = async (req, res) => {
         account_number: accountNumber,
         source: "balance",
         amount: amount * 100,
-        bank_code: getBanks.data.data.find((bank) => bank.code === bankName).code,
+        bank_code: bank.code,
         description: reason,
         email: user.email,
         currency: "NGN",
@@ -55,7 +56,7 @@ exports.makeTransfer = async (req, res) => {
           custom_fields: {
             display_name: "Bank Name",
             variable_name: "bank_name",
-            value: getBanks.data.data.find((bank) => bank.code === bankName).name,
+            value: bank.name,
           },
         },
       },
@@ -79,14 +80,14 @@ exports.makeTransfer = async (req, res) => {
       userId: user._id,
       transfer_code: transferCode,
       account_name: accountName,
-      bank_name: getBanks.data.data.find((bank) => bank.code === bankName).name,
+      bank_name: bank.name,
       account_number: accountNumber,
       reason: reason,
     });
     await sendEmail({
       email: user.email,
       subject: "Transfer initiated",
-      message: `Transfer initiated for NGN${amount} to ${getBanks.data.data.find((bank) => bank.code === bankName).name}. Your reference number is: ${transaction.reference}`,
+      message: `Transfer initiated for NGN${amount} to ${bank.name}. Your reference number is: ${transaction.reference}`,
     })
 
     return res
@@ -107,6 +108,45 @@ exports.makeTransfer = async (req, res) => {
       });
   }
 };
+
+
+
+exports.verifyBankName = async (req, res) => {
+  const { accountNumber, bankName } = req.body;
+  const apiKey = process.env.PAYSTACK_MAIN_KEY;
+  const url = `https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankName}`;
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`
+      }
+    });
+    if (response.data.status) {
+      return res.json({
+        success: true,
+        data: response.data.data
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: response.data.message || 'Could not verify account name'
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'An error occurred during the verification process',
+      message: error.response?.data.message
+    });
+  }
+};
+
+
+
+
+
+
 
 
 exports.viewTransferTransactions = async (req, res) => {
