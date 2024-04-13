@@ -31,15 +31,11 @@ exports.makeTransfer = async (req, res) => {
         return res.status(400).json({ message: 'Insufficient funds' });
     }
 
-    await User.findOneAndUpdate(
-      { _id: user._id },
-      { $inc: { wallet: -amount } }
-    );
     const confirmPin = await Pin.findOne({ userId: user._id, pin: req.body.pin });
     if (!confirmPin) {
       return res.status(400).json({ message: 'Invalid Pin' });
     }
-
+    
     const paystackResponse = await axios.post(
       "https://api.paystack.co/transferrecipient",
       {
@@ -67,11 +63,11 @@ exports.makeTransfer = async (req, res) => {
         },
       }
     );
-
+    
     const transferCode = paystackResponse.data.data.recipient_code;
     const accountName = paystackResponse.data.data.details.account_name
     const transferData = paystackResponse.data;
-
+    
     const transaction = await WalletTransaction.create({
       reference: crypto.randomBytes(9).toString("hex"),
       amount: amount,
@@ -84,6 +80,10 @@ exports.makeTransfer = async (req, res) => {
       account_number: accountNumber,
       reason: reason,
     });
+    await User.findOneAndUpdate(
+      { _id: user._id },
+      { $inc: { wallet: -amount } }
+    );
     await sendEmail({
       email: user.email,
       subject: "Transfer initiated",
