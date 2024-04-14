@@ -12,17 +12,17 @@ exports.createPin = async(req, res)=>{
             return res.status(400).json({ message: 'You are blocked from transferring' });
         }
         const { pin } = req.body;
-        const confirmPin = await Pin.findOne({ userId: user._id, pin });
+        const confirmPin = await Pin.findOne({ userId: user._id });
         if (confirmPin) {
-            return res.status(400).json({ message: 'Pin already exists' });
+            return res.status(400).json({ message: "Pin already exists, please use a forgot pin if you couldn't remember it" });
         }
-        const newPin = new Pin({
+        const newPin = await Pin.create({
             userId: user._id,
-            pin: req.body.pin
+            pin: pin
         });
-        const savedPin = await newPin.save();
         return res.status(200).json({
             message: 'Pin created successfully',
+            newPin
         });
     }
     catch (error) {
@@ -34,35 +34,43 @@ exports.createPin = async(req, res)=>{
 }
 
 // update the pin 
-exports.updatePin = async(req, res)=>{
-    try {
-        const id = req.user;
-        const user = await User.findById(id);
-        if (user.isBlocked === true) {
-            return res.status(400).json({ message: 'You are blocked from transferring' });
-        }
-        const { pin, otp } = req.body;
-        const confirmOtp = await Token.findOne({ userId: user._id, token: otp });
-        if (!confirmOtp){
-            return res.status(400).json({ message: "invalid otp" });
-        }
-        const confirmPin = await Pin.findOne({ userId: user._id });
-        if (!confirmPin) {
-            return res.status(400).json({ message: 'You have not created a pin' });
-        }
-        const deleteOtp = await Token.findOneAndDelete({ userId: user._id, token: otp},{ new: true} )
-        const updatePin = await Pin.findOneAndUpdate({ userId: user._id }, req.body, { new: true });
-        return res.status(200).json({
-            message: 'Pin updated successfully',
-            updatePin
-        });
+exports.updatePin = async (req, res) => {
+  try {
+    const id = req.user;
+    const user = await User.findById(id);
+    if (user.isBlocked === true) {
+      return res
+        .status(400)
+        .json({ message: "You are blocked from transferring" });
     }
-    catch (error) {
-        return res.status(500).json({
-            error: 'An error occurred while updating pin',
-            message: error.message
-        });
+    const { pin, otp } = req.body;
+    const confirmOtp = await Token.findOne({ userId: user._id, token: otp });
+    if (!confirmOtp) {
+      return res.status(400).json({ message: "invalid otp" });
     }
+    const confirmPin = await Pin.findOne({ userId: user._id });
+    if (!confirmPin) {
+      return res.status(400).json({ message: "You have not created a pin" });
+    }
+    const deleteOtp = await Token.findOneAndDelete(
+      { userId: user._id, token: otp },
+      { new: true }
+    );
+    const updatePin = await Pin.findOneAndUpdate(
+      { userId: user._id },
+      { $set: { pin: pin } },
+      { new: true }
+    );
+    return res.status(200).json({
+      message: "Pin updated successfully",
+      updatePin,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "An error occurred while updating pin",
+      message: error.message,
+    });
+  }
 }
 
 
