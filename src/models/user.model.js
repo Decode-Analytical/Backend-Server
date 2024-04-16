@@ -90,6 +90,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    isPinCreated: {
+      type: Boolean,
+      default: false,
+    },
     comments: {
       type: Array,
     },

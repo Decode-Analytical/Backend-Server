@@ -15,15 +15,22 @@ exports.createPin = async(req, res)=>{
         const confirmPin = await Pin.findOne({ userId: user._id });
         if (confirmPin) {
             return res.status(400).json({ message: "Pin already exists, please use a forgot pin if you couldn't remember it" });
+        }else{
+          const newPin = await Pin.create({
+                userId: user._id,
+                pin: pin
+            });
+            const isPinCreated = await User.findByIdAndUpdate(user._id, {
+                $set: {
+                    isPinCreated: true
+                },
+            },
+          { new: true });
+            return res.status(200).json({
+                message: 'Pin created successfully',
+                newPin
+            });
         }
-        const newPin = await Pin.create({
-            userId: user._id,
-            pin: pin
-        });
-        return res.status(200).json({
-            message: 'Pin created successfully',
-            newPin
-        });
     }
     catch (error) {
         return res.status(500).json({
