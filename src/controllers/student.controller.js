@@ -620,7 +620,7 @@ exports.studentCourseProgress = async (req, res) => {
             if(studentStudyTrack) { 
                 if (studentStudyTrack.module.every(module => module.isCompleted === true )){ 
                     const progress = studentStudyTrack.module.map(module => module.isCompleted === true? 20 : 0);
-                    const totalScore = progress.reduce((a, b) => a + b, 0);                 
+                    const totalModules = progress.reduce((a, b) => a + b, 0);                 
                     const updatedProgress = await StudentCourse.findOneAndUpdate(
                         { userId: user._id, courseId },
                         { $set: { isCourseCompleted: true } },
@@ -629,7 +629,7 @@ exports.studentCourseProgress = async (req, res) => {
                     return res.status(200).json({
                         message: 'Course progress updated successfully',
                         updatedProgress,
-                        totalScore
+                        totalModules
                     }); 
                 } else {
                     return res.status(400).json({
