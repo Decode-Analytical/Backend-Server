@@ -457,7 +457,7 @@ exports.studentViewAllMeeting = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'IT') {
-            const meeting = await Meeting.find({ instructorId: userStatus._id   });
+            const meeting = await Meeting.find({ });
             const total = await Meeting.countDocuments({
                 instructor: { $exists: true },
                 course: { $exists: true },

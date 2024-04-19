@@ -28,21 +28,10 @@ const studentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    calibration: {
-      type: Number,
-      default: '0',
-      enum: [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
-      match: /[1-9]/,
-      validate: {
-        validator: function (v) {
-          return /[1-9]/.test(v);
-        },
-        message: (props) => `${props.value} is not a valid number`,
-      }
-    },
     module: {
       type: Array,
     },
+    
   },
   {
     collection:'students',
