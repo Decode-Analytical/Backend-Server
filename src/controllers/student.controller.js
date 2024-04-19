@@ -619,7 +619,7 @@ exports.studentCourseProgress = async (req, res) => {
             const studentStudyTrack = await StudentCourse.findOne({ userId: user._id, courseId });
             if(studentStudyTrack) { 
                 if (studentStudyTrack.module.every(module => module.isCompleted === true )){ 
-                    const progress = studentStudyTrack.module.map(module => module.isCompleted === true? 100 : 0);
+                    const progress = studentStudyTrack.module.map(module => module.isCompleted === true? 20 : 0);
                     const totalScore = progress.reduce((a, b) => a + b, 0);                 
                     const updatedProgress = await StudentCourse.findOneAndUpdate(
                         { userId: user._id, courseId },
