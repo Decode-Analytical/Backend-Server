@@ -21,7 +21,8 @@ const {
     studentTotalRegisteredCourse,
     markComplete,
     studentCourseProgress,
-    studentTotalCourseProgress
+    studentTotalCourseProgress,
+    studentLeaderboard
 } = require('../controllers/student.controller.js')
 const { auth } = require('../middleware/auth.js');
 
@@ -45,6 +46,7 @@ router.get('/studentViewTotalCourse', studentTotalRegisteredCourse  );
 router.put('/markcomplete/:courseId/:moduleId/',markComplete);
 router.get('/studentCourseProgress/:courseId', studentCourseProgress );
 router.get('/studentTotalCourseProgress', studentTotalCourseProgress);
+router.get('/studentLeaderboard', studentLeaderboard);
 
 
 module.exports = router;

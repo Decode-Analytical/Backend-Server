@@ -698,3 +698,51 @@ exports.studentTotalCourseProgress = async (req, res) => {
         });
     }
 };
+
+
+exports.studentLeaderboard = async (req, res) => {
+    try {
+        const userId = req.user;
+        const user = await User.findById(userId);
+        if (user.roles.includes('admin')) { 
+            const leaderboard = await StudentCourse.aggregate([
+                { $unwind: "$module" },
+                { $match: { "module.isCompleted": true } },
+                { $group: { _id: "$userId", completedModules: { $sum: 1 } } },
+                {
+                    $lookup: {
+                        from: "users", 
+                        localField: "_id", 
+                        foreignField: "_id", 
+                        as: "userDetails"
+                    }
+                },
+                { $unwind: "$userDetails" },
+                { $sort: { completedModules: -1 } },
+                { $limit: 10 },
+                { $project: { _id: 0, first_name: "$userDetails.firstName", last_name: "$userDetails.lastName", completedModules: 1 } }
+            ]);
+
+        if (leaderboard.length > 0) {
+            return res.status(200).json({
+                message: 'Leaderboard retrieved successfully',
+                leaderboard
+            });
+        } else {
+            return res.status(404).json({
+                message: 'No data available for the leaderboard.'
+            });
+        }
+    }else{
+           return res.status(403).json({
+                message: 'Access denied. Only admins can access the leaderboard.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error retrieving leaderboard',
+            error: error.message
+        });
+    }
+};
+
