@@ -649,3 +649,52 @@ exports.studentCourseProgress = async (req, res) => {
         });
     }
 }
+
+
+exports.studentTotalCourseProgress = async (req, res) => {
+    try {
+        const userId = req.user;
+        const user = await User.findById(userId);
+        if (user.roles.includes('admin') || user.roles.includes('student')) {
+            const studentCourses = await StudentCourse.find({ userId: user._id });
+            
+            if (studentCourses.length > 0) {
+                let totalProgress = 0;
+                let totalCompletedModules = 0;
+
+                studentCourses.forEach(course => {
+                    if (course.module && Array.isArray(course.module)) {
+                        const completedModules = course.module.filter(module => module.isCompleted).length;
+                        totalCompletedModules += completedModules;
+                        totalProgress += completedModules * 20;  
+                    }
+                });
+
+                if (totalProgress > 0) {
+                    return res.status(200).json({
+                        message: 'Course progress updated successfully',
+                        totalCourseProgress: totalProgress,
+                        totalModulesCompleted: totalCompletedModules
+                    });
+                } else {
+                    return res.status(400).json({
+                        message: 'You have not completed any modules in your courses yet'
+                    });
+                }
+            } else {
+                return res.status(404).json({
+                    message: 'No courses found for the user.'
+                });
+            }
+        } else {
+            return res.status(403).json({
+                message: 'Forbidden: You do not have the necessary permissions to access this resource.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error while updating student course progress',
+            error: error.message
+        });
+    }
+};
