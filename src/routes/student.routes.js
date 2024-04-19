@@ -42,7 +42,7 @@ router.get('/studentCourseCount/:courseId', studentCourseCount);
 router.get('/studentViewCourse/:courseId', studentViewCourseDetails  );
 router.get('/studentViewTotalCourse', studentTotalRegisteredCourse  );
 router.put('/markcomplete/:courseId/:moduleId/',markComplete);
-router.put('/studentCourseProgress/:courseId', studentCourseProgress );
+router.get('/studentCourseProgress/:courseId', studentCourseProgress );
 
 
 module.exports = router;

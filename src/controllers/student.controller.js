@@ -617,31 +617,30 @@ exports.studentCourseProgress = async (req, res) => {
         if (user.roles.includes('admin') || user.roles.includes('student')) {
             const { courseId } = req.params;
             const studentStudyTrack = await StudentCourse.findOne({ userId: user._id, courseId });
-            if(studentStudyTrack.calibration === 0 ) {
-                const updatedProgress = await StudentCourse.findOneAndUpdate(
-                    { userId: user._id, courseId, 'module.isCompleted': true },
-                    { $inc: { calibration : +1 } },
-                    { new: true }
-                );
-                if (updatedProgress.calibration < 10) {
+            if(studentStudyTrack) { 
+                if (studentStudyTrack.module.every(module => module.isCompleted === true )){ 
+                    const progress = studentStudyTrack.module.map(module => module.isCompleted === true? 100 : 0);
+                    const totalScore = progress.reduce((a, b) => a + b, 0);                 
+                    const updatedProgress = await StudentCourse.findOneAndUpdate(
+                        { userId: user._id, courseId },
+                        { $set: { isCourseCompleted: true } },
+                        { new: true }
+                    );
                     return res.status(200).json({
-                        message: 'Student learning progress in the course modules updated successfully',
-                        progress: updatedProgress.calibration
-                    });
+                        message: 'Course progress updated successfully',
+                        updatedProgress,
+                        totalScore
+                    }); 
                 } else {
-                    return res.status(200).json({
-                        message: 'No progress found to update, you have not completed your module'
+                    return res.status(400).json({
+                        message: 'You have not completed all the modules in this course yet'
                     });
                 }
             } else {
-                return res.status(400).json({
-                    message: 'You have completed your module'
+                return res.status(403).json({
+                    message: 'Forbidden: You do not have the necessary permissions to access this resource.'
                 });
             }
-        } else {
-            return res.status(403).json({
-                message: 'Forbidden: You do not have the necessary permissions to access this resource.'
-            });
         }
     } catch (error) {
         return res.status(500).json({
@@ -649,4 +648,4 @@ exports.studentCourseProgress = async (req, res) => {
             error: error.message
         });
     }
-};
+}

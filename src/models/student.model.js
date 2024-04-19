@@ -31,7 +31,10 @@ const studentSchema = new mongoose.Schema(
     module: {
       type: Array,
     },
-    
+    isCourseCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     collection:'students',
