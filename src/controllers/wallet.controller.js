@@ -112,7 +112,7 @@ exports.makeTransfer = async (req, res) => {
 
 
 exports.verifyAccountName = async (req, res) => {
-  const { accountNumber, bankName } = req.body;
+  const { accountNumber, bankName } = req.params;
   const apiKey = process.env.PAYSTACK_MAIN_KEY;
   const url = `https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankName}`;
 
