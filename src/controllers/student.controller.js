@@ -168,8 +168,8 @@ exports.studentViewAllCourse = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles === 'IT' || userStatus.roles === 'student') {
-            const courses = await StudentCourse.find({ }).sort({ createdAt: -1 });
+        if(userStatus.roles === 'admin' || userStatus.roles === 'student') {
+            const courses = await StudentCourse.find({ userId: userStatus._id }).sort({ createdAt: -1 });
             return res.status(200).json({
                 message: 'Course registered fetched successfully',
                 courses
@@ -609,4 +609,40 @@ exports.markComplete = async (req, res) => {
 };
 
 
-// view all the registered by student 
+// mark the student learning progress in the course modules
+exports.studentCourseProgress = async (req, res) => {
+    try {
+        const userId = req.user;
+        const user = await User.findById(userId);
+        if (user.roles.includes('IT') || user.roles.includes('student')) {
+            const { courseId } = req.params;
+            const updatedProgress = await StudentCourse.findOneAndUpdate(
+                { userId: user._id, courseId, 'module.isCompleted': true },
+                { $inc: { calibration : +1 } },
+                { new: true }
+            );
+            if (updatedProgress.calibration < 10) {
+                return res.status(200).json({
+                    message: 'Student learning progress in the course modules updated successfully',
+                    progress: updatedProgress.calibration
+                });
+            } else {
+                return res.status(200).json({
+                    message: 'No progress found to update, you have not completed your module'
+                });
+            }
+        } else {
+            return res.status(400).json({
+                message: 'You must be a registered student to view your course'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error while updating student course progress',
+            error: error.message
+        });
+    }
+};
+
+
+                

@@ -159,7 +159,7 @@ exports.viewUserProfile = async(req, res) => {
         const id= req.user;
         const existingUser = await User.findById(id);
         const userStatus = await User.findById(existingUser._id);
-        if (userStatus.roles === 'student') {
+        if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles === 'superadmin') {
         const user = await User.findOne({ _id: userStatus._id });
         if (!user) {
             return res.status(400).json({
