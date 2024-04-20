@@ -66,7 +66,7 @@ app.use((req, res, next) => {
     try {
       httpRequestDurationMicroseconds.observe(labels, durationInMicroseconds);
     } catch (error) {
-      return res.status(500).json({ message: 'Error observing httpRequestDuration', error: error})
+      return res.status(500).json({ message: 'Error observing httpRequestDuration in minisecs', error: error})
     }
   });
 
