@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const promClient = require('prom-client');
 // const { useTreblle } = require("treblle");
 const mongoSanitize = require("express-mongo-sanitize");
 const connectDB = require("./src/database/db");
@@ -34,44 +33,6 @@ app.use(mongoSanitize());
 //   apiKey: process.env.TREBLLE_API_KEY,
 //   projectId: process.env.TREBLLE_PROJECT_ID,
 // });
-
-const register = new promClient.Registry();
-const httpRequestDurationMicroseconds = new promClient.Histogram({
-  name: 'http_request_duration_microseconds',
-  help: 'Duration of HTTP requests in microseconds',
-  labelNames: ['method', 'route', 'status_code'],
-  buckets: [0.1, 5, 15, 50, 100, 500, 1000, 2000, 5000]
-});
-
-// Register metrics
-register.registerMetric(httpRequestDurationMicroseconds);
-
-// Expose metrics endpoint
-app.get('/metrics', async (req, res) => {
-  res.setHeader('Content-Type', register.contentType);
-  res.send(await register.metrics());
-});
-app.use((req, res, next) => {
-  const startTime = process.hrtime();
-
-  res.on('finish', () => {
-    const elapsedTime = process.hrtime(startTime);
-    const durationInMicroseconds = (elapsedTime[0] * 1e9 + elapsedTime[1]) / 1e3;
-    const labels = {
-      method: req.method,
-      route: req.route ? req.route.path : 'unknown',  
-      status_code: res.statusCode
-    };
-
-    try {
-      httpRequestDurationMicroseconds.observe(labels, durationInMicroseconds);
-    } catch (error) {
-      return res.status(500).json({ message: 'Error observing httpRequestDuration in minisecs', error: error})
-    }
-  });
-
-  next();
-});
 
 
 //cloudinary
