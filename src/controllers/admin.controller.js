@@ -341,6 +341,10 @@ exports.adminScheduleMeeting = async (req, res) => {
         const user = await User.findById(id);        
         if(user.roles.includes("admin") || user.roles.includes("superadmin")) {            
             const { description, date, time, courseName, isPaid, amount } = req.body;
+            const existingCourseName = await Meeting.findOne({courseName: courseName, userId: user._id});
+            if(existingCourseName){
+                return res.status(400).json({message: "Meeting already scheduled for this course"});
+            }
             const course = await Course.findOne({ course_title: courseName });
         if (!course) {    
         const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');

@@ -22,6 +22,7 @@ const meetupSchema = new mongoose.Schema({
     },
     courseName: {
         type: String,
+        trim: true,
         required: [ true, 'Course is required' ]
     },
     instructorId: {
