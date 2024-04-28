@@ -9,6 +9,7 @@ const courseSchema = new mongoose.Schema({
   course_title: {
     type: String,
     index: true,
+    trim: true,
     required: true ['write the title of course'],
   },
   course_description: {
