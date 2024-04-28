@@ -9,6 +9,9 @@ const aboutMeSchema = new mongoose.Schema({
     education: {
         type: String,
     },
+    employment: {
+        type: String
+    },
     experience: {
         type: String,
     },
