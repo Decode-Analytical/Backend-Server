@@ -24,6 +24,9 @@ const courseSchema = new mongoose.Schema({
   reviews: {
     type: Array,
   },
+  skill_level: {
+    type: String,
+  },
   course_image:{
     type: Array
   },

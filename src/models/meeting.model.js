@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const meetupSchema = new mongoose.Schema({
     instructor: {
         type: String,
-        required: [ true, 'Name is required' ]
+        required: [ true, 'Instructor Name is required' ]
     },
     date: {
         type: String,
@@ -19,7 +19,6 @@ const meetupSchema = new mongoose.Schema({
     },
     courseId: {
         type: String,
-        required: [ true, 'Course is required' ]
     },
     courseName: {
         type: String,

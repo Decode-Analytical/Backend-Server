@@ -9,7 +9,7 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { course_title, course_description, course_language, isPaid_course, isPrice_course } = req.body;
+            const { course_title, course_description, course_language, isPaid_course, isPrice_course, skill_level } = req.body;
             // validate 
             if(!course_title || !course_description || !course_language || !isPaid_course || !isPrice_course){
                 return res.status(400).json({
@@ -33,6 +33,7 @@ exports.createCourse = async (req, res) => {
                 course_image: course_image, 
                 isPaid_course, 
                 isPrice_course,
+                skill_level,
             })
             return res.status(201).json({
                 message: "Course registered successfully",

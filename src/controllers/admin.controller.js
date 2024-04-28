@@ -14,10 +14,6 @@ const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
 
 
-
-
-
-
 exports.adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -341,47 +337,67 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 //? admin schedule google meeting for students 
 exports.adminScheduleMeeting = async (req, res) => {
     try {
-        const { email, description, date, time, courseName, isPaid, amount } = req.body;
-        const organizerN = await User.findOne({ email });
+        const id = req.user;
+        const user = await User.findById(id);        
+        if(user.roles.includes("admin") || user.roles.includes("superadmin")) {            
+            const { description, date, time, courseName, isPaid, amount } = req.body;
+            const course = await Course.findOne({ course_title: courseName });
+        if (!course) {    
         const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
-        const course = await Course.findOne({ course_title: courseName });
-        if (!course) {
-            return res.status(404).json({
-                message: "This course does not exist in the database"
-            })
-        }
-        if (organizerN) {
-            const meeting = await Meeting.create({
-                instructor: organizerN.firstName + '' + organizerN.lastName,
-                description,
-                instructorId: organizerN._id,
-                courseId: course._id,
-                userId: organizerN._id,
-                date,
-                time,
-                courseName: course.course_title,
-                roomId: linkMeeting,
-                email,
-                isPaid,
-                amount,
-                course_image: course.course_image,
-            });
-            return res.status(201).json({
-                message: 'Meeting created successfully',
-                meeting
-            });
-        } else {
-            return res.status(404).json({
-                message: 'Your email registered on this platform'
-            })
-        }
+        const meeting = await Meeting.create({
+            instructor: `${user.firstName} ${user.lastName}`,
+            description,
+            instructorId: user._id,
+            userId: user._id,
+            courseId: "" || "No course registered",
+            courseName: courseName,
+            date,
+            time,
+            roomId: linkMeeting,
+            email: user.email,
+            isPaid,
+            amount,
+            course_image: "decodeIMG",
+        });
+        return res.status(201).json({
+            message: 'Meeting created without a registered course successfully',
+            meeting
+        });
+    }else{
+        const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
+        const meeting = await Meeting.create({
+            instructor: `${user.firstName} ${user.lastName}`,
+            description,
+            instructorId: user._id,
+            userId: user._id,
+            courseId: course._id,
+            courseName: course.course_title,
+            date,
+            time,
+            roomId: linkMeeting,
+            email: user.email,
+            isPaid,
+            amount,
+            course_image: course.course_image,
+        });
+        return res.status(201).json({
+            message: 'Meeting created with a registered course successfully',
+            meeting
+        });
+    }}else{
+        return res.status(401).json({
+            message: 'You are not authorized to schedule meeting'
+    })
+}
+
     } catch (error) {
         return res.status(500).json({
-            message: 'Meeting not created because the course name or your email is not registered',
+            message: 'Meeting not created due to an error',
             error: error.message
         });
     }
 };
+
 
 
 // ? get user information by email
