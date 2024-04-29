@@ -315,10 +315,10 @@ exports.adminTotalStudentForCourse = async (req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if (userStatus.roles === 'admin' || userStatus.roles === 'student' || userStatus.roles === 'IT') {
+        if (userStatus.roles === 'admin' || userStatus.roles === 'superadmin' ) {
             const total = await Student.countDocuments({});
             return res.status(200).json({
-                totalCourseRegisteredByStudent: total,
+                totalRegisteredStudent: total,
             });
         } else {
             return res.status(200).json({

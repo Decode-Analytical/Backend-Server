@@ -191,14 +191,15 @@ exports.updateStudentProfile = async(req, res) => {
         const id= req.user;
         const existingUser = await User.findById(id);
         const userStatus = await User.findById(existingUser._id);
-        if (userStatus.roles === 'student') {
-        const { firstName, lastName, phoneNumber, } = req.body; 
+        if (userStatus.roles === 'student' || userStatus.roles === 'admin' || userStatus.roles ==='superadmin') {
+        const { firstName, lastName, phoneNumber, aboutMe } = req.body; 
         if(req.files){
             const picture = req.files.picture;     
         const user = await User.findOneAndUpdate({ _id: userStatus._id }, {
             firstName,
             lastName,
             phoneNumber,
+            aboutMe,
             picture: picture,
         },
         { new: true });
@@ -359,11 +360,12 @@ exports.updateStudentProfilePicture = async(req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id)
         if (userStatus.roles === "student" && userStatus.roles === "IT" || userStatus.roles === "admin") {
-        const { facebook, twitter, linkedinUrl, githubUrl, instagramUrl, youtubeUrl } = req.body;
+        const { aboutMe, facebook, twitter, linkedinUrl, githubUrl, instagramUrl, youtubeUrl } = req.body;
             if(req.files){
                 const picture = req.files.picture;
             const updatedUser = await User.findByIdAndUpdate(userStatus._id, {
                 picture: picture,
+                aboutMe,
                 facebook,
                 twitter,
                 linkedinUrl,
