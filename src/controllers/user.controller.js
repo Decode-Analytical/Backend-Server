@@ -361,8 +361,6 @@ exports.updateStudentProfilePicture = async(req, res) => {
         const userStatus = await User.findById(user._id)
         if (userStatus.roles === "student" || userStatus.roles === "superadmin" || userStatus.roles === "admin") {
         const { firstName, lastName, aboutMe, facebook, twitter, linkedinUrl, githubUrl, instagramUrl, youtubeUrl } = req.body;
-            if(req.files){
-                const picture = req.files.picture;
             const updatedUser = await User.findByIdAndUpdate(userStatus._id, {
                 firstName,
                 lastName,
@@ -379,16 +377,12 @@ exports.updateStudentProfilePicture = async(req, res) => {
                 message: 'User profile picture updated successfully',
                 updatedUser
             });
-        } else {
-            return res.status(400).json({
-                message: 'You are not authorized a student or IT Student to perform this task',
-            });
-        }
+        }     
     }
-    } catch (error) {
+     catch (error) {
         return res.status(400).json({
             message: 'Error while updating user profile picture',
             error: error.message
         });
     }
-};
+}
