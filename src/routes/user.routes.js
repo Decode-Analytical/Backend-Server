@@ -25,7 +25,7 @@ router.use(auth);
 router.get("/viewprofile",  viewUserProfile );
 router.put("/studentUpdate", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfile);
 router.delete("/studentDeleteCourse", deleteUser)
-router.put("/userUpdateProfile", upload.fields([{ name: "picture", maxCount: 1}]), updateStudentProfilePicture );
+router.put("/userUpdateProfile", updateStudentProfilePicture );
 
 
 
