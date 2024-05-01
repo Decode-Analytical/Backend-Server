@@ -364,7 +364,6 @@ exports.updateStudentProfilePicture = async(req, res) => {
             const updatedUser = await User.findByIdAndUpdate(userStatus._id, {
                 firstName,
                 lastName,
-                picture: picture,
                 aboutMe,
                 facebook,
                 twitter,
