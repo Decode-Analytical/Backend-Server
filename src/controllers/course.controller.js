@@ -157,8 +157,8 @@ exports.getCourses = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const courses = await Course.find({ userId: userStatus._id });
-            
+            const courses = await Course.find({ userId: userStatus._id })
+            .sort({ createdAt: -1 })
             return res.status(200).json({
                 message: "Courses fetched successfully",
                 courses
@@ -173,6 +173,24 @@ exports.getCourses = async (req, res) => {
         });
     }
 }
+
+exports.getCoursesDisplay = async (req, res) => {
+    try {
+            
+        const courses = await Course.find({ userId: userStatus._id })
+            .sort({ createdAt: -1 })
+            return res.status(200).json({
+                message: "Courses fetched successfully",
+                courses
+            });     
+        } catch (error) {
+            return res.status(400).json({ 
+                message: "Error fetching courses",
+                error: error.message 
+        });
+    }
+}
+
 
 // view the Course registered  by Admin(one user)
 exports.getCoursesByUserId = async (req, res) => {

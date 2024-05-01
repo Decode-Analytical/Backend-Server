@@ -23,12 +23,13 @@ const { createCourse,
     getCourseById,
     viewCourseById,
     getCoursesByUserId,
-    updateCourseUpload 
+    updateCourseUpload,
+    getCoursesDisplay 
 
        } = require('../controllers/course.controller');
 const router = express.Router();
 
-
+router.get('/getCoursesDisplay', getCoursesDisplay);
 router.use(auth);
 router.post("/registeredCourse", upload.fields([{ name: "course_image", maxCount: 1 }]),  createCourse );
 router.put("/updateCourse/:courseId", updateCourse )
