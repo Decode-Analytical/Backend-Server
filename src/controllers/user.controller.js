@@ -359,11 +359,13 @@ exports.updateStudentProfilePicture = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id)
-        if (userStatus.roles === "student" && userStatus.roles === "IT" || userStatus.roles === "admin") {
+        if (userStatus.roles === "student" || userStatus.roles === "superadmin" || userStatus.roles === "admin") {
         const { aboutMe, facebook, twitter, linkedinUrl, githubUrl, instagramUrl, youtubeUrl } = req.body;
             if(req.files){
                 const picture = req.files.picture;
             const updatedUser = await User.findByIdAndUpdate(userStatus._id, {
+                firstName,
+                lastName,
                 picture: picture,
                 aboutMe,
                 facebook,
