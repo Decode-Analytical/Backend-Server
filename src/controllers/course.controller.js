@@ -177,7 +177,7 @@ exports.getCourses = async (req, res) => {
 exports.getCoursesDisplay = async (req, res) => {
     try {
             
-        const courses = await Course.find({ userId: userStatus._id })
+        const courses = await Course.find({ })
             .sort({ createdAt: -1 })
             return res.status(200).json({
                 message: "Courses fetched successfully",
@@ -535,6 +535,7 @@ exports.searchCourse = async (req, res) => {
     }
 }
       
+
 
 
 // create question
