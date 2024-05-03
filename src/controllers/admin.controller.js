@@ -1634,3 +1634,67 @@ exports.adminWeeklyMonthlyAndYearlyWithdrawals = async (req, res) => {
         return res.status(500).json({ message: 'Failed to fetch withdrawal analytics', error: error.message });
     }
 };
+
+
+// weekly sales analytics of a course 
+function getWeekNumber(date) {
+    const onejan = new Date(date.getFullYear(), 0, 1);
+    const millisecsInDay = 86400000;
+    return Math.ceil((((date - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7);
+}
+exports.courseWeeklySales = async (req, res) => {
+    try {
+        const userId = req.user; 
+        const user = await User.findById(userId);
+        
+        if (!user || !user.roles.includes('admin')) {
+            return res.status(403).json({ message: 'You are not authorized to perform this action' });
+        }
+
+        const courseId = req.params.courseId;
+        const course = await Course.findOne({ _id: courseId, userId: user._id });
+        
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Assuming you have a Sales model and it contains fields like createdAt, totalRegisteredByStudent
+        const sales = await Course.find({ _id: course._id, userId: user._id });
+
+        const weeklySales = {};
+        const monthlySales = {};
+        const yearlySales = {};
+
+        // Aggregate sales data for each week and year
+        sales.forEach(item => {
+            const week = getWeekNumber(item.createdAt);;
+            const month = item.createdAt.getMonth() + 1; 
+            const year = item.createdAt.getFullYear();
+
+            // Weekly sales aggregation
+            if (!weeklySales[week]) {
+                weeklySales[week] = 0;
+            }
+            weeklySales[week] += item.totalRegisteredByStudent;
+
+             // monthly sales aggregation
+            if (!monthlySales[month]) {
+                monthlySales[month] = 0;
+            }
+            monthlySales[month] += item.totalRegisteredByStudent;
+
+            // Yearly sales aggregation
+            if (!yearlySales[year]) {
+                yearlySales[year] = 0;
+            }
+            yearlySales[year] += item.totalRegisteredByStudent;
+        });
+
+        return res.status(200).json({ weeklySales, monthlySales, yearlySales });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Internal Server error',
+            error: error.message
+        });
+    }
+};

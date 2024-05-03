@@ -7,6 +7,7 @@ router.post('/adminSignIn', adminController.adminLogin);
 router.post('/joinmeeting/:roomId', adminController.studentJoinMeeting );
 router.post('/receivingPayment', adminController.studentPaid);
 router.use(auth);
+router.get('/courseWeeklySales/:courseId', adminController.courseWeeklySales);
 router.post('/adminScheduleMeeting', adminController.adminScheduleMeeting  );
 router.put('/roles', adminController.adminUpdateUserRoles);
 router.get('/viewTransaction', adminController.adminViewTransactions );
