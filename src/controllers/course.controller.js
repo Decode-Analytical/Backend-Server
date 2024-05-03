@@ -313,7 +313,9 @@ exports.getAllCourses = async (req, res) => {
             const totalPages = Math.ceil(totalCourses / 10);
             const currentPage = parseInt(req.query.page, 10) || 1;
             const skip = (currentPage - 1) * 10;
-            const courses = await Course.find().skip(skip).limit(10);
+            const courses = await Course.find()
+            // .skip(skip)
+            // .limit(10);
             return res.status(200).json({
                 message: "Courses fetched successfully",
                 courses,
