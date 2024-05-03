@@ -1657,15 +1657,12 @@ exports.courseWeeklySales = async (req, res) => {
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
-
-        // Assuming you have a Sales model and it contains fields like createdAt, totalRegisteredByStudent
         const sales = await Course.find({ _id: course._id, userId: user._id });
 
         const weeklySales = {};
         const monthlySales = {};
         const yearlySales = {};
 
-        // Aggregate sales data for each week and year
         sales.forEach(item => {
             const week = getWeekNumber(item.createdAt);;
             const month = item.createdAt.getMonth() + 1; 
