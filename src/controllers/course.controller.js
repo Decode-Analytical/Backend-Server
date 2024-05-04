@@ -192,6 +192,43 @@ exports.getCoursesDisplay = async (req, res) => {
 }
 
 
+exports.getCoursesDisplayBySkill = async (req, res) => {
+    try {
+        const { skill_level } = req.params;
+        const courses = await Course.find({ skill_level })
+            .sort({ createdAt: -1 })
+            return res.status(200).json({
+                message: "Courses fetched successfully",
+                courses
+            });     
+        } catch (error) {
+            return res.status(400).json({ 
+                message: "Error fetching courses",
+                error: error.message 
+        });
+    }
+}
+
+
+exports.getCoursesDisplayBycourse_title = async (req, res) => {
+    try {
+        const { course_title } = req.params;
+        const courses = await Course.find({ course_title })
+            .sort({ createdAt: -1 })
+            return res.status(200).json({
+                message: "Courses fetched successfully",
+                courses
+            });     
+        } catch (error) {
+            return res.status(400).json({ 
+                message: "Error fetching courses",
+                error: error.message 
+        });
+    }
+}
+
+
+
 // view the Course registered  by Admin(one user)
 exports.getCoursesByUserId = async (req, res) => {
     try {

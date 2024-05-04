@@ -24,12 +24,16 @@ const { createCourse,
     viewCourseById,
     getCoursesByUserId,
     updateCourseUpload,
-    getCoursesDisplay 
+    getCoursesDisplay,
+    getCoursesDisplayBySkill,
+    getCoursesDisplayBycourse_title
 
        } = require('../controllers/course.controller');
 const router = express.Router();
 
-router.get('/getCoursesDisplay', getCoursesDisplay);
+router.get('/getCoursesDisplay', getCoursesDisplay );
+router.get('/getCoursesDisplayBySkill/:skill_level', getCoursesDisplayBySkill );
+router.get('/getCoursesDisplayBycourse_title/:course_title', getCoursesDisplayBycourse_title );
 router.use(auth);
 router.post("/registeredCourse", upload.fields([{ name: "course_image", maxCount: 1 }]),  createCourse );
 router.put("/updateCourse/:courseId", updateCourse )

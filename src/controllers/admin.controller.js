@@ -1664,7 +1664,7 @@ exports.courseWeeklySales = async (req, res) => {
         const yearlySales = {};
 
         sales.forEach(item => {
-            const week = getWeekNumber(item.createdAt);;
+            const week = getWeekNumber(item.createdAt);
             const month = item.createdAt.getMonth() + 1; 
             const year = item.createdAt.getFullYear();
 
