@@ -14,6 +14,7 @@ const {
     studentUpdateRole,
     studentUpdatePassword,
     studentCount,
+    totalStudentRegisteredForAdminCourse,
     studentPaidCount,
     studentCourseCount,
     studentUpdateProfilePicture,
@@ -37,6 +38,7 @@ router.get('/studentViewAllCourse', studentViewAllCourse );
 router.put('/studentUpdateProfile', studentUpdateProfile );
 router.put('/studentUpdateProfilePicture', upload.fields([{ name: "picture", maxCount: 1}]), studentUpdateProfilePicture );
 router.get('/studentCount', studentCount)
+router.get('/totalStudentRegisteredForAdminCourse', totalStudentRegisteredForAdminCourse );
 router.put('/studentUpdatePassword', studentUpdatePassword);
 router.put('/studentUpdateRole', studentUpdateRole);
 router.get('/studentPaidCount', studentPaidCount );

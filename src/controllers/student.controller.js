@@ -396,7 +396,7 @@ exports.studentCount = async(req, res) => {
         const id = req.user;
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
-        if(userStatus.roles ==='student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
+        if(userStatus.roles ==='student' || userStatus.roles === 'superadmin' || userStatus.roles === 'admin') {
             const count = await StudentCourse.find({ }).count();
             return res.status(200).json({
                 message: 'Total number of students registered fetched successfully',
@@ -414,6 +414,35 @@ exports.studentCount = async(req, res) => {
         });
     }
 };
+
+
+// admin knows the total number of student registered for his all courses
+
+exports.totalStudentRegisteredForAdminCourse = async(req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        const userStatus = await User.findById(user._id);
+        if(userStatus.roles ==='student' || userStatus.roles === 'superadmin' || userStatus.roles === 'admin') {
+            const count = await StudentCourse.find({ courseOwnerId: userStatus._id }).count();
+            return res.status(200).json({
+                message: 'Total number of students registered for admin all courses fetched successfully',
+                count
+        });
+    }else{
+        return res.status(400).json({
+            message: 'You must be registered student to view your course'
+        });
+    }
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error while viewing user',
+            error: error.message
+        });
+    }
+};
+
+
 
 // count the total number of students paid for his registered course
 
