@@ -73,7 +73,7 @@ exports.updateCourse = async (req, res) => {
             const courseId = await Course.findById(req.params.courseId);
             if(courseId){
                 if(courseId.userId.equals(userStatus._id)){
-                    const { course_title, course_description, course_language, course_level, isPaid_course, isPrice_course } = req.body;
+                    const { course_title, course_description, course_language, course_level, isPaid_course, isPrice_course, skill_level } = req.body;
                     if(req.files){
                     const course_image = req.files.course_image
                     const newCourse = await Course.findByIdAndUpdate(req.params.courseId, {
@@ -83,7 +83,8 @@ exports.updateCourse = async (req, res) => {
                         course_level,
                         course_image: course_image,
                         isPaid_course, 
-                        isPrice_course
+                        isPrice_course,
+                        skill_level
                     },
                     {
                         new: true
@@ -259,6 +260,35 @@ exports.getCoursesByUserId = async (req, res) => {
         });
     }
 }
+exports.viewCourseByUserId = async (req, res) => {
+    try {
+        const id = req.user;
+        const user = await User.findById(id);
+        if (!user || !user.roles.includes("admin")) {
+            return res.status(403).json({ error: "User must login as Admin in order to view a course" });
+        }
+
+        const course = await Course.findById(req.params.courseId);
+        if (!course) {
+            return res.status(404).json({ error: "Course not found" });
+        }
+
+        if (!user._id.equals(course.userId)) {
+            return res.status(403).json({ error: "You are not the owner of this course" });
+        }
+
+        return res.status(200).json({
+            message: "Courses fetched successfully",
+            course
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error fetching courses",
+            error: error.message
+        });
+    }
+};
 
 
 // get course by id that belongs to you as an admin
@@ -280,10 +310,10 @@ exports.getCourseById = async (req, res) => {
                     return res.status(400).json({ error: "You are not the owner of this course" });
                 }
             } else {
-                return res.status(400).json({ error: "Course not found" });
+                return res.status(404).json({ error: "Course not found" });
             }
         } else {
-            return res.status(400).json({ error: "User must login as Admin in order to view a course" });
+            return res.status(403).json({ error: "User must login as Admin in order to view a course" });
         }
     } catch (error) {
         return res.status(400).json({ 
