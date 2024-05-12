@@ -228,8 +228,6 @@ exports.getCoursesDisplayBycourse_title = async (req, res) => {
     }
 }
 
-
-
 // view the Course registered  by Admin(one user)
 exports.getCoursesByUserId = async (req, res) => {
     try {
@@ -260,6 +258,22 @@ exports.getCoursesByUserId = async (req, res) => {
         });
     }
 }
+
+exports.getCoursesByCourseId = async (req, res) => {
+    try {
+            const course = await Course.findById(req.params.courseId);
+            if(!course){
+                return res.status(400).json({ error: "Course not found" });
+            }           
+    } catch (error) {
+        return res.status( 400 ).json( {
+            message: "Error fetching courses",
+            error: error.message 
+        });
+    }
+}
+
+
 exports.viewCourseByUserId = async (req, res) => {
     try {
         const id = req.user;

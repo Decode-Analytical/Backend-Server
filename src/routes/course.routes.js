@@ -26,7 +26,8 @@ const { createCourse,
     updateCourseUpload,
     getCoursesDisplay,
     getCoursesDisplayBySkill,
-    getCoursesDisplayBycourse_title
+    getCoursesDisplayBycourse_title,
+    getCoursesByCourseId
 
        } = require('../controllers/course.controller');
 const router = express.Router();
@@ -34,6 +35,7 @@ const router = express.Router();
 router.get('/getCoursesDisplay', getCoursesDisplay );
 router.get('/getCoursesDisplayBySkill/:skill_level', getCoursesDisplayBySkill );
 router.get('/getCoursesDisplayBycourse_title/:course_title', getCoursesDisplayBycourse_title );
+router.get('/getCoursesById/:courseId', getCoursesByCourseId)
 router.use(auth);
 router.post("/registeredCourse", upload.fields([{ name: "course_image", maxCount: 1 }]),  createCourse );
 router.put("/updateCourse/:courseId", updateCourse )
