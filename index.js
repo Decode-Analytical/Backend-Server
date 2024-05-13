@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const { useTreblle } = require("treblle");
+const { useTreblle } = require("treblle");
 const mongoSanitize = require("express-mongo-sanitize");
 const connectDB = require("./src/database/db");
 const cloudinaryConfig = require("./src/utils/cloudinary");
@@ -29,10 +29,10 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(mongoSanitize());
 
-// useTreblle(app, {
-//   apiKey: process.env.TREBLLE_API_KEY,
-//   projectId: process.env.TREBLLE_PROJECT_ID,
-// });
+useTreblle(app, {
+  apiKey: process.env.TREBLLE_API_KEY,
+  projectId: process.env.TREBLLE_PROJECT_ID,
+});
 
 
 //cloudinary
