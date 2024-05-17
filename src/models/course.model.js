@@ -28,6 +28,18 @@ const courseSchema = new mongoose.Schema({
   skill_level: {
     type: String,
   },
+  creator_name: {
+    type: String,
+  },
+  what_you_will_learn: {
+    type: String,
+  },
+  skills_and_knowledge_you_will_gain: {
+    type: String,
+  },
+  tools_and_technologies_you_will_use: {
+    type: String,
+  },
   course_image:{
     type: Array
   },

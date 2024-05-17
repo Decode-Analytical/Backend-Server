@@ -9,13 +9,24 @@ exports.createCourse = async (req, res) => {
         const user = await User.findById(id);
         const userStatus = await User.findById(user._id);
         if (userStatus.roles === "admin") {
-            const { course_title, course_description, course_language, isPaid_course, isPrice_course, skill_level } = req.body;
-            // validate 
+            const { 
+                course_title, 
+                course_description, 
+                course_language,  
+                isPaid_course, 
+                isPrice_course, 
+                skill_level,
+                what_you_will_learn,
+                skills_and_knowledge_you_will_gain,
+                tools_and_technologies_you_will_use,
+            } = req.body;
+             
             if(!course_title || !course_description || !course_language || !isPaid_course || !isPrice_course){
                 return res.status(400).json({
                     message: "All fields are required"
                 })
             }
+           
             const existingTitle = await Course.findOne({ course_title, userId: userStatus._id });
             if(!existingTitle){
                 if(req.files){
@@ -34,6 +45,11 @@ exports.createCourse = async (req, res) => {
                 isPaid_course, 
                 isPrice_course,
                 skill_level,
+                creator_name: userStatus.firstName + " " + userStatus.lastName,
+                what_you_will_learn,
+                skills_and_knowledge_you_will_gain,
+                tools_and_technologies_you_will_use,
+
             })
             return res.status(201).json({
                 message: "Course registered successfully",
