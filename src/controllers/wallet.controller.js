@@ -4,7 +4,8 @@ const Student = require('../models/student.model');
 const Pin = require('../models/pin.models');
 const crypto = require('crypto');
 const sendEmail = require('../emails/email');
-const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
+const {Paystack} = require( 'paystack-sdk');
+const paystack = new Paystack(process.env.PAYSTACK_MAIN_KEY );
 const axios = require('axios');
 
 

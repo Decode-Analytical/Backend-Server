@@ -4,7 +4,8 @@ const { Course, Module } = require('../models/course.model');
 const crypto = require('crypto');
 const StudentCourse = require('../models/student.model');
 const sendEmail = require('../emails/email');
-const paystack = require('paystack')(process.env.PAYSTACK_MAIN_KEY);
+const {Paystack} = require( 'paystack-sdk');
+const paystack = new Paystack(process.env.PAYSTACK_MAIN_KEY );
 
 
 exports.paystackPayment= async(req, res) => {

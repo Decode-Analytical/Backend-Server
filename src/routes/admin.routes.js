@@ -49,4 +49,4 @@ router.get('/decodePdfDownloadableFile', adminController.decodePdfDownloadableFi
 // payment for the video tutor
 router.post('/paymentInitialized/:roomId', adminController.studentPayForMeeting)
 
-module.exports = router;
+module.exports = router; 
