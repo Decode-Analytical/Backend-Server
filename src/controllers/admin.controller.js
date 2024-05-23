@@ -1725,7 +1725,7 @@ exports.decodePdfDownloadableFile = async (req, res) => {
       return res.status(400).json({ message: 'Invalid date format. Please use YYYY-MM-DD format.' });
     }
 
-    const monthlyOrders = await Course.aggregate([
+    const monthlyOrders = await Student.aggregate([
       {
         $match: {
           userId: user._id,
@@ -1738,7 +1738,7 @@ exports.decodePdfDownloadableFile = async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSales: { $sum: "$isPrice_course" },
+          totalSales: { $sum: "$price" },
           count: { $sum: 1 },
         },
       },
@@ -1780,5 +1780,6 @@ exports.decodePdfDownloadableFile = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 
