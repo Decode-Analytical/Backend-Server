@@ -42,6 +42,7 @@ router.get('/adminTotalEarnings', adminController.adminTotalEarnings );
 router.delete('/adminDeleteAllMeetingTransactions', adminController.adminDeleteAllMeetingTransactions);
 router.get('/adminWeeklyMonthlyAndYearlyEarnings', adminController.adminWeeklyMonthlyAndYearlyEarnings);
 router.get('/adminWeeklyMonthlyAndYearlyWithdrawals', adminController.adminWeeklyMonthlyAndYearlyWithdrawals);
+router.get('/vendorPdfDownloadableFile', adminController.vendorPdfDownloadableFile );
 
 
 

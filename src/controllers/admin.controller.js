@@ -12,6 +12,8 @@ const paystack_live = require('paystack')(process.env.DECODE_LIVE_CLASS);
 const MeetingTransaction = require('../models/meetingTransact.model');
 const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
+const PDFDocument  = require('pdfkit');
+const fs = require('fs');
 
 
 exports.adminLogin = async (req, res) => {
@@ -1657,7 +1659,7 @@ exports.courseWeeklySales = async (req, res) => {
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
-        const sales = await Course.find({ _id: course._id, userId: user._id });
+        const sales = await Student.find({ courseId: course._id, userId: user._id });
 
         const weeklySales = {};
         const monthlySales = {};
@@ -1695,3 +1697,87 @@ exports.courseWeeklySales = async (req, res) => {
         });
     }
 };
+
+
+
+
+exports.vendorPdfDownloadableFile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    
+    if (!user || !user.roles.includes('admin')) {
+      return res.status(403).json({ message: 'You are not authorized to perform this action' });
+    }
+
+    const { startDate, endDate } = req.body;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json({ message: 'Start date and end date are required' });
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); 
+
+    if (isNaN(start) || isNaN(end)) {
+      return res.status(400).json({ message: 'Invalid date format. Please use YYYY-MM-DD format.' });
+    }
+
+    const monthlyOrders = await Course.aggregate([
+      {
+        $match: {
+          userId: user._id,
+          createdAt: {
+            $gte: start,
+            $lte: end,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSales: { $sum: "$isPrice_course" },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          totalSales: 1,
+          count: 1,
+        },
+      },
+    ]);
+
+    if (!monthlyOrders || monthlyOrders.length === 0) {
+      return res.status(404).json({ message: 'No orders found for the specified date range' });
+    }
+
+    const { totalSales, count } = monthlyOrders[0];
+
+    // Create PDF
+    const doc = new PDFDocument();
+    const pdfFilePath = './monthly_sales_report.pdf';
+
+    doc.pipe(fs.createWriteStream(pdfFilePath));
+    doc.fontSize(24).text('Monthly Sales Report', { align: 'center', underline: true });
+    doc.moveDown();
+    doc.fontSize(18).text(`Tutor: ${user.firstName} ${user.lastName}`);
+    doc.fontSize(18).text(`Balance: ${user.wallet}`);
+    doc.moveDown();
+    doc.fontSize(14).text(`Total Sales: $${totalSales.toFixed(2)}`);
+    doc.fontSize(14).text(`Number of Orders: ${count}`);
+    doc.moveDown();
+    doc.fontSize(12).text(`Report Date: ${new Date().toLocaleDateString()}`);
+    doc.end();
+
+    // Wait for PDF to be written before sending response 
+    return res.status(200).json({ downloadPath: pdfFilePath, monthlyOrders })    
+
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+
