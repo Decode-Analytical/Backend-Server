@@ -119,14 +119,14 @@ exports.userLogin = async(req, res) => {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({
-                message: 'User not found'
+                message: "User does not exist"
             });
         };
         // verify password by bcrypt 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({
-                message: 'Incorrect username or password'
+                message: 'Incorrect credentials'
             });
         };
         const isActive = await User.findOne({ _id: user._id });
@@ -145,7 +145,7 @@ exports.userLogin = async(req, res) => {
             user
         });
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             message: 'Error while logging in',
             error: error.message
         });
