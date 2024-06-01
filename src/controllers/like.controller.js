@@ -7,7 +7,7 @@ const Student = require('../models/student.model'); //needed to be able to autho
 /**middleware to like a course students can only like when they haven't like or dislike */
 exports.likeCourse = async (req, res) => {
     try {
-      const { courseId } = req.params;
+      const { courseId } = req.params; 
       const userId = req.user._id;
       const course = req.course;
       const { likeAndDislikeUsers } = course;
