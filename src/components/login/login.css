@@ -1,15 +1,19 @@
-.container {
+.login-container {
+  max-width: 1100px;
+  height: auto;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0 40px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  justify-content: start;
 }
 
 .nav {
   display: flex;
   flex-direction: row;
-  width: 100vw;
-  height: 20vh;
+  width: 100%;
+  height: 10vh;
   justify-content: space-between;
   align-items: start;
   padding: 16px;
@@ -58,9 +62,7 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 60vh;
-  padding-bottom: 140px;
-  margin-top: 64px;
+  height: 70vh;
   justify-self: center;
   align-self: center;
   justify-content: center;
@@ -112,10 +114,16 @@
 }
 
 .copyright {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   height: 20vh;
-  text-align: center;
   color: white;
-  padding: 8px;
+}
+
+.copyright label {
+  align-self: center;
+  text-align: center;
 }
 
 .show {
@@ -189,7 +197,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 415px) {
   .nav {
     flex-direction: column;
   }
@@ -201,13 +209,11 @@
     width: 80%;
   }
 
-  .copyright {
-    font-size: 0.7em;
-  }
-}
-
-@media (max-width: 450px) {
   .meeting-card label {
     font-size: 12px;
+  }
+
+  .copyright {
+    font-size: 0.7em;
   }
 }

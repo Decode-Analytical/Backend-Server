@@ -1,21 +1,26 @@
 :root {
   --some-white: rgb(250, 249, 249);
   --bg-blue: #16285d;
+  --bg-timer: #1c7c44;
   --chat: rgb(212, 211, 211);
 }
 
-.container {
+.room-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
   position: relative;
 }
 
+/*========================= TOP ====================*/
+
 .stream-container {
-  height: 87vh;
+  height: 100%;
+  min-height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: row;
-  width: 100%;
 }
 
 .stream-left {
@@ -105,8 +110,8 @@
 }
 
 .video-stream-container {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   box-shadow: 0 2px 30px var(--box);
   border-radius: 8px;
   background-color: var(--dark-grey);
@@ -201,7 +206,7 @@
 
 .stream-right-mid {
   width: 100%;
-  height: 75vh;
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -213,6 +218,7 @@
   width: 100%;
   justify-content: start;
   align-items: start;
+  font-size: 0.9em;
 }
 
 .msg-container li {
@@ -235,8 +241,8 @@
 }
 
 .msg-bottom img {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   margin-top: 12px;
   border-radius: 8px;
   align-self: flex-start;
@@ -254,7 +260,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 
 .btm-col-top {
@@ -311,9 +318,10 @@
   width: 100%;
 }
 
+/*========================= BOTTOM ====================*/
 .bottom-nav {
   width: 100%;
-  height: 13vh;
+  height: 100px;
   padding: 8px;
   display: flex;
   flex-direction: row;
@@ -340,6 +348,10 @@
   margin-left: 64px;
 }
 
+.duration {
+  color: white;
+}
+
 .nav-btn {
   display: flex;
   flex-direction: column;
@@ -355,6 +367,9 @@
 
 .nav-btn label {
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1.1em;
 }
 
 .nav-icon {
@@ -363,6 +378,10 @@
   background-color: var(--bg-blue);
   border-radius: 50%;
   padding: 10px;
+}
+
+.nav-btn .timer {
+  background-color: var(--bg-timer);
 }
 
 .nav-leave-icon {
@@ -410,29 +429,25 @@
   gap: 8px;
 }
 
-@media (max-width: 1057px) {
+/* =================== Mobile =================== */
+@media (max-width: 1024px) {
   .stream-container {
-    height: 82vh;
+    height: 75vh;
   }
 
   .bottom-nav {
-    height: 18vh;
-    width: 100vw;
+    height: 25vh;
   }
 
   .bottom-container {
     gap: 4px;
-    align-items: start;
+    align-items: flex-start;
     overflow-x: scroll;
     overflow-y: hidden;
   }
 
-  .bottom-container > div:nth-child(2) {
-    margin-right: 24px;
-  }
-
-  .bottom-container > div:nth-last-child(2) {
-    margin-left: 24px;
+  .bottom-container::-webkit-scrollbar {
+    height: 0;
   }
 
   .toggle-presentation {
@@ -460,7 +475,7 @@
   }
 }
 
-@media (max-width: 954px) {
+@media (max-width: 768px) {
   .stream-grid-cover {
     flex-direction: column;
   }
@@ -485,13 +500,46 @@
     font-size: 12px;
   }
 
+  .bottom-container > div:nth-child(2) {
+    margin-right: 0px;
+  }
+
+  .bottom-container > div:nth-last-child(2) {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 600px) {
   .bottom-container {
-    padding-left: 60%;
+    justify-content: start;
   }
 }
 
 @media (max-width: 415px) {
+  .bottom-nav {
+    height: 170px;
+  }
+
   .bottom-container {
-    padding-left: 30%;
+    gap: 0px;
+  }
+
+  .nav-btn {
+    font-size: 6px;
+  }
+
+  .nav-icon,
+  .mem-cover,
+  .nav-leave-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-icon {
+    padding: 8px;
+  }
+
+  .mem-cover label {
+    font-size: 0.4em;
   }
 }

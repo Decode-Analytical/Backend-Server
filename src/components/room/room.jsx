@@ -11,6 +11,7 @@ import {
   BsFillInfoCircleFill,
 } from "react-icons/bs"
 import { BiExpand, BiCollapse } from "react-icons/bi"
+import { LuAlarmCheck } from "react-icons/lu"
 import { PiPresentationChartFill } from "react-icons/pi"
 import { HiHandRaised } from "react-icons/hi2"
 import { FaPeopleGroup } from "react-icons/fa6"
@@ -25,15 +26,14 @@ import Peer from "peerjs"
 import { v4 as uuidv4 } from "uuid"
 import Modal from "../modal/modal"
 import Kick from "../modal/kick"
+import Timer from "../modal/timer"
 import "../modal/modal.css"
-import io from "socket.io-client"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleLogin } from "../../store"
 import "../animations.css"
+import io from "socket.io-client"
 
-const ENDPOINT = "https://noom-lms-server.onrender.com"
-//const ENDPOINT = "http://localhost:5000"
 let socket = null
 let myId = null
 let prevId = null
@@ -41,16 +41,22 @@ let boardStream = null
 let instructor = null
 let members = []
 const calls = {}
+let chatAlert = false
 let uniqueId = uuidv4()
 
-export default function Room() {
+export default function Room({ socket_url }) {
+  const loggedIn = useSelector((state) => state.loggedIn)
+  const meetingRecord = useSelector((state) => state.meeting)
+  const userRecord = useSelector((state) => state.user)
   const [videoEnabled, setVideoEnabled] = useState(true)
   const [audioEnabled, setAudioEnabled] = useState(true)
   const [muteAllEnabled, setMuteAllEnabled] = useState(false)
   const [isChatVisible, setIsChatVisible] = useState(
     window.innerWidth > 1057 ? true : false
   )
+  //const [chatAlert, setChatAlert] = useState(false)
   const [meetingDetails, setMeetingDetails] = useState(false)
+  const [timerDialog, setTimerDialog] = useState(false)
   const [isBoard, setIsBoard] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [isDisplay, setIsDisplay] = useState(false)
@@ -60,25 +66,15 @@ export default function Room() {
   const { room } = useParams()
   const navigate = useNavigate()
   const [membersCount, setMembersCount] = useState("")
-  const loggedIn = useSelector((state) => state.loggedIn)
-  const meetingRecord = useSelector((state) => state.meeting)
-  const userRecord = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState([])
   const [isPhone, setIsPhone] = useState(false)
   const [myPeer, setMyPeer] = useState(null)
+  const [duration, setDuration] = useState(0)
   const videoGridRef = useRef()
   const presentationRef = useRef()
   const ulRef = useRef()
-
-  const nav =
-    navigator.mediaDevices.getUserMedia ||
-    navigator.mediaDevices.webkitGetUserMedia ||
-    navigator.mediaDevices.mozGetUserMedia ||
-    navigator.mediaDevices.msGetUserMedia
-  const getUserMediaOptions = { video: true, audio: true }
-  const getUserScreenOptions = { cursor: true, audio: true }
 
   const startBoard = () => {
     if (!socket) return
@@ -90,7 +86,7 @@ export default function Room() {
 
     setIsBoard(true)
     navigator.mediaDevices
-      .getDisplayMedia(getUserScreenOptions)
+      .getDisplayMedia({ cursor: true, audio: true })
       .then((stream) => {
         instructor = myId
         setIsDisplay(true)
@@ -122,28 +118,41 @@ export default function Room() {
         recordId,
       },
     })*/
-
-    socket = io(ENDPOINT)
+    socket = io(socket_url)
     socket.on("connect", () => {
       if (myId !== null && myId !== prevId) prevId = myId
       myId = socket.id
-      socket.emit("join-room", room, myId)
+
+      const duration = meetingRecord.duration ? meetingRecord.duration : 7200 //7200=2hrs
+      socket.emit("join-room", room, userRecord.userId, duration)
+
       if (meetingRecord.instructorId === userRecord.userId) setIsAdmin(true)
 
       socket.on("nom", (data) => {
         setMembersCount(data.toString())
       })
 
-      nav(getUserMediaOptions)
-        .then((stream) => {
+      const loadStream = async () => {
+        try {
+          const mediaOptions = {
+            video: true,
+            audio: true,
+          }
+          const stream =
+            (await navigator.mediaDevices.getUserMedia(mediaOptions)) ||
+            (await navigator.mediaDevices.webkitGetUserMedia(mediaOptions)) ||
+            (await navigator.mediaDevices.mozGetUserMedia(mediaOptions)) ||
+            (await navigator.mediaDevices.msGetUserMedia(mediaOptions))
+
           initializePeer(stream)
           addVideoStream(myId, stream, "You", userRecord.img)
-        })
-        .catch((error) => {
+        } catch (error) {
           toast.error("Error accessing media:", error)
           console.error("Error accessing media:", error)
-        })
+        }
+      }
 
+      loadStream()
       const initializePeer = (localStream) => {
         /*const peer = new Peer(myId, {
           host: "localhost",
@@ -151,18 +160,34 @@ export default function Room() {
           path: "/peerjs",
         })*/
         const peer = new Peer(myId, {
-          host: "https://peerserver-two.vercel.app",
+          host: "noom-lms-server.onrender.com",
           port: 443,
           path: "/peerjs",
           secure: true,
           config: {
             iceServers: [
-              { urls: "stun:stun.l.google.com:19302" },
-              { urls: "stun:freeturn.net:5349" },
               {
-                urls: "turns:freeturn.tel:5349",
-                username: "free",
-                credential: "free",
+                urls: "stun:stun.relay.metered.ca:80",
+              },
+              {
+                urls: "turn:a.relay.metered.ca:80",
+                username: "7f3ab71881d9c115a4fc0189",
+                credential: "750xbgrmZbW0DRxo",
+              },
+              {
+                urls: "turn:a.relay.metered.ca:80?transport=tcp",
+                username: "7f3ab71881d9c115a4fc0189",
+                credential: "750xbgrmZbW0DRxo",
+              },
+              {
+                urls: "turn:a.relay.metered.ca:443",
+                username: "7f3ab71881d9c115a4fc0189",
+                credential: "750xbgrmZbW0DRxo",
+              },
+              {
+                urls: "turn:a.relay.metered.ca:443?transport=tcp",
+                username: "7f3ab71881d9c115a4fc0189",
+                credential: "750xbgrmZbW0DRxo",
               },
             ],
           },
@@ -297,7 +322,7 @@ export default function Room() {
           socket.on("kick", (userId) => {
             if (userId === myId) {
               leave()
-              toast.success("You've been removed by the instructor")
+              toast.info("You've been removed by the instructor")
             } else {
               const member = members.find((member) => member.userId === userId)
               if (member) toast.error(`${member.username} has been removed`)
@@ -308,17 +333,23 @@ export default function Room() {
           socket.on("message", (msg) => {
             if (msg.userId === myId) msg.username = "You"
             setMessages((prevMessages) => [...prevMessages, msg])
+            if (msg.userId !== myId && chatAlert) {
+              const content = `${msg.username}: ${
+                msg.msg.length > 10 ? `${msg.msg.substring(0, 10)}...` : msg.msg
+              }`
+              toast.success(content)
+            }
             if (ulRef.current)
               ulRef.current.scrollTop = ulRef.current.scrollHeight
           })
         })
 
         peer.on("call", (call) => {
-          if (call.metadata !== undefined && myId === call.metadata.userId) {
-            leave()
-            toast.success("A User with this ID already exists")
-            return
-          }
+          /*if (call.metadata !== undefined && myId === call.metadata.userId) {
+          leave()
+          toast.error("A User with this ID already exists")
+          return
+        }*/
           const doc = {
             username: userRecord.username,
             userId: myId,
@@ -350,6 +381,15 @@ export default function Room() {
           })
         })
 
+        socket.on("timer", (data) => {
+          if (data === -1) {
+            leave()
+            toast.success("Time Elapsed!")
+          } else if (data === 600) {
+            toast.info("10 mins remaining for this class!")
+          } else setDuration(data)
+        })
+
         peer.on("disconnect", () => {
           peer.connections.forEach((conn) => {
             conn.close()
@@ -374,6 +414,7 @@ export default function Room() {
   }
 
   const handleResize = () => {
+    if (window.innerWidth < 1057) chatAlert = true
     setIsPhone(window.innerWidth < 1057)
   }
 
@@ -526,7 +567,7 @@ export default function Room() {
   }
 
   const toggleRecord = () => {
-    toast.success("Coming soon")
+    toast.info("Coming soon")
   }
 
   const toggleMuteAll = () => {
@@ -539,6 +580,8 @@ export default function Room() {
   }
 
   const toggleChat = () => {
+    chatAlert = !chatAlert
+    //setChatAlert(!chatAlert)
     setIsChatVisible(!isChatVisible)
   }
 
@@ -549,11 +592,19 @@ export default function Room() {
   const toggleParticipants = () => {
     setIsParticaipants(!isParticipants)
     setMeetingDetails(false)
+    setTimerDialog(false)
   }
 
   const toggleMeetingDetails = () => {
     setMeetingDetails(!meetingDetails)
     setIsParticaipants(false)
+    setTimerDialog(false)
+  }
+
+  const toggleTimer = () => {
+    setTimerDialog(!timerDialog)
+    setIsParticaipants(false)
+    setMeetingDetails(false)
   }
 
   const exitCleanUp = () => {
@@ -568,6 +619,7 @@ export default function Room() {
 
       instructor = null
       if (myPeer !== null) myPeer.destroy()
+
       if (socket) {
         socket.off("connect")
         socket.disconnect()
@@ -589,7 +641,7 @@ export default function Room() {
   }
 
   return (
-    <div className={`container`}>
+    <div className={`room-container`}>
       {meetingDetails && (
         <Modal
           meeting={meetingDetails}
@@ -616,6 +668,8 @@ export default function Room() {
           kicked={(userId) => removeMember(userId)}
         />
       )}
+
+      {timerDialog && <Timer timerDialog={timerDialog} duration={duration} />}
 
       <div className="stream-container">
         <div
@@ -673,7 +727,7 @@ export default function Room() {
                   <div className="msg-container">
                     <div className="msg-top">
                       <label className="msg-name">{obj.username}</label>
-                      <label className="msg-date">{obj.date}</label>
+                      <label className="msg-date">{`${obj.date} WAT`}</label>
                     </div>
                     <div className="msg-bottom">
                       <img
@@ -710,6 +764,11 @@ export default function Room() {
       </div>
       <div className="bottom-nav">
         <div className="bottom-container">
+          <div className="nav-btn" onClick={toggleTimer}>
+            <LuAlarmCheck className="nav-icon timer" />
+            <label>Timer</label>
+          </div>
+
           <div className="nav-btn" onClick={toggleVideo}>
             {videoEnabled ? (
               <BsFillCameraVideoOffFill className="nav-icon" />
@@ -730,13 +789,15 @@ export default function Room() {
             <BsFillChatTextFill className="nav-icon" />
             <label> {isChatVisible ? "Hide Chat" : "Show Chat"}</label>
           </div>
-          <div className="nav-btn">
-            <PiPresentationChartFill
-              className="nav-icon"
-              onClick={startBoard}
-            />
-            <label>Presentation</label>
-          </div>
+          {!isPhone && (
+            <div className="nav-btn">
+              <PiPresentationChartFill
+                className="nav-icon"
+                onClick={startBoard}
+              />
+              <label>Presentation</label>
+            </div>
+          )}
           {/* ========== Admin function =============*/}
           {isAdmin && (
             <div className="nav-btn" onClick={toggleRecord}>
