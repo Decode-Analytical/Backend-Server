@@ -337,34 +337,40 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 };
 
 
-//? admin schedule google meeting for students 
+//? admin schedule google meeting for students
 exports.adminScheduleMeeting = async (req, res) => {
     try {
         const id = req.user;
-        const user = await User.findById(id);        
-        if(user.roles.includes("admin") || user.roles.includes("superadmin")) {            
-            const { description, date, time, courseName, isPaid, amount } = req.body;
+        const user = await User.findById(id);
+        if(user.roles.includes("admin") || user.roles.includes("superadmin")) {
+            const { description, startDate, startTime, endDate, endTime, courseName, isPaid, amount } = req.body;
+            const start = new Date(`${startDate}T${startTime}`);
+            const end = new Date(`${endDate}T${endTime}`);
+
+            if (start >= end) {
+            return res.status(400).json({ message: 'Start time must be before end time.' });
+            }
             const existingCourseName = await Meeting.findOne({courseName: courseName, userId: user._id});
             if(existingCourseName){
                 return res.status(400).json({message: "Meeting already scheduled for this course"});
             }
             const course = await Course.findOne({ course_title: courseName });
-        if (!course) {    
+        if (!course) {
         const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
         const meeting = await Meeting.create({
             instructor: `${user.firstName} ${user.lastName}`,
             description,
             instructorId: user._id,
             userId: user._id,
-            courseId: "" || "No course registered",
+            courseId: course._id || "No course registered",
             courseName: courseName,
-            date,
-            time,
+            startDate: start,
+            endDate: end,
             roomId: linkMeeting,
             email: user.email,
             isPaid,
             amount,
-            course_image: "decodeIMG",
+            course_image: course.course_image,
         });
         return res.status(201).json({
             message: 'Meeting created without a registered course successfully',
