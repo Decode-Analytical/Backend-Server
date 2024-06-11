@@ -15,7 +15,6 @@ const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
 const PDFDocument  = require('pdfkit');
 const fs = require('fs');
-const moment = require('moment');
 
 
 exports.adminLogin = async (req, res) => {
@@ -354,15 +353,14 @@ exports.adminScheduleMeeting = async (req, res) => {
 
         const { description, startDate, startTime, endDate, endTime, courseName, isPaid, amount } = req.body;
 
-        // Validate and parse dates using moment
-        const start = moment(`${startDate} ${startTime}`, 'YYYY-MM-DD HH:mm:ss', true);
-        const end = moment(`${endDate} ${endTime}`, 'YYYY-MM-DD HH:mm:ss', true);
+        const start = new Date(`${startDate}T${startTime}`);
+        const end = new Date(`${endDate}T${endTime}`);
 
-        if (!start.isValid() || !end.isValid()) {
-            return res.status(400).json({ message: 'Invalid date or time format. Use "YYYY-MM-DD" for dates and "HH:mm:ss" for times.' });
+        if (isNaN(start) || isNaN(end)) {
+            return res.status(400).json({ message: 'Invalid date or time format' });
         }
 
-        if (start.isSameOrAfter(end)) {
+        if (start >= end) {
             return res.status(400).json({ message: 'Start time must be before end time' });
         }
 
@@ -381,8 +379,8 @@ exports.adminScheduleMeeting = async (req, res) => {
             userId: user._id,
             courseId: course ? course._id : 'No course registered',
             courseName: course ? course.course_title : courseName,
-            startDate: start.toDate(),
-            endDate: end.toDate(),
+            startDate: start,
+            endDate: end,
             roomId: linkMeeting,
             email: user.email,
             isPaid,
@@ -402,6 +400,27 @@ exports.adminScheduleMeeting = async (req, res) => {
     }
 };
 
+exports.deleteMeeting = async (req, res) => {
+    try {
+        const meetingId = req.params.meetingId;
+        const meeting = await Meeting.findById(meetingId);
+        if (meeting) {
+            await meeting.delete();
+            return res.status(200).json({
+            message: 'Meeting deleted successfully'
+        });
+    }else {
+        return res.status(404).json({
+            message: 'Meeting not found'
+        });
+    }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Meeting not deleted due to an error',
+            error: error.message
+        });
+    }
+}
 
 
 // ? get user information by email

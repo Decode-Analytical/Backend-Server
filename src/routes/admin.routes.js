@@ -6,6 +6,7 @@ const adminController = require('../controllers/admin.controller');
 router.post('/adminSignIn', adminController.adminLogin);
 router.post('/joinmeeting/:roomId', adminController.studentJoinMeeting );
 router.post('/receivingPayment', adminController.studentPaid);
+router.delete('/deleteMeeting/:meetingId', adminController.deleteMeeting);
 router.use(auth);
 router.get('/courseWeeklySales/:courseId', adminController.courseWeeklySales);
 router.post('/adminScheduleMeeting', adminController.adminScheduleMeeting  );
