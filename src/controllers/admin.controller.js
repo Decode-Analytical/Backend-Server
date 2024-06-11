@@ -15,6 +15,7 @@ const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
 const PDFDocument  = require('pdfkit');
 const fs = require('fs');
+const moment = require('moment');
 
 
 exports.adminLogin = async (req, res) => {
@@ -340,68 +341,58 @@ exports.adminTotalStudentForCourse = async (req, res) => {
 //? admin schedule google meeting for students
 exports.adminScheduleMeeting = async (req, res) => {
     try {
-        const id = req.user;
-        const user = await User.findById(id);
-        if(user.roles.includes("admin") || user.roles.includes("superadmin")) {
-            const { description, startDate, startTime, endDate, endTime, courseName, isPaid, amount } = req.body;
-            const start = new Date(`${startDate}T${startTime}`);
-            const end = new Date(`${endDate}T${endTime}`);
+        const userId = req.user;
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-            if (start >= end) {
-            return res.status(400).json({ message: 'Start time must be before end time.' });
-            }
-            const existingCourseName = await Meeting.findOne({courseName: courseName, userId: user._id});
-            if(existingCourseName){
-                return res.status(400).json({message: "Meeting already scheduled for this course"});
-            }
-            const course = await Course.findOne({ course_title: courseName });
-        if (!course) {
+        if (!user.roles.includes('admin') && !user.roles.includes('superadmin')) {
+            return res.status(401).json({ message: 'You are not authorized to schedule a meeting' });
+        }
+
+        const { description, startDate, startTime, endDate, endTime, courseName, isPaid, amount } = req.body;
+
+        // Validate and parse dates using moment
+        const start = moment(`${startDate} ${startTime}`, 'YYYY-MM-DD HH:mm:ss', true);
+        const end = moment(`${endDate} ${endTime}`, 'YYYY-MM-DD HH:mm:ss', true);
+
+        if (!start.isValid() || !end.isValid()) {
+            return res.status(400).json({ message: 'Invalid date or time format. Use "YYYY-MM-DD" for dates and "HH:mm:ss" for times.' });
+        }
+
+        if (start.isSameOrAfter(end)) {
+            return res.status(400).json({ message: 'Start time must be before end time' });
+        }
+
+        const existingCourseMeeting = await Meeting.findOne({ courseName, userId: user._id });
+        if (existingCourseMeeting) {
+            return res.status(400).json({ message: 'Meeting already scheduled for this course' });
+        }
+
+        const course = await Course.findOne({ course_title: courseName });
         const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
+
         const meeting = await Meeting.create({
             instructor: `${user.firstName} ${user.lastName}`,
             description,
             instructorId: user._id,
             userId: user._id,
-            courseId: course._id || "No course registered",
-            courseName: courseName,
-            startDate: start,
-            endDate: end,
+            courseId: course ? course._id : 'No course registered',
+            courseName: course ? course.course_title : courseName,
+            startDate: start.toDate(),
+            endDate: end.toDate(),
             roomId: linkMeeting,
             email: user.email,
             isPaid,
             amount,
-            course_image: course.course_image,
+            course_image: course ? course.course_image : null,
         });
         return res.status(201).json({
-            message: 'Meeting created without a registered course successfully',
+            message: `Meeting created ${course ? 'with a registered course' : 'without a registered course'} successfully`,
             meeting
         });
-    }else{
-        const linkMeeting = referralCodeGenerator.custom('lowercase', 3, 3, 'lmsore');
-        const meeting = await Meeting.create({
-            instructor: `${user.firstName} ${user.lastName}`,
-            description,
-            instructorId: user._id,
-            userId: user._id,
-            courseId: course._id,
-            courseName: course.course_title,
-            date,
-            time,
-            roomId: linkMeeting,
-            email: user.email,
-            isPaid,
-            amount,
-            course_image: course.course_image,
-        });
-        return res.status(201).json({
-            message: 'Meeting created with a registered course successfully',
-            meeting
-        });
-    }}else{
-        return res.status(401).json({
-            message: 'You are not authorized to schedule meeting'
-    })
-}
 
     } catch (error) {
         return res.status(500).json({

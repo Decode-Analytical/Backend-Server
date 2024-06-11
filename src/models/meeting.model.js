@@ -5,13 +5,13 @@ const meetupSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Instructor Name is required' ]
     },
-    startTime: {
+    startDate: {
         type: Date,
-        required: [ true, 'Date is required' ]
+        required: [ true, 'Start date is required' ]
     },
-    endTime: {
+    endDate: {
         type: Date,
-        required: [ true, 'Date is required' ]
+        required: [ true, 'End date is required' ]
     },
     description: {
         type: String,
