@@ -351,18 +351,14 @@ exports.adminScheduleMeeting = async (req, res) => {
             return res.status(401).json({ message: 'You are not authorized to schedule a meeting' });
         }
 
-        const { description, startDate, startTime, endDate, endTime, courseName, isPaid, amount } = req.body;
+        const { description, startDate, startTime, duration, endDate, endTime, courseName, isPaid, amount } = req.body;
 
-        const start = new Date(`${startDate}T${startTime}`);
-        const end = new Date(`${endDate}T${endTime}`);
+        // const start = new Date(`${startDate}`);
+        // const end = new Date(`${endDate}`);
 
-        if (isNaN(start) || isNaN(end)) {
-            return res.status(400).json({ message: 'Invalid date or time format' });
-        }
-
-        if (start >= end) {
-            return res.status(400).json({ message: 'Start time must be before end time' });
-        }
+        // if (isNaN(start) || isNaN(end)) {
+        //     return res.status(400).json({ message: 'Invalid date or time format' });
+        // }
 
         const existingCourseMeeting = await Meeting.findOne({ courseName, userId: user._id });
         if (existingCourseMeeting) {
@@ -379,9 +375,10 @@ exports.adminScheduleMeeting = async (req, res) => {
             userId: user._id,
             courseId: course ? course._id : 'No course registered',
             courseName: course ? course.course_title : courseName,
-            startDate: start,
+            startDate,
             startTime,
-            endDate: end,
+            duration,
+            endDate,
             roomId: linkMeeting,
             email: user.email,
             isPaid,

@@ -6,7 +6,7 @@ const meetupSchema = new mongoose.Schema({
         required: [ true, 'Instructor Name is required' ]
     },
     startDate: {
-        type: Date,
+        type: String,
         required: [ true, 'Start date is required' ]
     },
     startTime: {
@@ -29,6 +29,19 @@ const meetupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: [ true, 'Link is required' ],
         ref: "User"
+    },
+    duration: {
+        type: Number,
+        required: [ true, 'Duration is required' ],
+        validate: {
+            validator: function(v) {
+                return v > 0;
+            },
+            message: 'Duration must be greater than 0'
+        },
+        set: function(v) {
+            return v * 60 * 60;
+        }
     },
     roomId: {
         type: String,
