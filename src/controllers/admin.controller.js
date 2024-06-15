@@ -380,6 +380,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             courseId: course ? course._id : 'No course registered',
             courseName: course ? course.course_title : courseName,
             startDate: start,
+            startTime,
             endDate: end,
             roomId: linkMeeting,
             email: user.email,
@@ -403,9 +404,9 @@ exports.adminScheduleMeeting = async (req, res) => {
 exports.deleteMeeting = async (req, res) => {
     try {
         const meetingId = req.params.meetingId;
-        const meeting = await Meeting.findById(meetingId);
+        const meeting = await Meeting.findOne({ roomId: meetingId });
         if (meeting) {
-            await meeting.delete();
+            await Meeting.findByIdAndDelete(meeting._id);
             return res.status(200).json({
             message: 'Meeting deleted successfully'
         });

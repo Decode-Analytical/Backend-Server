@@ -9,8 +9,8 @@ const meetupSchema = new mongoose.Schema({
         type: Date,
         required: [ true, 'Start date is required' ]
     },
-    endDate: {
-        type: Date,
+    startTime: {
+        type: String,
         required: [ true, 'End date is required' ]
     },
     description: {
