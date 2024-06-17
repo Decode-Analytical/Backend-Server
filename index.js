@@ -18,6 +18,7 @@ const likeRoutes = require("./src/routes/like.routes");
 const messageRoutes = require('./src/routes/message.routes');
 const walletRoutes = require('./src/routes/wallet.routes');
 const pinRoutes = require('./src/routes/pin.routes');
+const certificateRoutes = require('./src/routes/certificate.routes');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use("/api/quizes", questionRoutes);
 app.use('/api/chat', messageRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/pin", pinRoutes);
+app.use("/api/certificate", certificateRoutes);
 
 app.listen(port, () => {
   console.log(`Decode App is running on port, http://localhost:${port}`);

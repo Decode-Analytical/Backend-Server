@@ -27,9 +27,9 @@ exports.studentRegisterCourse = async(req, res, next) => {
         }       
         const userStatus = await User.findById(user._id);
         if(userStatus.roles === 'student' || userStatus.roles === 'IT' || userStatus.roles === 'admin') {
-          if( userStatus.courseLimit === 15) {
+          if( userStatus.courseLimit === 5) {
             return res.status(400).json({
-              message: 'You have reached your limit of 10 courses'
+              message: 'You have reached your limit of 5 courses'
             });
           };
           const link = `<a href="https://decode-mnjh.onrender.com/api/payment/initializedPayment/${courseId}"</a>`;

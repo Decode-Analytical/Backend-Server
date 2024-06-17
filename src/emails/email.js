@@ -20,6 +20,7 @@ const sendEmail = async (options) => {
       subject: options.subject,
       text: options.message,
       html: options.message,
+      attachments: options.attachments
     };
 
     const m = await transporter.sendMail(message);

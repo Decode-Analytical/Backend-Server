@@ -14,7 +14,7 @@ exports.createQuizQuestions = async (req, res) => {
                 userId: userStatus._id,
                 question_description,
                 question_duration,
-                question,                
+                question,
                 options,
                 correct_answer,
                 moduleId,

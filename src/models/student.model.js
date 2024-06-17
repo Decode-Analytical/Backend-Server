@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const referralCodeGenerator = require('referral-code-generator');
 
 const studentSchema = new mongoose.Schema(
   {
@@ -17,7 +18,7 @@ const studentSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-    },    
+    },
     price: {
       type: Number,
       float: true
@@ -30,6 +31,10 @@ const studentSchema = new mongoose.Schema(
     },
     module: {
       type: Array,
+    },
+    certificateCode: {
+      type: String,
+      default: referralCodeGenerator.custom('lowercase', 7, 7, 'DecodeAnalytics')
     },
     isCourseCompleted: {
       type: Boolean,
