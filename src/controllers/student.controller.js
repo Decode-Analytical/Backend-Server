@@ -45,8 +45,8 @@ exports.studentRegisterCourse = async(req, res, next) => {
             image: course.course_image,
             price: course.isPrice_course,
             courseOwnerId: course.userId,
-            userId: userStatus._id,  
-            module: modules       
+            userId: userStatus._id,
+            module: modules
 
         });
         // update the user courseLimit
