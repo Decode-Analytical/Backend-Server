@@ -29,7 +29,7 @@ exports.studentCertificate = async (req, res) => {
         const { id } = req.user;
         const user = await User.findById(id);
 
-        if (user.roles !== 'superadmin') {
+        if (user.roles !== 'student') {
             return res.status(401).json({ message: 'Unauthorized, only students can generate certificates' });
         }
 
