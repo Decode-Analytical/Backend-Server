@@ -358,7 +358,7 @@ exports.adminScheduleMeeting = async (req, res) => {
 
         const existingCourseMeeting = await Meeting.findOne({ courseName, userId: user._id });
         if (existingCourseMeeting) {
-            return res.status(400).json({ message: 'Meeting already scheduled for this course' });
+            return res.status(400).json({ message: 'You have already scheduled meeting for this course' });
         }
 
         const course = await Course.findOne({ course_title: courseName });
