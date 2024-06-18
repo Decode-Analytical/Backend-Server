@@ -12,7 +12,7 @@ const generateCertificatePDF = (courseName, user, student) => {
     doc.rect(0, 0, doc.page.width, doc.page.height).fill('#f0f0f0');
     doc.rect(25, 25, doc.page.width - 50, doc.page.height - 50).stroke('#000');
     // doc.image(`${user.picture[0].path}`, { fit: [250, 300],align: 'right', valign: 'center'});
-    doc.fontSize(25).fillColor('#000').text('Certificate of Completion', { align: 'center', underline: true,  bold: true, });
+    doc.fontSize(25).fillColor('blue').text('Certificate of Completion', { align: 'center', underline: true,  bold: true, });
     doc.moveDown();
     doc.fontSize(20).text(`This certifies that`, { align: 'center', });
     doc.fontSize(20).text(`${user.firstName} ${user.lastName}`, { align: 'center', underline: true, bold: true, });
