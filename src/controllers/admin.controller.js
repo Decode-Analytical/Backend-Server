@@ -353,8 +353,8 @@ exports.adminScheduleMeeting = async (req, res) => {
 
         const { description, startDate, startTime, duration, endDate, endTime, courseName, isPaid, amount } = req.body;
 
-        const start = new Date(`${startDate.toLocaleDateString()}`);
-        const end = new Date(`${endDate.toLocaleDateString()}`);
+        // const start = new Date(`${startDate}`).toLocaleDateString();
+        const end = new Date(`${endDate}`).toLocaleDateString();
 
         const existingCourseMeeting = await Meeting.findOne({ courseName, userId: user._id });
         if (existingCourseMeeting) {
@@ -362,7 +362,7 @@ exports.adminScheduleMeeting = async (req, res) => {
         }
 
         const course = await Course.findOne({ course_title: courseName });
-        const linkMeeting = referralCodeGenerator.custom('lowercase', 7, 7, 'decodelms');
+        const linkMeeting = referralCodeGenerator.custom('lowercase', 6, 4, 'decodelms');
 
         const meeting = await Meeting.create({
             instructor: `${user.firstName} ${user.lastName}`,
@@ -371,7 +371,7 @@ exports.adminScheduleMeeting = async (req, res) => {
             userId: user._id,
             courseId: course ? course._id : 'No course registered',
             courseName: course ? course.course_title : courseName,
-            startDate: start,
+            startDate,
             startTime,
             duration,
             endDate: end,
