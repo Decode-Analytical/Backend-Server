@@ -7,6 +7,8 @@ router.post('/adminSignIn', adminController.adminLogin);
 router.post('/joinmeeting/:roomId', adminController.studentJoinMeeting );
 router.post('/receivingPayment', adminController.studentPaid);
 router.delete('/deleteMeeting/:meetingId', adminController.deleteMeeting);
+router.post('/otpForMeeting', adminController.otpForMeeting );
+router.get('/verifyMeeting/:token', adminController.verifyOtpMeeting );
 router.use(auth);
 router.get('/courseWeeklySales/:courseId', adminController.courseWeeklySales);
 router.post('/adminScheduleMeeting', adminController.adminScheduleMeeting  );

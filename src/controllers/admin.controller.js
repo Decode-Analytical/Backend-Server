@@ -15,6 +15,8 @@ const WalletTransaction = require('../models/walletTransaction.model')
 const crypto = require("crypto");
 const PDFDocument  = require('pdfkit');
 const fs = require('fs');
+const Token = require("../models/token.model");
+const otpGenerator = require('otp-generator')
 
 
 exports.adminLogin = async (req, res) => {
@@ -416,71 +418,128 @@ exports.deleteMeeting = async (req, res) => {
     }
 }
 
+exports.otpForMeeting = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'Your email is not registered on this platform.' });
+        }
+        const otp = await Token.create({
+            userId: user._id,
+            token: otpGenerator.generate(6, { upperCase: false, specialChars: false }),
+            type: 'otp',
+            expires: Date.now() + 300000,
+        });
+        const link = `https://decode-mnjh.onrender.com/api/admin/verifyMeeting/${otp.token}`;
+        await sendEmail({
+            email: email,
+            subject: 'Meeting OTP',
+            message: `
+                <h3>Hi, ${user.firstName} ${user.lastName}</h3>
+                <p>Please use the following OTP to join the meeting</p>
+                <h2>OTP Code: ${otp.token}</h2>
+                <p>Or click on the link below to join the meeting</p>
+                <a href="${link}">${link}</a>
+                <p>This OTP will expire in 5 minutes</p>
+                <p>If you did not request this email, please ignore it</p>
+                <p>Regards</p>
+                <p>Decode LMS</p>
+                `,
+        })
+    return res.status(200).json({
+            message: 'OTP sent successfully'
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'OTP not sent due to an error',
+            error: error.message
+        });
+    }
+}
+
+exports.verifyOtpMeeting = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const otp = await Token.findOne({ token, type: 'otp' });
+        if (!otp) {
+            return res.status(404).json({ message: 'Invalid OTP' });
+        }
+        if (otp.expires < Date.now()) {
+            return res.status(400).json({ message: 'OTP has expired' });
+        }
+        await Token.findByIdAndDelete(otp._id);
+        const user = await User.findById(otp.userId);
+        return res.status(200).json({
+            message: 'OTP verified successfully',
+        });
+    }catch (error) {
+        return res.status(500).json({
+            message: 'Meeting not joined due to an error',
+            error: error.message
+        });
+    }
+}
 
 // ? get user information by email
 exports.studentJoinMeeting = async (req, res) => {
     try {
-        const { email, } = req.body;
-        const admin = await User.findOne({ email });
-        if (!admin) {
-            return res.status(404).json({
-                message: 'Your email is not registered on this platform as student'
-            })
+        const { token, email } = req.body;
+        const otp = await Token.findOne({ token, type: 'otp' });
+        if (!otp) {
+            return res.status(404).json({ message: 'Invalid OTP' });
         }
+        if (otp.expires < Date.now()) {
+            return res.status(400).json({ message: 'OTP has expired' });
+        }
+        await Token.findByIdAndDelete(otp._id);
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'Your email is not registered on this platform.' });
+        }
+        
         const roomId = req.params.roomId;
         const meeting = await Meeting.findOne({ roomId });
+
         if (!meeting) {
-            return res.status(404).json({
-                message: "This room meeting does not exist"
-            })
+            return res.status(404).json({ message: 'This room meeting does not exist.' });
         }
+
         const link = `https://decode-mnjh.onrender.com/api/admin/paymentInitialized/${roomId}`;
+
         if (meeting.isPaid === "paid") {
-            const hasPaid = await MeetingTransaction.findOne({ meetingId: meeting._id, userId: admin._id });
-            if (hasPaid === null) {
-                return res.status(401).json({
-                    message: `This meeting is paid. Please proceed to make payment here: ${link}.`,
-                });
+            const hasPaid = await MeetingTransaction.findOne({ meetingId: meeting._id, userId: user._id });
+
+            if (!hasPaid) {
+                return res.status(401).json({ message: `This meeting is paid. Please proceed to make payment here: ${link}.` });
             }
 
             if (hasPaid.transactionType === "refunded") {
-                return res.status(401).json({
-                    message: "Your payment is not successfully yet, kindly contact admin"
-                })
-            }
-            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
-            const userStatus = await User.findById(admin._id);
-            if (userStatus.roles === 'student' && student || userStatus.roles === 'IT' || userStatus.roles === "admin") {
-                return res.status(200).json({
-                    meeting,
-                    name: admin.firstName + ' ' + admin.lastName,
-                    userId: admin._id,
-                    image: admin.picture
-                });
-            } else {
-                return res.status(200).json({
-                    message: 'You are not authorized to view this page'
-                });
-            }
-        } else {
-            const student = await Student.findOne({ userId: admin._id, title: meeting.courseName });
-            const userStatus = await User.findById(admin._id);
-            if (userStatus.roles === 'student' && student || userStatus.roles === 'IT' || userStatus.roles === "admin") {
-                return res.status(200).json({
-                    meeting,
-                    name: admin.firstName + ' ' + admin.lastName,
-                    userId: admin._id,
-                    image: admin.picture
-                });
+                return res.status(401).json({ message: "Your payment was not successful, kindly contact admin." });
             }
         }
+
+        const student = await Student.findOne({ userId: user._id, title: meeting.courseName });
+        const userStatus = await User.findById(user._id);
+
+        if (userStatus.roles === 'student' && student || userStatus.roles === 'IT' || userStatus.roles === "admin") {
+            return res.status(200).json({
+                meeting,
+                name: `${user.firstName} ${user.lastName}`,
+                userId: user._id,
+                image: user.picture
+            });
+        } else {
+            return res.status(401).json({ message: 'You are not authorized to view this page.' });
+        }
+
     } catch (error) {
-        return res.status(500).json({
-            message: 'You are not a registered student',
-            error: error.message
-        });
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 };
+
 
 
 // view all the meeting events
