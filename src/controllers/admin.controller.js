@@ -440,7 +440,7 @@ exports.otpForMeeting = async (req, res) => {
                 <p>Please use the following OTP to join the meeting</p>
                 <h2>OTP Code: ${otp.token}</h2>
                 <p>Or click on the link below to join the meeting</p>
-                <a href="${link}">${link}</a>
+                <a href="${link}">Link</a>
                 <p>This OTP will expire in 5 minutes</p>
                 <p>If you did not request this email, please ignore it</p>
                 <p>Regards</p>

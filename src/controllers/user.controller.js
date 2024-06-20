@@ -234,6 +234,8 @@ exports.forgotPassword = async(req, res) => {
           const token = await Token.create({
              token: tokens,
              userId: existingUser._id,
+             type: 'password',
+             expires: Date.now() + 3600000
         });
         await sendEmail({
             email: existingUser.email,
@@ -276,7 +278,10 @@ exports.resetPassword = async(req, res) => {
                 message: 'Password cannot be empty'
             });
         };
-        const user = await Token.findOne({ token });
+        const user = await Token.findOne({ token, type: 'password' });
+        if (user.expires < Date.now()) {
+            return res.status(400).json({ message: 'OTP has expired' });
+        }
         if (user) {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);

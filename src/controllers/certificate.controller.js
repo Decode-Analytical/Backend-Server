@@ -99,7 +99,7 @@ exports.getCertificate = async (req, res) => {
         const { id } = req.user;
         const user = await User.findById(id);
 
-        if (user.roles !== 'superadmin' && user.roles !== 'admin') {
+        if (user.roles !== 'superadmin' && user.roles !== 'admin' && user.roles !== 'student') {
             return res.status(401).json({ message: 'Unauthorized, only super admin or admin can view certificates' });
         }
         const { certificateCode } = req.params;
